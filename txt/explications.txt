@@ -1,4 +1,4 @@
---> int     main(int argc, char **argv, char **env) <--
+--------------------> int     main(int argc, char **argv, char **env) <--
 
 Dans le contexte de la fonction main, le paramètre env contient les variables d'environnement du système
 au moment où le programme est lancé. Les variables d'environnement sont des variables globales qui sont
@@ -13,9 +13,36 @@ les répertoires où le système doit rechercher les exécutables lorsqu'une com
 L'utilisation de char **env dans la signature de la fonction main permet au programmeur d'accéder aux variables
 d'environnement et de les manipuler si nécessaire pendant l'exécution du programme.
 
---> Variables d'environnement <--
+--------------------> Variables d'environnement <--
 
 En résumé, les variables d'environnement sont des outils essentiels pour configurer, personnaliser et
 communiquer des informations importantes entre les processus et les programmes sur un système d'exploitation.
 Elles offrent une flexibilité et une extensibilité importantes pour l'environnement informatique.
 
+--------------------> execve <--
+
+Une famille de fonctions qui vont nous permettre d'executer de nouveaux programmes a partir du programme
+courant. 
+
+int execve(const char *filename, char *const argv[], char *const envp[]);
+
+execve("/bin/ls", argv, NULL);
+
+--------------------> fork <--
+
+Creer de nouveaux processus.
+
+Création du processus enfant : Lorsque vous appelez la fonction fork() dans un programme, le système
+d'exploitation crée une copie exacte du processus appelant. Cette copie est le processus enfant.
+
+Copie du contexte du processus parent : Le processus enfant hérite du contexte du processus parent. Cela
+signifie qu'il copie toutes les données du processus parent telles que le code, les variables,
+les descripteurs de fichier, etc. à l'instant où fork() est appelé.
+
+Retour de fork() : Après la création réussie du processus enfant, fork() retourne deux valeurs différentes :
+    Dans le processus parent, il renvoie l'identifiant du processus enfant (PID) qui est un nombre positif.
+    Dans le processus enfant, il renvoie zéro (0) pour indiquer que c'est le processus enfant.
+
+Gestion des erreurs : Si fork() échoue pour une raison quelconque (par exemple, si le système manque de
+ressources pour créer un nouveau processus), il retourne -1 pour indiquer une erreur. Dans ce cas,
+aucun nouveau processus n'est créé et le programme doit gérer cette situation d'échec.
