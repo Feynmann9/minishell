@@ -1,0 +1,21 @@
+--> int     main(int argc, char **argv, char **env) <--
+
+Dans le contexte de la fonction main, le paramètre env contient les variables d'environnement du système
+au moment où le programme est lancé. Les variables d'environnement sont des variables globales qui sont
+disponibles pour tous les processus en cours d'exécution sur le système. Elles contiennent des informations
+telles que les chemins vers les répertoires de recherche, les paramètres spécifiques au système,
+les préférences utilisateur, etc.
+
+Les variables d'environnement sont généralement stockées sous forme de paires clé-valeur, où chaque
+clé est associée à une valeur. Par exemple, une variable d'environnement courante est PATH, qui spécifie
+les répertoires où le système doit rechercher les exécutables lorsqu'une commande est entrée dans un terminal.
+
+L'utilisation de char **env dans la signature de la fonction main permet au programmeur d'accéder aux variables
+d'environnement et de les manipuler si nécessaire pendant l'exécution du programme.
+
+--> Variables d'environnement <--
+
+En résumé, les variables d'environnement sont des outils essentiels pour configurer, personnaliser et
+communiquer des informations importantes entre les processus et les programmes sur un système d'exploitation.
+Elles offrent une flexibilité et une extensibilité importantes pour l'environnement informatique.
+
