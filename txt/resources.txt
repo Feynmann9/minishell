@@ -6,3 +6,6 @@ https://www.youtube.com/watch?v=hMSByvFHOro&list=PLGU1kcPKHMKj5yA0RPb5AK4QAhexmQ
 
 https://www.youtube.com/watch?v=cazH0zqtakI
 
+https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218
+
+https://achrafbelarif.medium.com/42cursus-minishell-29cd25f972e6
