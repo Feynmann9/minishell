@@ -1,0 +1,73 @@
+1. **malloc**: Cette fonction alloue de la mémoire pendant l'exécution du programme.
+Par exemple, si vous voulez stocker une liste de nombres dont la taille n'est pas 
+connue à l'avance, vous pouvez utiliser malloc pour réserver l'espace mémoire nécessaire.
+
+2. **free**: Une fois que vous avez fini d'utiliser la mémoire allouée par malloc,
+vous devez la libérer pour éviter les fuites de mémoire. La fonction free fait cela,
+elle indique au système que vous n'avez plus besoin de l'espace mémoire que
+vous avez alloué précédemment.
+
+3. **write**: Lorsque vous souhaitez écrire des données dans un fichier ou envoyer des
+données à un autre processus, vous utilisez la fonction write. Par exemple,
+si vous voulez écrire du texte dans un fichier, vous pouvez utiliser write pour le faire.
+
+4. **open**: Pour travailler avec des fichiers, vous devez d'abord les ouvrir.
+La fonction open vous permet de le faire. Vous spécifiez le nom du fichier que
+vous voulez ouvrir et le mode dans lequel vous souhaitez l'ouvrir (lecture seule, écriture, etc.).
+
+5. **read**: Lorsque vous avez besoin de lire des données à partir d'un fichier,
+vous utilisez la fonction read. Elle récupère les données du fichier et les place
+dans un tampon que vous spécifiez.
+
+6. **close**: Une fois que vous avez terminé de travailler avec un fichier,
+vous devez le fermer pour libérer les ressources système. La fonction close fait cela,
+elle ferme le descripteur de fichier que vous avez obtenu lors de l'ouverture du fichier avec open.
+
+7. **fork**: Pour créer un nouveau processus, vous utilisez la fonction fork.
+Le nouveau processus créé est une copie exacte du processus parent, et les deux
+continuent à s'exécuter indépendamment.
+
+8. **wait**: Lorsque vous créez un processus enfant avec fork, le processus parent
+peut attendre que le processus enfant se termine en utilisant la fonction wait.
+Cela permet au parent de synchroniser son exécution avec celle de l'enfant.
+
+9. **waitpid**: Similaire à wait, mais vous pouvez spécifier le PID du processus
+enfant que vous voulez attendre.
+
+10. **wait3, wait4**: Des versions de wait avec des fonctionnalités supplémentaires
+pour la gestion des processus.
+
+11. **signal**: Vous pouvez utiliser cette fonction pour spécifier comment votre programme
+doit réagir lorsqu'il reçoit certains signaux système, comme SIGINT pour interrompre le programme.
+
+12. **kill**: Permet d'envoyer un signal à un processus spécifique, ce qui peut être utile
+pour arrêter un processus en cours ou lui demander de se terminer proprement.
+
+13. **exit**: Lorsque vous avez terminé l'exécution de votre programme, vous utilisez
+la fonction exit pour le quitter proprement.
+
+14. **getcwd**: Cette fonction renvoie le répertoire de travail actuel du processus,
+c'est-à-dire le répertoire dans lequel le programme est actuellement en train de s'exécuter.
+
+15. **chdir**: Utilisée pour changer le répertoire de travail du processus en cours.
+
+16. **stat, lstat, fstat**: Ces fonctions sont utilisées pour obtenir des informations
+sur un fichier, telles que sa taille, ses autorisations, son type, etc.
+
+17. **execve**: Vous permet de remplacer le programme actuel dans le processus par un
+nouveau programme spécifié. C'est utile lorsque vous avez besoin de démarrer un nouveau
+programme à partir d'un programme en cours d'exécution.
+
+18. **dup, dup2**: Permet de dupliquer un descripteur de fichier, ce qui peut être utile
+lorsque vous souhaitez rediriger la sortie standard vers un fichier, par exemple.
+
+19. **pipe**: Crée un canal de communication entre deux processus, ce qui leur permet de
+partager des données.
+
+20. **opendir, readdir, closedir**: Ces fonctions sont utilisées pour travailler avec des
+répertoires. opendir ouvre un répertoire, readdir lit son contenu un par un, et closedir le
+ferme une fois que vous avez fini de l'utiliser.
+
+21. **strerror, errno**: strerror renvoie une chaîne de caractères décrivant une erreur donnée,
+tandis que errno renvoie le code d'erreur actuel. Ces fonctions sont utiles pour la gestion des
+erreurs lors de l'exécution du programme.
