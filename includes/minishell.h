@@ -10,6 +10,10 @@
 # include <errno.h>
 # include "../libft/libft.h"
 
-
+typedef struct s_env
+{
+    char    *name_folder;
+    char    *value_folder;
+}               t_env;
 
 #endif
