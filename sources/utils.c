@@ -1,0 +1,38 @@
+#include "../includes/minishell.h"
+
+void	ft_lstadd_front_env(t_env **lst, t_env *new)
+{
+	if (lst == NULL || new == NULL)
+		return ;
+	else
+	{
+		new->next = *lst;
+		*lst = new;
+	}
+}
+
+void	ft_lstadd_back_env(t_env **lst, t_env *new)
+{
+	t_env	*temp;
+
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	temp = *lst;
+	while (temp->next != NULL)
+		temp = temp->next;
+	temp->next = new;
+}
+
+t_env   *ft_lstnew_env(char *name_folder, char *value_folder)
+{
+    t_env   *new = malloc(sizeof(t_env));
+    if (new == NULL)
+        return (NULL);
+    new->name_folder = name_folder;
+    new->value_folder = value_folder;
+    new->next = NULL;
+    return (new);
+}
