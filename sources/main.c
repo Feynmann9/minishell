@@ -35,30 +35,33 @@ void     init_env(t_env **ev, char **env)
 
 void    print_env(t_env *ev)
 {
-    printf("Environment variables:\n");
+    //printf("environment variable:\n");
     while (ev) 
     {
-        printf("%s=%s\n", ev->name_folder, ev->value_folder);
+        if (strcmp(ev->name_folder, "PWD") == 0)
+            printf("%s\n", ev->value_folder);
         ev = ev->next;
     }
 }
 
 int     main(int argc, char **argv, char **env)
 {
-    t_env *ev;
-
-    ev = NULL;
+    t_env *ev = NULL;
+    t_base *base = NULL;
     (void)argv;
-    if (argc != 1)
+    if (argc > 3)
     {
-        printf("\033[32mToo many argc, sorry\033[0m]");
+        printf("\033[32mToo many argc, sorry\033[0m\n");
         return (0);
     }
     init_env(&ev, env);
-    print_env(ev);
+    init(&base, ev);
+    printf("\033[32mCumShell $> \033[0m");
+    builtin(&base, argv[1], argv[2]);
+    //print_env(ev);
     //while (1)
     //{
-        printf("\033[32mCumShell $>\n\033[0m]");
+    //    printf("\033[32mCumShell $>\n\033[0m]");
     //}
     return (0);
 }
