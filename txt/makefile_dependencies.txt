@@ -1,0 +1,95 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dwayenbo <dwayenbo@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/02/18 08:19:01 by dwayenbo          #+#    #+#              #
+#    Updated: 2024/04/24 16:18:01 by dwayenbo         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+################################################################
+#							COLORS							   #
+################################################################
+# Bold High Intensity
+BIBlack=\033[1;90m
+BIRed=\033[1;91m
+BIGreen=\033[1;92m
+BIYellow=\033[1;93m
+BIBlue=\033[1;94m
+BIPurple=\033[1;95m
+BICyan=\033[1;96m
+BIWhite=\033[1;97m
+# Bold
+BBlack=\033[1;30m
+BRed=\033[1;31m
+BGreen=\033[1;32m
+BYellow=\033[1;33m
+BBlue=\033[1;34m
+BPurple=\033[1;35m
+BCyan=\033[1;36m
+BWhite=\033[1;37m
+# Regular Colors
+Black=\033[0;30m
+Red=\033[0;31m
+Green=\033[0;32m
+Yellow=\033[0;33m
+Blue=\033[0;34m
+Purple=\033[0;35m
+Cyan=\033[0;36m
+White=\033[0;37m
+
+################################################################
+#							PROJ							   #
+################################################################
+
+NAME = minishell
+
+MANDATORY = parser second_reading
+
+UTILS = 
+
+BUILTINS =
+
+SRCS = $(MANDATORY) $(UTILS) $(BUILTINS)
+SRCS_DIR = taf_david/
+BONUS = $(NAME)
+OBJS_DIR = objs_and_deps/
+M_SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS)))
+M_OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRCS))) 
+DEPENDENCIES = 	$(patsubst %.o,%.d,$(M_OBJS))  
+
+HEADERS = -Iheaders/
+VG_FLAG = 
+CFLAGS = -Wall -Werror -Wextra $(VG_FLAG) -MMD -MP 
+
+################################################################
+#							RULES							   #
+################################################################
+
+$(OBJS_DIR)%.o:$(SRCS_DIR)%.c
+	@mkdir -p $(OBJS_DIR)
+	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+
+all: $(NAME)
+
+$(NAME): $(M_OBJS) 
+	@printf "$(BIGreen)COMPILING BINARY : $(NAME)\n$(White)"
+	$(CC) $(CFLAGS) $(M_OBJS)-o $(NAME)
+
+re: fclean all
+
+bonus: $(NAME)
+
+clean: 
+	rm -rf $(OBJS_DIR)
+
+fclean: clean 
+	rm -f $(NAME)
+
+	
+.PHONY: all clean fclean bonus re
+
+-include $(DEPENDENCIES)

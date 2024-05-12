@@ -14,29 +14,10 @@ void    new_env(t_env **ev, char *name_folder, char *value_folder)
         ft_lstadd_back_env(ev, tmp);
 }
 
-void     init_env(t_env **ev, char **env)
-{
-    char    **tmp;
-    char    **new;
-
-    tmp = env;
-    while (*tmp)
-    {
-        new = ft_split(*tmp, '=');
-        //printf("test1\n");
-        if (new && new[0] && new[1])
-        {
-            new_env(ev, new[0], new[1]);
-        //    printf("test2\n");
-        }
-        tmp++;
-    }
-}
-
 void    print_env(t_env *ev)
 {
     //printf("environment variable:\n");
-    while (ev) 
+    while (ev)
     {
         if (strcmp(ev->name_folder, "PWD") == 0)
             printf("%s\n", ev->value_folder);
@@ -44,7 +25,7 @@ void    print_env(t_env *ev)
     }
 }
 
-int     main(int argc, char **argv, char **env)
+int main(int argc, char **argv, char **env)
 {
     t_env *ev = NULL;
     t_base *base = NULL;

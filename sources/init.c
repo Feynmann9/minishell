@@ -9,8 +9,27 @@ void init(t_base **tmp_base, t_env *ev)
         (*tmp_base)->pid = 0;
         (*tmp_base)->next = NULL;
     }
-    else 
+    else
         exit(EXIT_FAILURE);
+}
+
+void     init_env(t_env **ev, char **env)
+{
+    char    **tmp;
+    char    **new;
+
+    tmp = env;
+    while (*tmp)
+    {
+        new = ft_split(*tmp, '=', '\0');
+        //printf("test1\n");
+        if (new && new[0] && new[1])
+        {
+            new_env(ev, new[0], new[1]);
+        //    printf("test2\n");
+        }
+        tmp++;
+    }
 }
 
 char *get_env_value(t_env *env, char *name)
