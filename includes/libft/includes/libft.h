@@ -6,12 +6,16 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:11:44 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/12 14:05:49 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:21:35 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# ifndef FDS
+#  define FDS 1024
+# endif
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
@@ -33,6 +37,13 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct s_string
+{
+	char	*content;
+	size_t	len;
+	size_t	max_size;
+}			t_string;
 
 //______________________Fonctions obligatoire de base
 

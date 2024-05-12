@@ -1,27 +1,54 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
+#    Updated: 2024/05/12 15:30:56 by gmarquis         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+SRCS = sources/init.c $\
+sources/main.c $\
+sources/utils.c
+
+LIBFT_PATH = includes/libft/
+
 NAME = minishell
+
+MK = mkdir
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 
-FILES = $(wildcard sources/*.c) \
-		$(wildcard libft/*.c)
+OBJS_DIR = objs/
+OBJS = $(notdir $(SRCS:>C=.o))
+OBJS_PREF = $(addprefix $(OBJS_DIR), $(OBJS:.c=.o))
 
-OBJ = $(FILES:.c=.o)
+all : libft $(NAME)
 
-%.o: $(FILES)/%.c
-		$(CC) -c $< -o $@
+libft :
+	@make all -C $(LIBFT_PATH)
 
-$(NAME): $(OBJ)
-		$(CC) -o $(NAME) $(OBJ)
+bonus : libft $(NAME)
 
-all: $(NAME)
+$(OBJS_DIR)%.o : sources/%.c $(LIBFT_PATH)libft_bns.a 
+	$(MK) -p $(OBJS_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-clean:
-		$(RM) $(OBJ)
+$(NAME) : $(OBJS_PREF) $(LIBFT_PATH)libft_bns.a 
+	$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_PATH)libft_bns.a
 
-fclean: clean
-		$(RM) $(NAME)
+clean :
+	@make clean -C $(LIBFT_PATH)
+	$(RM) objs/
 
-re: fclean all
+fclean : clean
+	@make fclean -C $(LIBFT_PATH)
+	$(RM) $(NAME)
 
-.PHONY: all clean fclean re
+re : fclean all
+
+.PHONY : all bonus libft clean fclean re
