@@ -8,7 +8,7 @@
 # include <dirent.h>
 # include <string.h>
 # include <errno.h>
-# include "../libft/libft.h"
+# include "libft/includes/libft.h"
 
 //struct pour recuperer env et comme ca on peut modifier
 typedef struct s_env
