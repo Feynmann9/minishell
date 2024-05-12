@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
+/*   Updated: 2024/05/12 17:58:21 by gmarquis         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-void init(t_base **tmp_base, t_env *ev)
+void	init(t_base **tmp_base, t_env *ev)
 {
     (*tmp_base) = malloc(sizeof(t_base));
     if ((*tmp_base) != NULL)
@@ -13,7 +25,7 @@ void init(t_base **tmp_base, t_env *ev)
         exit(EXIT_FAILURE);
 }
 
-void     init_env(t_env **ev, char **env)
+void	init_env(t_env **ev, char **env)
 {
     char    **tmp;
     char    **new;
@@ -21,7 +33,7 @@ void     init_env(t_env **ev, char **env)
     tmp = env;
     while (*tmp)
     {
-        new = ft_split(*tmp, '=', '\0');
+        new = ft_split(*tmp, '=', '\n');
         //printf("test1\n");
         if (new && new[0] && new[1])
         {
@@ -32,7 +44,7 @@ void     init_env(t_env **ev, char **env)
     }
 }
 
-char *get_env_value(t_env *env, char *name)
+char	*get_env_value(t_env *env, char *name)
 {
     while (env != NULL)
     {
@@ -43,13 +55,15 @@ char *get_env_value(t_env *env, char *name)
     return (NULL);
 }
 
-void builtin(t_base **base, char *cmd, char *more)
+void	builtin(t_base **base, char *cmd, char *more)
 {
+    char *pwd;
+
     if (more == NULL)
     {
         if (strcmp(cmd, "PWD") == 0)
         {
-            char *pwd = get_env_value((*base)->tmp_env, "PWD");
+            pwd = get_env_value((*base)->tmp_env, "PWD");
             if (pwd != NULL)
                 printf("%s\n", pwd);
             else

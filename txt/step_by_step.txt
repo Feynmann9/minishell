@@ -1,2 +1,22 @@
 1 - Mathieu = faire un tmp de tout l'environnement
 
+format :
+    <date> <auteur> <"nom de commit">
+        <description du taff effectuer>
+
+    12/05/2024 gmarquis "add libft gmarquis && modiff Makefile | dependencies du Makefile a faire"
+        Ajout de la libft gmarquis,
+        Retouche du Makefile(ajout de dossier pour les .o et dependence de compilation(libf_bns.a) des .c).
+
+    12/05/2024 gmarquis "rangement avant debut de projet"
+        Modif de la libft :
+            ajout de ft_free_str.c (free un char * et return NULL),
+            modif de ft_free_tab2d.c (free un char ** et return NULL),
+            modif du ft_split (pour utiliser ft_free_tab_2d.c),
+            modif de gnl (pour utiliser ft_free_str.c),
+            modif et ajout des proto dans libft.h,
+            ajout de ft_free_str au Makefile,
+        Mise a la norme et rangement du .h
+        Ajout dans txt de makefile_dependencies.txt
+        Ajout d'un lien dans resources.txt
+    

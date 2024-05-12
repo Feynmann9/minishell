@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 04:57:49 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/12 14:05:12 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:16:35 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ static char	*ft_alt_strjoin(char *s1, char *s2)
 	while (s2[i])
 		str[len++] = s2[i++];
 	str[len] = '\0';
-	free(s1);
+	ft_free_str(s1);
 	return (str);
 }
 
-char	*print_line(char **tempo)
+static char	*print_line(char **tempo)
 {
 	int		i;
 	char	*line;
@@ -53,10 +53,15 @@ char	*print_line(char **tempo)
 		i++;
 	line = ft_strndup(str, i);
 	*tempo = ft_strndup(str + i, ft_strlen(str + i));
-	if (str)
-		free(str);
-	str = NULL;
+	str = ft_free_str(str);
 	return (line);
+}
+
+static int	ft_verif_n(char n)
+{
+	if (n == '\0' || !n)
+		return (0);
+	return (1);
 }
 
 char	*get_next_line(int fd, char n)
@@ -66,7 +71,9 @@ char	*get_next_line(int fd, char n)
 	int			bytes_read;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return (free(tempo[fd]), tempo[fd] = NULL, NULL);
+		return (tempo[fd] = ft_free_str(tempo[fd]), NULL);
+	if (!ft_verif_n(n))
+		n = '\n';
 	if (ft_contain_n(tempo[fd], n))
 		return (print_line(&tempo[fd]));
 	buffer = malloc(BUFFER_SIZE + 1);
@@ -82,7 +89,6 @@ char	*get_next_line(int fd, char n)
 			break ;
 	}
 	if (buffer)
-		free(buffer);
-	buffer = NULL;
+		buffer = ft_free_str(buffer);
 	return (print_line(&tempo[fd]));
 }

@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:11:44 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/12 14:21:35 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:52:49 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # endif
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 42
 # endif
 
 # include <ctype.h>
@@ -111,7 +111,8 @@ int					ft_countain_double(char **input);
 size_t				ft_countuntil(char *str, char n);
 int					ft_countwords(char *str, char set, char set2, char end);
 void				ft_exit(int out, char *message);
-void				ft_free_tab2d(char **input);
+char				*ft_free_str(char *str);
+char				**ft_free_tab2d(char **input);
 int					ft_isnbr(char *input);
 int					ft_isexa(char *code);
 int					ft_isint(char *clean_input);

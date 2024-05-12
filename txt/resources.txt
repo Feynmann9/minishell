@@ -11,4 +11,6 @@ https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a1059
 https://achrafbelarif.medium.com/42cursus-minishell-29cd25f972e6
 
 
+https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html
+
 Videos de 42 sur l'intra

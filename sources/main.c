@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
+/*   Updated: 2024/05/12 17:25:25 by gmarquis         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void    new_env(t_env **ev, char *name_folder, char *value_folder)
@@ -14,7 +26,7 @@ void    new_env(t_env **ev, char *name_folder, char *value_folder)
         ft_lstadd_back_env(ev, tmp);
 }
 
-void    print_env(t_env *ev)
+void	print_env(t_env *ev)
 {
     //printf("environment variable:\n");
     while (ev)

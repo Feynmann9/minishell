@@ -6,7 +6,7 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/21 17:10:22 by gmarquis          #+#    #+#              #
-#    Updated: 2024/04/23 07:48:04 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/05/12 18:25:45 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ srcs/ajout/ft_countain_double.c $\
 srcs/ajout/ft_countuntil.c $\
 srcs/ajout/ft_countwords.c $\
 srcs/ajout/ft_exit.c $\
+srcs/ajout/ft_free_str.c $\
 srcs/ajout/ft_free_tab2d.c $\
 srcs/ajout/ft_isexa.c $\
 srcs/ajout/ft_isint.c $\

@@ -6,7 +6,7 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/12 15:30:56 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/05/12 18:53:16 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ RM = rm -rf
 OBJS_DIR = objs/
 OBJS = $(notdir $(SRCS:>C=.o))
 OBJS_PREF = $(addprefix $(OBJS_DIR), $(OBJS:.c=.o))
+DEPENDENCIES = $(patsubst %.o,%.d,$(OBJS_PREF))
 
 all : libft $(NAME)
 
@@ -52,3 +53,5 @@ fclean : clean
 re : fclean all
 
 .PHONY : all bonus libft clean fclean re
+
+-include $(DEPENDENCIES)

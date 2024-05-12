@@ -6,25 +6,11 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:10:03 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/04/23 06:59:12 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:19:07 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-
-static void	ft_freetab(char **str, unsigned int i)
-{
-	unsigned int	j;
-
-	j = 0;
-	while (j < i)
-	{
-		free(str[j]);
-		j++;
-	}
-	free(str);
-	return ;
-}
 
 static size_t	ft_tabsize(char *s, char c, char c2)
 {
@@ -67,7 +53,7 @@ char	**ft_split(char const *s, char c, char c2)
 {
 	int		i;
 	int		counttab;
-	char	**str;
+	char	**strs;
 	char	*strtemp;
 
 	i = 0;
@@ -75,18 +61,18 @@ char	**ft_split(char const *s, char c, char c2)
 		return (NULL);
 	counttab = ft_countwords((char *)s, c, c2, '\0');
 	strtemp = (char *)s;
-	str = (char **)malloc((counttab + 1) * sizeof(char *));
-	if (!str)
+	strs = (char **)malloc((counttab + 1) * sizeof(char *));
+	if (!strs)
 		return (NULL);
 	while (i < counttab && strtemp[0] != '\0')
 	{
 		while (*strtemp == c || *strtemp == c2)
 			strtemp++;
-		str[i] = ft_memlcpy(strtemp, ft_tabsize(strtemp, c, c2));
-		if (!str[i])
-			return (ft_freetab(str, i), NULL);
+		strs[i] = ft_memlcpy(strtemp, ft_tabsize(strtemp, c, c2));
+		if (!strs[i])
+			return (strs = ft_free_tab2d(strs), NULL);
 		strtemp += ft_movestr(strtemp, c, c2);
 		i++;
 	}
-	return (str[i] = NULL, str);
+	return (strs[i] = NULL, strs);
 }
