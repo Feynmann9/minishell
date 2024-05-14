@@ -6,14 +6,15 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:38:32 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/12 15:38:33 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:11:14 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../exec.h"
 
 void	ft_lstadd_front_env(t_env **lst, t_env *new)
 {
+
 	if (lst == NULL || new == NULL)
 		return ;
 	else

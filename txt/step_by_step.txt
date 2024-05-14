@@ -15,10 +15,17 @@ format :
             modif du ft_split (pour utiliser ft_free_tab_2d.c),
             modif de gnl (pour utiliser ft_free_str.c),
             modif et ajout des proto dans libft.h,
-            ajout de ft_free_str au Makefile,
+            ajout de ft_free_str au Makefile.
         Mise a la norme et rangement du .h
         Ajout dans txt de makefile_dependencies.txt
         Ajout d'un lien dans resources.txt
     
     14/05/2024 gmarquis "ajout des dependences"
-        ajout des dependences (.d) dans les makefile minishell et libft.
+        Ajout des dependences (.d) dans les makefile minishell et libft.
+
+    14/05/2024 gmarquis "modification de l'architecture"
+        Modification de l'architecture du projet:
+            separation en 2 dossier exec et parse,
+            ajout de leurs .h, Makefile et sous dossiers pour .c (sources et srcs),
+            modification du Makefile d'origine pour declacher les 2 autres,
+        supretion de makefile_dependencies.txt.

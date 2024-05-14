@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/12 17:22:08 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/14 17:38:26 by gmarquis         ###   ########.fr       */
+/*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
+/*   Updated: 2024/05/14 17:13:22 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PARSE_H
+# define PARSE_H
 
-# include "libft/includes/libft.h"
+#include "../includes/minishell.h"
+
+typedef struct s_cmd
+{
+	char			*cmd; //cat grep
+	char			*flag; //-e
+	char			**output;
+
+	struct s_cmd	*next;
+}					t_cmp;
 
 #endif

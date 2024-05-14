@@ -6,11 +6,11 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/12 17:25:25 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:11:09 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../exec.h"
 
 void    new_env(t_env **ev, char *name_folder, char *value_folder)
 {
