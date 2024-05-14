@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/14 23:11:24 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/15 00:02:57 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ char	*get_env_value(t_env *env, char *name)
     }
     return (NULL);
 }
+// pour test = ./exec pwd
+// pour test = ./exec env
+// pour test = ./exec echo "greg le fdp"
+// pour test = ./exec export nom="salope" (comment ft_env)
 
 void	builtin(t_base **base, char *cmd, char *more)
 {
