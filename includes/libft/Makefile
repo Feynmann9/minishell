@@ -6,7 +6,7 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/21 17:10:22 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/12 18:25:45 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/05/14 14:13:01 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,29 +103,34 @@ srcs/printf/ft_printf.c
 OBJS_DIR = objs/
 OBJS = $(notdir $(SRCS:.c=.o))
 OBJS_PREF = $(addprefix $(OBJS_DIR), $(OBJS))
+DEPENDENCIES = $(patsubst %.o,%.d,$(OBJS_PREF))
 
 OBJS_DIR_AJT = objs/ajout/
 OBJS_AJT = $(notdir $(SRCS_AJT:.c=.o))
 OBJS_AJT_PREF = $(addprefix $(OBJS_DIR_AJT), $(OBJS_AJT))
+AJT_DEPENDENCIES = $(patsubst %.o,%.d,$(OBJS_AJT_PREF))
 
 OBJS_DIR_BNS = objs/bonus/
 OBJS_BNS = $(notdir $(SRCS_BNS:.c=.o))
 OBJS_BNS_PREF = $(addprefix $(OBJS_DIR_BNS), $(OBJS_BNS))
+BNS_DEPENDENCIES = $(patsubst %.o,%.d,$(OBJS_BNS_PREF))
 
 OBJS_DIR_GNL = objs/gnl/
 OBJS_GNL = $(notdir $(SRCS_GNL:.c=.o))
 OBJS_GNL_PREF = $(addprefix $(OBJS_DIR_GNL), $(OBJS_GNL))
+GNL_DEPENDENCIES = $(patsubst %.o,%.d,$(OBJS_GNL_PREF))
 
 OBJS_DIR_PRINTF = objs/printf/
 OBJS_PRINTF = $(notdir $(SRCS_PRINTF:.c=.o))
 OBJS_PRINTF_PREF = $(addprefix $(OBJS_DIR_PRINTF), $(OBJS_PRINTF))
+GNL_PRINTF_DEPENDENCIES = $(patsubst %.o,%.d,$(OBJS_PRINTF_PREF))
 
 NAME = libft.a
 NAME_BNS = libft_bns.a
 
 MK = mkdir
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -MMD -MP
 
 all : $(NAME_BNS)
 
@@ -167,3 +172,5 @@ fclean : clean
 	rm -f $(NAME_BNS)
 
 re : fclean all
+
+-include $(DEPENDENCIES)

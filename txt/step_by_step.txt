@@ -20,3 +20,5 @@ format :
         Ajout dans txt de makefile_dependencies.txt
         Ajout d'un lien dans resources.txt
     
+    14/05/2024 gmarquis "ajout des dependences"
+        ajout des dependences (.d) dans les makefile minishell et libft.
