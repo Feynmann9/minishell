@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/14 17:11:09 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:11:39 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,13 @@ void    new_env(t_env **ev, char *name_folder, char *value_folder)
     tmp->name_folder = ft_strdup(name_folder);
     tmp->value_folder = ft_strdup(value_folder);
     if (*ev != NULL)
-        ft_lstadd_front_env(ev, tmp);
-    else
         ft_lstadd_back_env(ev, tmp);
+    else
+        ft_lstadd_front_env(ev, tmp);
 }
 
 void	print_env(t_env *ev)
 {
-    //printf("environment variable:\n");
     while (ev)
     {
         if (strcmp(ev->name_folder, "PWD") == 0)
@@ -51,10 +50,5 @@ int main(int argc, char **argv, char **env)
     init(&base, ev);
     printf("\033[32mCumShell $> \033[0m");
     builtin(&base, argv[1], argv[2]);
-    //print_env(ev);
-    //while (1)
-    //{
-    //    printf("\033[32mCumShell $>\n\033[0m]");
-    //}
     return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/14 17:11:05 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:07:44 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,8 @@ void	init_env(t_env **ev, char **env)
     while (*tmp)
     {
         new = ft_split(*tmp, '=', '\n');
-        //printf("test1\n");
         if (new && new[0] && new[1])
-        {
             new_env(ev, new[0], new[1]);
-        //    printf("test2\n");
-        }
         tmp++;
     }
 }
@@ -57,18 +53,14 @@ char	*get_env_value(t_env *env, char *name)
 
 void	builtin(t_base **base, char *cmd, char *more)
 {
-    char *pwd;
-
     if (more == NULL)
     {
-        if (strcmp(cmd, "PWD") == 0)
-        {
-            pwd = get_env_value((*base)->tmp_env, "PWD");
-            if (pwd != NULL)
-                printf("%s\n", pwd);
-            else
-                printf("erreur\n");
-        }
+        if (strcmp(cmd, "pwd") == 0)
+            ft_pwd(base);
+        if (strcmp(cmd, "cd") == 0)
+            ft_cd(base);
+        if (strcmp(cmd, "env") == 0)
+            ft_env(base);
     }
     if (more != NULL)
     {

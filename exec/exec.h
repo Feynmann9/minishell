@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/14 17:39:14 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:07:57 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,14 @@ void	print_env(t_env *ev);
 void	ft_lstadd_front_env(t_env **lst, t_env *new);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env	*ft_lstnew_env(char *name_folder, char *value_folder);
+
+//			cd.c
+void	ft_cd(t_base **base);
+
+//			pwd.c
+void	ft_pwd(t_base **base);
+
+//			env.c
+void    ft_env(t_base **base);
 
 #endif
