@@ -6,7 +6,7 @@
 #    By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/14 20:03:52 by jpp              ###   ########.fr        #
+#    Updated: 2024/05/14 23:32:23 by jpp              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ sources/main.c $\
 sources/utils.c $\
 sources/cd.c $\
 sources/env.c $\
-sources/pwd.c 
+sources/pwd.c $\
+sources/export.c
 
 LIBFT_PATH = ../includes/libft/
 

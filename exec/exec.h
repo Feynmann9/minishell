@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/14 22:07:57 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/14 23:41:45 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,9 @@ void	ft_pwd(t_base **base);
 
 //			env.c
 void    ft_env(t_base **base);
+
+//			export.c
+void    ft_export(t_base **base, char *more);
+void    add_export(t_env *ev, char *name_folder, char *value_folder);
 
 #endif

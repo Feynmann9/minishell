@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/14 22:07:44 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/14 23:11:24 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	builtin(t_base **base, char *cmd, char *more)
     {
         if (strcmp(cmd, "echo") == 0)
             printf("%s\n", more);
+        if (strcmp(cmd, "export") == 0)
+            ft_export(base, more);
         else
             printf("erreur\n");
     }
