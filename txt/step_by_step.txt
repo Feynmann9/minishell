@@ -29,3 +29,6 @@ format :
             ajout de leurs .h, Makefile et sous dossiers pour .c (sources et srcs),
             modification du Makefile d'origine pour declacher les 2 autres,
         supretion de makefile_dependencies.txt.
+
+    15/05/2024 gmarquis "first test binary trees"
+        Premier teste sur arbre binaire.

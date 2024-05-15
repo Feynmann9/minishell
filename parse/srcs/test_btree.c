@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   test_btree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/15 04:11:38 by gmarquis         ###   ########.fr       */
+/*   Created: 2024/05/15 01:19:02 by gmarquis          #+#    #+#             */
+/*   Updated: 2024/05/15 05:37:00 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parse.h"
 
-int	main(int argc, char **argv, char **env)
+void	btree_apply_prefix(t_btree *root, void (*applyf)(void *))
 {
-	t_btree btree;
+	ft_printf("%s\n", root->item);
+	if (root->left != NULL)
+		btree_apply_prefix(root->left, &ft_putstr_fd);
+	if (root->right != NULL)
+		btree_apply_prefix(root->right, );
+}
 
-	argc = 0;
-	argv = NULL;
-	ft_bzero(&btree, sizeof(t_btree));
-	btree.item = env[0];
-	btree.left = btree_create_node(env[1]);
-	btree.right = btree_create_node(env[2]);
-	ft_printf("0 = %s\n", btree.item);
-	ft_printf("1 = %s\n", btree.left->item);
-	ft_printf("2 = %s\n", btree.right->item);
-	free(btree.left);
-	free(btree.right);
-	return (0);
+t_btree *btree_create_node(void *item)
+{
+	t_btree *new;
+	new = ft_calloc(1, sizeof(t_btree));
+	new->item = item;
+	return (new);
 }
