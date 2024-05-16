@@ -2,10 +2,10 @@
 
 void ft_export(t_base **base, char *more)
 {
-    char *folder = NULL;
-    char *value = NULL;
-    int i = 0;
-    int j = 0;
+    char (*folder) = NULL;
+    char (*value) = NULL;
+    int (i) = 0;
+    int (j) = 0;
 
     if (!(folder = malloc(strlen(more) * sizeof(char))) || base == NULL)
         return;
