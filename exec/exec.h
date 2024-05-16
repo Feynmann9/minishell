@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/14 23:41:45 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/16 14:58:44 by matran-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,8 @@ void    ft_env(t_base **base);
 //			export.c
 void    ft_export(t_base **base, char *more);
 void    add_export(t_env *ev, char *name_folder, char *value_folder);
+
+//			unset.c
+void	ft_unset(t_base **base, char *more);
 
 #endif

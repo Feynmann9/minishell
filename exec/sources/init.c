@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/15 00:02:57 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/16 14:50:06 by matran-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	builtin(t_base **base, char *cmd, char *more)
             printf("%s\n", more);
         if (strcmp(cmd, "export") == 0)
             ft_export(base, more);
+        if (strcmp(cmd, "unset") == 0)
+            ft_unset(base, more);
         else
             printf("erreur\n");
     }
