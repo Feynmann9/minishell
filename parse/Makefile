@@ -6,7 +6,7 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/16 01:54:47 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/05/16 23:11:13 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ fclean : clean
 	@make fclean -C $(LIBFT_PATH)
 	$(RM) $(NAME)
 
-re : fclean all
+re : fclean
+	make all
 
 .PHONY : all bonus libft clean fclean re
 

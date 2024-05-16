@@ -44,3 +44,6 @@ format :
         unset -> fait
         echo -> fait, jai fait que le simple 'echo'
         exit -> il faut que je le fasse
+
+    16/05/2024 gmarquis "je rentre bosser a domicile"
+        taff en cours sur ft_alt_split.

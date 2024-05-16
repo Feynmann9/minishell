@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 06:20:35 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/16 06:29:03 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/16 23:30:03 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static size_t	ft_tabsize(char *s, char c, char c2)
 	unsigned int	i;
 	unsigned int	tabcount;
 
-	if (!s || !c || !c2)
+	if (!s)
 		return (0);
 	i = 0;
 	tabcount = 0;
@@ -49,29 +49,45 @@ static int	ft_movestr(char *str, char c, char c2)
 	return (i);
 }
 
-char	**ft_alt_split(char const *s, char c, char c2)
+static int	ft_verif_setings(char *s, char c, char c2, int flag)
+{
+	int		counttab;
+
+	if (c == '\0' && c2 == '\0')
+		c = ' ';
+	if (c2 == '\0')
+		c2 = c;
+	if (c == '\0' && c2 != '\0')
+		c = c2;
+	counttab = ft_countwords(s, c, c2, '\0');
+	if (flag > 5)
+		flag = 0;
+	return (counttab);
+}
+
+char	**ft_alt_split(char *s, char c, char c2, int flag)
 {
 	int		i;
+	int		j;
 	int		counttab;
 	char	**strs;
-	char	*strtemp;
 
 	i = 0;
-	if (!s || s[0] == '\0' || !c || !c2)
+	j = 0;
+	if (!s || s[0] == '\0')
 		return (NULL);
-	counttab = ft_countwords((char *)s, c, c2, '\0');
-	strtemp = (char *)s;
+	counttab = ft_verif_setings(s, c, c2, flag);
 	strs = (char **)malloc((counttab + 1) * sizeof(char *));
 	if (!strs)
 		return (NULL);
-	while (i < counttab && strtemp[0] != '\0')
+	while (i < counttab && s[0] != '\0')
 	{
-		while (*strtemp == c || *strtemp == c2)
-			strtemp++;
-		strs[i] = ft_memlcpy(strtemp, ft_tabsize(strtemp, c, c2));
+		while (s[j] == c || s[j] == c2)
+			j++;
+		strs[i] = ft_memlcpy(s + j, ft_tabsize(s + j, c, c2));
 		if (!strs[i])
 			return (strs = ft_free_tab2d(strs), NULL);
-		strtemp += ft_movestr(strtemp, c, c2);
+		j += ft_movestr(s + j, c, c2);
 		i++;
 	}
 	return (strs[i] = NULL, strs);

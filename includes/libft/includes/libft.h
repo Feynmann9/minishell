@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:11:44 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/16 06:23:06 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/16 21:40:42 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void				ft_lstadd_front(t_list **lst, t_list *new);
 //_______________________Fonction ajouter
 
 int					ft_absolute_nbr(int nbr);
-char				**ft_alt_split(char const *s, char c, char c2);
+char				**ft_alt_split(char *s, char c, char c2, int flag);
 int					ft_atoi_base(char *str, char *base);
 long				ft_atol(char *input);
 int					ft_base_length(char *base);
