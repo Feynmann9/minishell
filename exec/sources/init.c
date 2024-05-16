@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/16 14:50:06 by matran-d         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:08:53 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,11 @@ void	builtin(t_base **base, char *cmd, char *more)
         if (strcmp(cmd, "export") == 0)
             ft_export(base, more);
         if (strcmp(cmd, "unset") == 0)
+        {
             ft_unset(base, more);
-        else
-            printf("erreur\n");
+            ft_env(base);
+        }
+        //else
+        //    printf("erreur\n");
     }
 }

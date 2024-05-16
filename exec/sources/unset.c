@@ -1,16 +1,18 @@
 #include "../exec.h"
 
-void	ft_unset(t_base **base, char *more)
+void ft_unset(t_base **base, char *more)
 {
-	while ((*base)->tmp_env)
+    t_env *current = (*base)->tmp_env;
+
+    while (current)
 	{
-		if ((*base)->tmp_env->name_folder == more)
+        if (strcmp(current->name_folder, more) == 0)
 		{
-			free((*base)->tmp_env->name_folder);
-			free((*base)->tmp_env->value_folder);
-			free((*base)->tmp_env->content);
-			return ;
-		}
-		(*base)->tmp_env = (*base)->tmp_env->next;
-	}
+            free(current->name_folder);
+            free(current->value_folder);
+            free(current->content);
+            return;
+        }
+        current = current->next;
+    }
 }

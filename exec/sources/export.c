@@ -7,34 +7,20 @@ void ft_export(t_base **base, char *more)
     int i = 0;
     int j = 0;
 
-    folder = malloc(strlen(more) * sizeof(char));
-    if (folder == NULL || base == NULL)
+    if (!(folder = malloc(strlen(more) * sizeof(char))) || base == NULL)
         return;
-    value = malloc(strlen(more) * sizeof(char));
-    if (value == NULL)
-    {
-        free(folder);
-        return;
-    }
-    while (more[i] != '=') {
-        folder[j] = more[i];
-        j++;
-        i++;
-    }
+    if (!(value = malloc(strlen(more) * sizeof(char))))
+        return (free(folder));
+    while (more[i] != '=')
+        folder[j++] = more[i++];
     folder[j] = '\0';
-    //printf("%s\n", folder);
     j = 0;
     i++;
     while (more[i] != '\0')
-    {
-        value[j] = more[i];
-        j++;
-        i++;
-    }
+        value[j++] = more[i++];
     value[j] = '\0';
-    //printf("%s\n", value);
     add_export((*base)->tmp_env, folder, value);
-    //ft_env(base);
+    ft_env(base);
     free(folder);
     free(value);
 }
