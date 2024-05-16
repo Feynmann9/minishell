@@ -6,7 +6,7 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/21 17:10:22 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/14 14:13:01 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/05/16 06:21:38 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ srcs/ft_strtrim.c $\
 srcs/ft_toupper.c
 
 SRCS_AJT = srcs/ajout/ft_absolute_nbr.c $\
+srcs/ajout/ft_alt_split.c $\
 srcs/ajout/ft_atoi_base.c $\
 srcs/ajout/ft_atol.c $\
 srcs/ajout/ft_base_lenght.c $\

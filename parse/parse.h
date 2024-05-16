@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/15 04:17:28 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/16 04:53:22 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,17 @@
 
 #include "../includes/minishell.h"
 
-typedef struct s_cmd
+typedef struct s_prompt
 {
-	char			*cmd; //cat grep
-	char			*flag; //-e
-	char			**output;
+	char			**env;
+	char			**cmd; //[0]cat [1]-e [2]etc...
+	char			**infiles;
+	char			**outfiles;
 	struct s_cmd	*next;
-}					t_cmp;
+}					t_prompt;
 
-//		test_btree.c		//
-
-typedef struct s_btree
-{
-	struct s_btree	*left;
-	struct s_btree	*right;
-	void			*item;
-}					t_btree;
-
-void	btree_apply_prefix(t_btree *root, void (*applyf)(void *));
-t_btree	*btree_create_node(void *item);
+//		parse_env.c		//
+void	ft_parse_prompt(t_prompt *prompt);
+void	ft_print_cmd(char **cmd);
 
 #endif

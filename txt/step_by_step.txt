@@ -32,3 +32,6 @@ format :
 
     15/05/2024 gmarquis "first test binary trees"
         Premier teste sur arbre binaire.
+
+    16/05/2024 gmarquis "parse de l'env et ft_alt_split"
+        t'entative de decoupage de split sans suppretion de char set
