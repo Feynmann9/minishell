@@ -47,3 +47,6 @@ format :
 
     16/05/2024 gmarquis "je rentre bosser a domicile"
         taff en cours sur ft_alt_split.
+
+    17/05/2024 matran-d "ca me pete les burns"
+        l'exec me pete les couilles, et faut que je refasse certain buildin
