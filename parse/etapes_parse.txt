@@ -1,0 +1,43 @@
+
+Les etapes du parsing
+
+    -Lire la commande de l'utilisateur
+        Utiliser readline pour lire les commandes utilisateur
+        Gérer l'historique des commandes avec add_history
+
+    -Tokenisation
+        Diviser la ligne de commande en tokens en respectant les espaces,
+            (PLUS TARD : les guillemets, et les caractères d'échappement)
+
+    -Séparer la commande et ses arguments
+
+    -Support des commandes de base
+        Commandes simples: ls, echo, pwd, etc.
+            (internes (implémentées directement dans le shell))
+            (externes (programmes situés dans le système de fichiers))
+    
+    -Gestion des redirections d'entrée/sortie (<, >, >>)
+        Rediriger l'entrée standard (stdin) depuis un fichier (<)
+        Rediriger la sortie standard (stdout) vers un fichier (>)
+        Ajouter à un fichier (>>)
+
+    -Gestion des pipes (|)
+        Permet de chaîner plusieurs commandes ensemble via des pipes
+
+    -Gestion des guillemets (" et ')
+        Permet l'utilisation de guillemets simples (')
+            et doubles (") pour grouper des arguments contenant des espaces
+            ou des caractères spéciaux.
+        Les guillemets simples empêchent l'interprétation des caractères
+            spéciaux à l'intérieur.
+        Les guillemets doubles permettent l'expansion des variables
+            d'environnement et des caractères d'échappement
+
+    -Gestion des variables d'environnement
+        Permet l'expansion des variables d'environnement ($HOME, $PATH)
+
+    -Gestion des caractères d'échappement (\)
+        Permet l'utilisation du caractère d'échappement \ pour traiter
+            les caractères spéciaux comme des caractères littéraux
+
+    -Gestion des Erreurs

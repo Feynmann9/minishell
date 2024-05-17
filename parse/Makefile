@@ -6,12 +6,12 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/16 23:11:13 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/05/17 02:57:09 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = srcs/main.c $\
-srcs/parse_env.c
+srcs/input_reading.c
 
 LIBFT_PATH = ../includes/libft/
 
