@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/16 16:06:59 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/17 17:15:59 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <dirent.h>
 # include <string.h>
 # include <errno.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 //	struct pour recuperer env et comme ca on peut modifier
 typedef struct s_env
