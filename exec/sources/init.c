@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/16 16:08:53 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/17 17:12:50 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,6 @@ void	init(t_base **tmp_base, t_env *ev)
     }
     else
         exit(EXIT_FAILURE);
-}
-
-void	init_env(t_env **ev, char **env)
-{
-    char    **tmp;
-    char    **new;
-
-    tmp = env;
-    while (*tmp)
-    {
-        new = ft_split(*tmp, '=', '\n');
-        if (new && new[0] && new[1])
-            new_env(ev, new[0], new[1]);
-        tmp++;
-    }
 }
 
 char	*get_env_value(t_env *env, char *name)
@@ -71,9 +56,13 @@ void	builtin(t_base **base, char *cmd, char *more)
         if (strcmp(cmd, "echo") == 0)
             printf("%s\n", more);
         if (strcmp(cmd, "export") == 0)
+        {
+            //printf("%s\n", more);
             ft_export(base, more);
+        }
         if (strcmp(cmd, "unset") == 0)
         {
+            //printf("%s\n", more);
             ft_unset(base, more);
             ft_env(base);
         }

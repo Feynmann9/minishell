@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+         #
+#    By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/16 14:59:01 by matran-d         ###   ########.fr        #
+#    Updated: 2024/05/17 16:04:07 by jpp              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ sources/cd.c $\
 sources/env.c $\
 sources/pwd.c $\
 sources/export.c $\
-sources/unset.c
+sources/unset.c 
 
 LIBFT_PATH = ../includes/libft/
 
@@ -45,7 +45,7 @@ $(OBJS_DIR)%.o : sources/%.c $(LIBFT_PATH)libft_bns.a
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME) : $(OBJS_PREF) $(LIBFT_PATH)libft_bns.a 
-	$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_PATH)libft_bns.a
+	$(CC) $(CFLAGS) $^ -o $@ -lreadline $(LIBFT_PATH)libft_bns.a
 
 clean :
 	@make clean -C $(LIBFT_PATH)

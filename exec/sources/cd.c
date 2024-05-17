@@ -12,4 +12,5 @@ void    ft_cd(t_base **base)
     }
     else
         ft_printf("erreur\n");
+    //ft_printf("%s\n", cd);
 }
