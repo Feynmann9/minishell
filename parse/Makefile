@@ -6,7 +6,7 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/17 02:57:09 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/05/17 14:48:04 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ NAME = parse
 MK = mkdir
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP
+LDFLAGS = -L/usr/lib -lreadline
+CPPFLAGS = -I/usr/include/readline
 RM = rm -rf
 
 OBJS_DIR = objs/
@@ -36,10 +38,10 @@ bonus : libft $(NAME)
 
 $(OBJS_DIR)%.o : srcs/%.c $(LIBFT_PATH)libft_bns.a 
 	$(MK) -p $(OBJS_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 $(NAME) : $(OBJS_PREF) $(LIBFT_PATH)libft_bns.a 
-	$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_PATH)libft_bns.a
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) $(LIBFT_PATH)libft_bns.a
 
 clean :
 	@make clean -C $(LIBFT_PATH)

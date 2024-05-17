@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/17 03:23:01 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/17 17:46:43 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 # define PARSE_H
 
 #include "../includes/minishell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 typedef struct s_prompt
 {
+	int				fd;
+	char			*history_file;
+	char			*input;
 	char			**cmd; //[0]cat [1]-e [2]etc...
 	char			**infiles;
 	char			**outfiles;

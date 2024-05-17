@@ -47,3 +47,14 @@ format :
 
     16/05/2024 gmarquis "je rentre bosser a domicile"
         taff en cours sur ft_alt_split.
+
+    17/05/2024 gmarquis "fin des tests et definition des etapes"
+        Suppretion de ft_alt_joint apres fin de test
+        Nettoyage des fichiers de travail
+        Definnition des etapes du parse
+        
+    17/05/2024 gmarquis "historique fonctionnel"
+        Gestion d'un historique fonctionnel avec fonctionnaliter suivante:
+        Ajout a l'historique
+        Affichage de l'historique
+        clean de l'historique
