@@ -61,3 +61,8 @@ format :
         Ajout a l'historique
         Affichage de l'historique
         clean de l'historique
+
+    18/05/2024  gmarquis "tokenisation fonctionnel"
+        Reduction du fonctionement de l'historique a la demande de la mandatory
+        Ajout de la tokenisation ' ' a ajouter dans les commande
+        Norme a faire

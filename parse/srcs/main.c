@@ -6,69 +6,175 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/17 18:05:10 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/18 07:48:39 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parse.h"
 
-void ft_load_history(const char *filename)
+t_infos	ft_init_infos()
 {
-	read_history(filename);
+	t_infos	s_infos;
+
+	s_infos.history_file = ".minishell_history";
+	s_infos.input = NULL;
+	return (s_infos);
 }
 
-void ft_save_history(const char *filename)
+t_token	*ft_new_token(token_type type, char *value)
 {
-	write_history(filename);
+	t_token	*token;
+
+	token = malloc(sizeof(t_token));
+	if (!token)
+		ft_exit(2, "Error: echec malloc token.\n;");
+	token->type = type;
+	token->value = ft_strdup(value);
+	token->next = NULL;
+	return (token);
 }
 
-void ft_print_history()
+void	ft_add_token(t_token **tokens, token_type type, char *value)
 {
-	HIST_ENTRY	**hist_list = history_list();
-	int			i;
+	t_token	*new = ft_new_token(type, value);
+	t_token	*temp = *tokens;
 
-	if (hist_list)
+	if (*tokens == NULL)
+		*tokens = new;
+	else
 	{
-		i = 0;
-		while (hist_list[i])
-		{
-			ft_printf("%d: %s\n", i + 1, hist_list[i]->line);
-			i++;
-		}
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new;
 	}
 }
 
-void	ft_add_history(t_prompt *prompt)
+void	ft_free_tokens(t_token *tokens)
 {
-	prompt->history_file = ".minishell_history";
-	add_history(prompt->input);
+	t_token	*temp;
+
+	while (tokens)
+	{
+		temp = tokens;
+		tokens = tokens->next;
+		free(temp->value);
+		free(temp);
+	}
 }
 
-char	*ft_read_input(t_prompt *prompt)
+void	ft_print_tokens(t_token *tokens)
 {
-	ft_add_history(prompt);
-	if (!ft_strncmp(prompt->input, "print history", 14))
-		ft_print_history();
-	if (!ft_strncmp(prompt->input, "clear history", 14))
-		rl_clear_history();
-	return (ft_free_str(prompt->input));
+	while (tokens)
+	{
+		ft_printf("Type: %d, Value: %s\n", tokens->type, tokens->value);
+		tokens = tokens->next;
+	}
+}
+
+t_token	*ft_tokenize(char *input)
+{
+	t_token	*tokens = NULL;
+	char	*current = input;
+	char	buffer[1024];
+	int		buf_index = 0;
+
+	while (*current)
+	{
+		if (isspace(*current))
+			current++;
+		else if (*current == '|')
+		{
+			buffer[buf_index] = '\0';
+			if (buf_index > 0)
+			{
+				ft_add_token(&tokens, TOKEN_ARGUMENT, buffer);
+				buf_index = 0;
+			}
+			ft_add_token(&tokens, TOKEN_PIPE, "|");
+			current++;
+		}
+		else if (*current == '>')
+		{
+			buffer[buf_index] = '\0';
+			if (buf_index > 0)
+			{
+				ft_add_token(&tokens, TOKEN_ARGUMENT, buffer);
+				buf_index = 0;
+			}
+			if (*(current + 1) == '>')
+			{
+				ft_add_token(&tokens, TOKEN_REDIRECT_APPEND, ">>");
+				current += 2;
+			}
+			else
+			{
+				ft_add_token(&tokens, TOKEN_REDIRECT_OUT, ">");
+				current++;
+			}
+		}
+		else if (*current == '<')
+		{
+			buffer[buf_index] = '\0';
+			if (buf_index > 0)
+			{
+				ft_add_token(&tokens, TOKEN_ARGUMENT, buffer);
+				buf_index = 0;
+			}
+			ft_add_token(&tokens, TOKEN_REDIRECT_IN, "<");
+			current++;
+		}
+		else if (*current == '\'' || *current == '"')
+		{
+			char quote = *current;
+			current++;
+			while (*current && *current != quote)
+				buffer[buf_index++] = *current++;
+			if (*current == quote)
+				current++;
+			buffer[buf_index] = '\0';
+			ft_add_token(&tokens, TOKEN_ARGUMENT, buffer);
+			buf_index = 0;
+		}
+		else if (*current == '\\')
+		{
+			current++;
+			if (*current)
+				buffer[buf_index++] = *current++;
+		}
+		else
+			buffer[buf_index++] = *current++;
+	}
+	if (buf_index > 0)
+	{
+		buffer[buf_index] = '\0';
+		ft_add_token(&tokens, TOKEN_ARGUMENT, buffer);
+	}
+	return (tokens);
 }
 
 int main()
 {
-	t_prompt *prompt;
+	t_infos	s_infos;
+	t_token	*tokens;
 
-	prompt = ft_calloc(1, sizeof(prompt));
-
+	s_infos = ft_init_infos();
+//	tokens = ft_init_token();
 	while (1)
 	{
-		prompt->input = readline("minishell> ");
-		if (!prompt->input)
+		s_infos.input = readline("minishell> "); // leak ? utiliser supp.supp
+		if (!s_infos.input)
 			break;
 		else
-			prompt->input = ft_read_input(prompt);
+		{
+			add_history(s_infos.input); // leak ?
+			tokens = ft_tokenize(s_infos.input);
+			s_infos.input = ft_free_str(s_infos.input);
+		}
 	}
-	ft_save_history(prompt->history_file);
-	clear_history();
+	ft_print_tokens(tokens);
+	ft_free_tokens(tokens);
+	rl_clear_history(); // leak ?
 	return (0);
 }
+
+//	ls -l | grep 'foo' > output.txt

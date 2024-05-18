@@ -1,6 +1,6 @@
 #include "../exec.h"
 
-void ft_unset(t_base **base, char *more)
+void ft_unset(t_base **base, char *more) // Attention pd utilise un char ** pour le cas ou il y a plusieurs argument (Charles a dit)
 {
     t_env *current = (*base)->tmp_env;
 

@@ -1,0 +1,21 @@
+
+valgrind --suppressions=supp.supp ./parse
+
+{
+   minishell_readline_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect,possible
+   fun:readline
+}
+{
+   minishell_add_history_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect,possible
+   fun:add_history
+}
+{
+   minishell_rl_clear_history_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect,possible
+   fun:rl_clear_history
+}

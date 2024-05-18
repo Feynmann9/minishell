@@ -3,20 +3,16 @@
 [-] en cour
 [V] fait
 [T] tests en cour
-[S] securiser
+[S] Leak et securiter
 
 Les etapes du parsing:
 
-    -[-]  Lire la commande de l'utilisateur
-        [V]  Utiliser readline pour lire les commandes utilisateur
-        [-]  Gérer l'historique des commandes avec des equivalent a add_history, ect...
-            [-] Creer ou entre dans le fichier .minishell_history
-            [O] Ajouter l'input a .minishell_history
-            [O] Pouvoir afficher le contenue de .minishell_history
-            [O] Pouvoir clean le contenue de .minishell_history
+    -[T]  Lire la commande de l'utilisateur
+        [T]  Utiliser readline pour lire les commandes utilisateur
+        [T]  Gérer l'historique des commandes avec add_history et rl_clear_history.
 
-    -Tokenisation
-        [O]  Diviser la ligne de commande en tokens en respectant les espaces,
+    -[-]    Tokenisation
+        [-]  Diviser la ligne de commande en tokens en respectant les espaces,
             (PLUS TARD : les guillemets, et les caractères d'échappement)
 
     -[O]  Séparer la commande et ses arguments
@@ -49,5 +45,7 @@ Les etapes du parsing:
     -[O]  Gestion des caractères d'échappement (\)
         [O]  Permet l'utilisation du caractère d'échappement \ pour traiter
                 les caractères spéciaux comme des caractères littéraux
+
+    -[O]    heredoc (<< bite > outfile)
 
     -[O]  Gestion des Erreurs

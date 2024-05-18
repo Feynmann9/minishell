@@ -1,6 +1,6 @@
 #include "../exec.h"
 
-void ft_export(t_base **base, char *more)
+void ft_export(t_base **base, char *more) // Attention pd utilise un char ** pour le cas ou il y a plusieurs argument (Charles a dit)
 {
     char (*folder) = NULL;
     char (*value) = NULL;
