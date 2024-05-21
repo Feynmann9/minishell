@@ -66,3 +66,8 @@ format :
         Reduction du fonctionement de l'historique a la demande de la mandatory
         Ajout de la tokenisation ' ' a ajouter dans les commande
         Norme a faire
+
+    21/05/2024  gmarquis    "tokenisation en cours d'affinage"
+        Ajout de ft_isspace dans la libft (check si c == '\t' || '\v' || '\t' || '\f')
+        supp.supp fonctionel avec valgrind --suppressions=supp.supp
+        

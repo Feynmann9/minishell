@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:11:44 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/17 02:54:20 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:09:58 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,10 @@ int					ft_countwords(char *str, char set, char set2, char end);
 void				ft_exit(int out, char *message);
 char				*ft_free_str(char *str);
 char				**ft_free_tab2d(char **input);
-int					ft_isnbr(char *input);
 int					ft_isexa(char *code);
 int					ft_isint(char *clean_input);
+int					ft_isnbr(char *input);
+int					ft_isspace(char c);
 char				*ft_memlcpy(char *s, size_t len);
 char				*ft_strndup(char *s, int len);
 void				ft_verif_extention(char *filename, char *exe);

@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/18 07:24:40 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:44:44 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,15 @@ typedef struct s_infos
 {
 	char			*history_file;
 	char			*input;
-//	char			**cmd; //[0]cat [1]-e [2]etc...
-//	char			**infiles;
-//	char			**outfiles;
+	t_token			*tokens;
 }					t_infos;
 
-//		input_reading.c		//
+//		token_utils.c	//
+t_token	*ft_new_token(token_type type, char *value);
+void	ft_add_token(t_token **tokens, token_type type, char *value);
+void	ft_free_tokens(t_token *tokens);
+
+//		tokenize.c		//
+t_token	*ft_tokenize(char *input);
 
 #endif

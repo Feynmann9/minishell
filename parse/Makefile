@@ -6,12 +6,13 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/17 14:48:04 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/05/21 19:22:21 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = srcs/main.c $\
-srcs/input_reading.c
+srcs/token_utils.c $\
+srcs/tokenize.c
 
 LIBFT_PATH = ../includes/libft/
 
