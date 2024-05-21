@@ -70,4 +70,8 @@ format :
     21/05/2024  gmarquis    "tokenisation en cours d'affinage"
         Ajout de ft_isspace dans la libft (check si c == '\t' || '\v' || '\t' || '\f')
         supp.supp fonctionel avec valgrind --suppressions=supp.supp
+
+    21/05/2024 matran-d "builtin cd qui commence a etre bien, je suis assez content de moi"
+        il faut que je verifie bien tout les builtin,
+        mais ca commence a etre bien je crois...
         

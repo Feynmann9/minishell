@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/17 17:12:50 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/21 21:10:15 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	builtin(t_base **base, char *cmd, char *more)
         if (strcmp(cmd, "pwd") == 0)
             ft_pwd(base);
         if (strcmp(cmd, "cd") == 0)
-            ft_cd(base);
+            ft_cd(base, NULL);
         if (strcmp(cmd, "env") == 0)
             ft_env(base);
     }
@@ -66,6 +66,8 @@ void	builtin(t_base **base, char *cmd, char *more)
             ft_unset(base, more);
             ft_env(base);
         }
+        if (strcmp(cmd, "cd") == 0)
+            ft_cd(base, more);
         //else
         //    printf("erreur\n");
     }

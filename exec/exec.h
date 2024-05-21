@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/17 17:15:59 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/21 21:09:44 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env	*ft_lstnew_env(char *name_folder, char *value_folder);
 
 //			cd.c
-void	ft_cd(t_base **base);
+void	ft_cd(t_base **base, const char *folder);
+void set_env_value(t_env *env, const char *name, const char *value);
 
 //			pwd.c
 void	ft_pwd(t_base **base);
