@@ -4,11 +4,11 @@ format :
     <date> <auteur> <"nom de commit">
         <description du taff effectuer>
 
-    12/05/2024 gmarquis "add libft gmarquis && modiff Makefile | dependencies du Makefile a faire"
+    12/05/2024  gmarquis    "add libft gmarquis && modiff Makefile | dependencies du Makefile a faire"
         Ajout de la libft gmarquis,
         Retouche du Makefile(ajout de dossier pour les .o et dependence de compilation(libf_bns.a) des .c).
 
-    12/05/2024 gmarquis "rangement avant debut de projet"
+    12/05/2024  gmarquis    "rangement avant debut de projet"
         Modif de la libft :
             ajout de ft_free_str.c (free un char * et return NULL),
             modif de ft_free_tab2d.c (free un char ** et return NULL),
@@ -20,23 +20,23 @@ format :
         Ajout dans txt de makefile_dependencies.txt
         Ajout d'un lien dans resources.txt
     
-    14/05/2024 gmarquis "ajout des dependences"
+    14/05/2024  gmarquis    "ajout des dependences"
         Ajout des dependences (.d) dans les makefile minishell et libft.
 
-    14/05/2024 gmarquis "modification de l'architecture"
+    14/05/2024  gmarquis    "modification de l'architecture"
         Modification de l'architecture du projet:
             separation en 2 dossier exec et parse,
             ajout de leurs .h, Makefile et sous dossiers pour .c (sources et srcs),
             modification du Makefile d'origine pour declacher les 2 autres,
         supretion de makefile_dependencies.txt.
 
-    15/05/2024 gmarquis "first test binary trees"
+    15/05/2024  gmarquis    "first test binary trees"
         Premier teste sur arbre binaire.
 
-    16/05/2024 gmarquis "parse de l'env et ft_alt_split"
+    16/05/2024  gmarquis    "parse de l'env et ft_alt_split"
         t'entative de decoupage de split sans suppretion de char set
 
-    16/05/2024 matran-d "il manque 'exit' builtin"
+    16/05/2024  matran-d    "il manque 'exit' builtin"
         cd -> il manque les redirections, jai fait que 'cd' simple
         env -> fait
         export -> fait
@@ -45,24 +45,24 @@ format :
         echo -> fait, jai fait que le simple 'echo'
         exit -> il faut que je le fasse
 
-    16/05/2024 gmarquis "je rentre bosser a domicile"
+    16/05/2024  gmarquis    "je rentre bosser a domicile"
         taff en cours sur ft_alt_split.
 
-    17/05/2024 matran-d "ca me pete les burns"
+    17/05/2024  matran-d    "ca me pete les burns"
         l'exec me pete les couilles, et faut que je refasse certain buildin
 
-    17/05/2024 gmarquis "fin des tests et definition des etapes"
+    17/05/2024  gmarquis    "fin des tests et definition des etapes"
         Suppretion de ft_alt_joint apres fin de test
         Nettoyage des fichiers de travail
         Definnition des etapes du parse
         
-    17/05/2024 gmarquis "historique fonctionnel"
+    17/05/2024  gmarquis    "historique fonctionnel"
         Gestion d'un historique fonctionnel avec fonctionnaliter suivante:
         Ajout a l'historique
         Affichage de l'historique
         clean de l'historique
 
-    18/05/2024  gmarquis "tokenisation fonctionnel"
+    18/05/2024  gmarquis    "tokenisation fonctionnel"
         Reduction du fonctionement de l'historique a la demande de la mandatory
         Ajout de la tokenisation ' ' a ajouter dans les commande
         Norme a faire
@@ -71,7 +71,12 @@ format :
         Ajout de ft_isspace dans la libft (check si c == '\t' || '\v' || '\t' || '\f')
         supp.supp fonctionel avec valgrind --suppressions=supp.supp
 
-    21/05/2024 matran-d "builtin cd qui commence a etre bien, je suis assez content de moi"
+    21/05/2024  matran-d    "builtin cd qui commence a etre bien, je suis assez content de moi"
         il faut que je verifie bien tout les builtin,
         mais ca commence a etre bien je crois...
         
+    23/05/2024  gmarquis    "finalisation de la tokenization et gestion des signaux faite"
+        Tokenization finaliser les ligne sont decouper en char ** (ex: ls -l donne valeur[0] = ls, valeur[1] = -l)
+        Gestion des signaux 'Ctrl+Z' (SIGTSTP) et 'Ctrl+\' (SIGQUIT), 'Ctrl+C' (SIGINT),
+        (L'affichage d'erreur dans sighandler.c pour sa est faux),
+        Norme sauf tokenize.c,

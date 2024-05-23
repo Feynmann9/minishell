@@ -7,15 +7,15 @@
 
 Les etapes du parsing:
 
-    -[T]  Lire la commande de l'utilisateur
-        [T]  Utiliser readline pour lire les commandes utilisateur
-        [T]  Gérer l'historique des commandes avec add_history et rl_clear_history.
+    -[S]  Lire la commande de l'utilisateur
+        [S]  Utiliser readline pour lire les commandes utilisateur
+        [S]  Gérer l'historique des commandes avec add_history et rl_clear_history.
 
-    -[-]    Tokenisation
-        [-]  Diviser la ligne de commande en tokens en respectant les espaces,
+    -[T]    Tokenisation
+        [T]  Diviser la ligne de commande en tokens en respectant les espaces,
             (PLUS TARD : les guillemets, et les caractères d'échappement)
 
-    -[O]  Séparer la commande et ses arguments
+    -[T]  Séparer la commande et ses arguments
 
     -[O]  Support des commandes de base
         [O]  Commandes simples: ls, echo, pwd, etc.
@@ -49,3 +49,8 @@ Les etapes du parsing:
     -[O]    heredoc (<< bite > outfile)
 
     -[O]  Gestion des Erreurs
+
+    -[S]    Gestion des signaux
+        [S] Ctrl+Z a ignorer
+        [S] Ctrl+\ a ignorer
+        [S] Ctrl+C interrompe la ligne actuelle et affiche une nouvelle invite sans quitter le shell

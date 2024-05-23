@@ -6,13 +6,13 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:21:22 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/21 19:40:49 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:11:16 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parse.h"
 
-t_token	*ft_new_token(token_type type, char *value)
+t_token	*ft_new_token(t_type type, char *value)
 {
 	t_token	*token;
 
@@ -20,12 +20,12 @@ t_token	*ft_new_token(token_type type, char *value)
 	if (!token)
 		ft_exit(2, "Error: echec malloc token.\n;");
 	token->type = type;
-	token->value = ft_strdup(value);
+	token->value = ft_split(value, ' ', ' ');
 	token->next = NULL;
 	return (token);
 }
 
-void	ft_add_token(t_token **tokens, token_type type, char *value)
+void	ft_add_token(t_token **tokens, t_type type, char *value)
 {
 	t_token	*new;
 	t_token	*tmp;
@@ -42,15 +42,18 @@ void	ft_add_token(t_token **tokens, token_type type, char *value)
 	}
 }
 
-void	ft_free_tokens(t_token *tokens)
+void	ft_free_tokens(t_token **tokens)
 {
 	t_token	*tmp;
+	t_token	*swap;
 
-	while (tokens)
+	tmp = *tokens;
+	while (tmp)
 	{
-		tmp = tokens->next;
-		free(tokens->value);
-		free(tokens);
-		tokens = tmp;
+		swap = tmp->next;
+		ft_free_tab2d(tmp->value);
+		free(tmp);
+		tmp = swap;
 	}
+	*tokens = NULL;
 }

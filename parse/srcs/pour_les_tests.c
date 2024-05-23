@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   pour_les_tests.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 19:08:14 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/23 07:56:09 by gmarquis         ###   ########.fr       */
+/*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
+/*   Updated: 2024/05/23 10:10:07 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "../parse.h"
 
-int	ft_isspace(char c)
+void	ft_print_tokens(t_token *tokens)
 {
-	if (c == '\f' || c == '\v' || c == '\n' || c == '\t')
-		return (1);
-	return (0);
+	int	i;
+
+	while (tokens)
+	{
+		i = 0;
+		ft_printf("Type: %d, ", tokens->type);
+		ft_printf("Value: %s", tokens->value[0]);
+		while (tokens->value[++i])
+			ft_printf(", %s", tokens->value[i]);
+		ft_printf("\n");
+		tokens = tokens->next;
+	}
 }
