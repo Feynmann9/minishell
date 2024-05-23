@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/23 18:57:56 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/23 23:26:11 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_cmd
 void	init(t_base **tmp_base, t_env *ev);
 void	init_env(t_env **ev, char **env);
 char	*get_env_value(t_env *env, char *name);
-void	builtin(t_base **base, char *cmd, char *more);
+void	builtin(t_base **base, char *cmd, char *more, char **argv, char **env);
 
 //			main.c			//
 void	new_env(t_env **ev, char *name_folder, char *value_folder);
@@ -83,6 +83,6 @@ void	ft_unset(t_base **base, char *more);
 
 //			path.c
 int     path_or_notpath(char *cmd);
-void ft_path(char *cmd);
+void ft_path(t_base **base, char *cmd, char **argv, char **env);
 
 #endif

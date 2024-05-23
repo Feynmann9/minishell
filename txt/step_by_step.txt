@@ -80,3 +80,6 @@ format :
         Gestion des signaux 'Ctrl+Z' (SIGTSTP) et 'Ctrl+\' (SIGQUIT), 'Ctrl+C' (SIGINT),
         (L'affichage d'erreur dans sighandler.c pour sa est faux),
         Norme sauf tokenize.c,
+
+    23/05/2024 matran-d     "il faut que je pige comment recup avec execve et acces"
+        Jai travaille quelques minutes et c'est deja bien trop ajd, je vais aller dormir salope

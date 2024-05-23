@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/17 17:18:51 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/23 23:25:35 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int main(int argc, char **argv, char **env)
         char *cmd;
         char *args;
         split_input(input, &cmd, &args);
-        builtin(&base, cmd, args);
+        builtin(&base, cmd, args, argv, env);
         free(input);
     }
     //builtin(&base, argv[1], argv[2]);
