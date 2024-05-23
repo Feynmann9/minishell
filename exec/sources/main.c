@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/23 23:25:35 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/23 23:48:58 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int main(int argc, char **argv, char **env)
     t_env *ev = NULL;
     t_base *base = NULL;
     char *input;
-    (void)argv;
+    //(void)argv;
     if (argc > 3)
     {
         ft_printf("\033[32mToo many argc, sorry\033[0m\n");
