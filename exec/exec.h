@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/21 21:09:44 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/23 18:57:56 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,9 @@ void    add_export(t_env *ev, char *name_folder, char *value_folder);
 
 //			unset.c
 void	ft_unset(t_base **base, char *more);
+
+//			path.c
+int     path_or_notpath(char *cmd);
+void ft_path(char *cmd);
 
 #endif
