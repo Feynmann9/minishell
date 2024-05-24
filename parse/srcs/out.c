@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pour_les_tests.c                                   :+:      :+:    :+:   */
+/*   out.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/23 15:15:09 by gmarquis         ###   ########.fr       */
+/*   Created: 2024/05/23 15:14:56 by gmarquis          #+#    #+#             */
+/*   Updated: 2024/05/23 15:15:23 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parse.h"
 
-void	ft_print_tokens(t_token *tokens)
+void	ft_quit(t_infos *s_infos, char *message, int out)
 {
-	int	i;
-
-	while (tokens)
-	{
-		i = 0;
-		ft_printf("Type: %d, ", tokens->type);
-		ft_printf("Value: %s", tokens->value[0]);
-		while (tokens->value[++i])
-			ft_printf(", %s", tokens->value[i]);
-		ft_printf("\n");
-		tokens = tokens->next;
-	}
+	ft_free_str(s_infos->buffer);
+	ft_free_tokens(&(s_infos->tokens));
+	ft_exit(out, message);
 }

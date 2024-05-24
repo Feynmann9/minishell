@@ -10,6 +10,7 @@ Les etapes du parsing:
     -[S]  Lire la commande de l'utilisateur
         [S]  Utiliser readline pour lire les commandes utilisateur
         [S]  Gérer l'historique des commandes avec add_history et rl_clear_history.
+        [S]  Ctrl+D termine minishell et affiche "exit\n"
 
     -[T]    Tokenisation
         [T]  Diviser la ligne de commande en tokens en respectant les espaces,
@@ -41,6 +42,9 @@ Les etapes du parsing:
 
     -[O]  Gestion des variables d'environnement
             Permet l'expansion des variables d'environnement ($HOME, $PATH)
+            [-]    > echo $HOME    = /home/gmarquis
+            [-]    > echo "$HOME"  = /home/gmarquis
+            [V]    > echo '$HOME'  = $HOME
 
     -[O]  Gestion des caractères d'échappement (\)
         [O]  Permet l'utilisation du caractère d'échappement \ pour traiter

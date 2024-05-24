@@ -52,7 +52,7 @@ format :
         l'exec me pete les couilles, et faut que je refasse certain buildin
 
     17/05/2024  gmarquis    "fin des tests et definition des etapes"
-        Suppretion de ft_alt_joint apres fin de test
+        Suppretion de ft_alt_split apres fin de test
         Nettoyage des fichiers de travail
         Definnition des etapes du parse
         
@@ -80,3 +80,11 @@ format :
         Gestion des signaux 'Ctrl+Z' (SIGTSTP) et 'Ctrl+\' (SIGQUIT), 'Ctrl+C' (SIGINT),
         (L'affichage d'erreur dans sighandler.c pour sa est faux),
         Norme sauf tokenize.c,
+
+    23/05/2024  gmarquis    "les variable d'environemant"
+        Ajout de 'Ctrl+D' (EOF),
+        Norme de tokenize et rearangement de fichier,
+        Gestion des variable d'environnement en cours
+            '$' gerer
+            "$" a faire
+             $  a faire

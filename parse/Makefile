@@ -6,15 +6,17 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/23 10:27:55 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/05/23 15:29:54 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = srcs/main.c $\
+srcs/out.c $\
 srcs/pour_les_tests.c $\
 srcs/sighandler.c $\
 srcs/token_utils.c $\
-srcs/tokenize.c
+srcs/tokenize.c $\
+srcs/tokenize++.c
 
 LIBFT_PATH = ../includes/libft/
 

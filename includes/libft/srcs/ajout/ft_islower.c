@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pour_les_tests.c                                   :+:      :+:    :+:   */
+/*   ft_islower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/23 15:15:09 by gmarquis         ###   ########.fr       */
+/*   Created: 2024/05/23 16:22:10 by gmarquis          #+#    #+#             */
+/*   Updated: 2024/05/23 16:22:54 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parse.h"
+#include "../../includes/libft.h"
 
-void	ft_print_tokens(t_token *tokens)
+int	ft_isupper(char c)
 {
-	int	i;
-
-	while (tokens)
-	{
-		i = 0;
-		ft_printf("Type: %d, ", tokens->type);
-		ft_printf("Value: %s", tokens->value[0]);
-		while (tokens->value[++i])
-			ft_printf(", %s", tokens->value[i]);
-		ft_printf("\n");
-		tokens = tokens->next;
-	}
+	if (c >= 97 && c <= 122)
+		return (1);
+	return (0);
 }
