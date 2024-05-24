@@ -81,10 +81,10 @@ format :
         (L'affichage d'erreur dans sighandler.c pour sa est faux),
         Norme sauf tokenize.c,
 
-    23/05/2024  gmarquis    "les variable d'environemant"
+    23/05/2024  gmarquis    "taff sur les variable d'environemant"
         Ajout de 'Ctrl+D' (EOF),
         Norme de tokenize et rearangement de fichier,
         Gestion des variable d'environnement en cours
             '$' gerer
             "$" a faire
-             $  a faire
+             $  en cours
