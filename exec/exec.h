@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/23 23:26:11 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/26 18:04:31 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ void	ft_unset(t_base **base, char *more);
 //			path.c
 int     path_or_notpath(char *cmd);
 void ft_path(t_base **base, char *cmd, char **argv, char **env);
+char *find_command(char *cmd, char *path_env);
 
 #endif

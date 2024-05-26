@@ -91,3 +91,6 @@ format :
             '$' gerer
             "$" a faire
              $  en cours
+    
+    26/05/2024 matran-d "ca me casse les couilles, mais ca marche a moitie, donc ca va"
+        "ca me casse les couilles, mais ca marche a moitie, donc ca va"
