@@ -6,7 +6,7 @@ void	ft_pwd(t_base **base)
 
 	pwd = get_env_value((*base)->tmp_env, "PWD");
 	if (pwd != NULL)
-		printf("%s\n", pwd);
+		ft_printf("%s\n", pwd);
 	else
-		printf("erreur\n");
+		ft_printf("commande introuvable\n");
 }

@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/23 23:27:08 by jpp              ###   ########.fr       */
+/*   Updated: 2024/05/29 18:15:04 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,14 @@ void	builtin(t_base **base, char *cmd, char *more, char **argv, char **env)
     if (more != NULL)
     {
         if (strcmp(cmd, "echo") == 0)
-            printf("%s\n", more);
+            ft_printf("%s\n", more);
         if (strcmp(cmd, "export") == 0)
-        {
-            //printf("%s\n", more);
             ft_export(base, more);
-        }
         if (strcmp(cmd, "unset") == 0)
-        {
-            //printf("%s\n", more);
             ft_unset(base, more);
-            ft_env(base);
-        }
         if (strcmp(cmd, "cd") == 0)
             ft_cd(base, more);
         else if (path_or_notpath(cmd))
             ft_path(base, cmd, argv, env);
-        //else
-        //    printf("erreur\n");
     }
 }

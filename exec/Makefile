@@ -6,7 +6,7 @@
 #    By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/26 16:46:51 by jpp              ###   ########.fr        #
+#    Updated: 2024/05/29 18:09:39 by jpp              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ NAME = exec
 
 MK = mkdir
 CC = cc
-CFLAGS = -Wall -Wextra -MMD -MP
+CFLAGS = -Wall -Wextra -Werror -MMD -MP
 RM = rm -rf
 
 OBJS_DIR = objs/

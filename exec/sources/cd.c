@@ -30,36 +30,19 @@ void    ft_cd(t_base **base, const char *folder)
     char cwd[1000];
 
     if (folder == NULL)
-    {
         cd = get_env_value((*base)->tmp_env, "HOME");
-        //(*base)->tmp_env->name_folder = "HOME";
-        //(*base)->tmp_env->value_folder = cd;
-    }
     if (folder != NULL)
-    {
         cd = ft_strdup(folder);
-    }
-    //else
-    //    ft_printf("erreur\n");
 
     if (chdir(cd) != 0)
-    {
-        printf("erreur chdir\n");
-    }
+        ft_printf("commande introuvable\n");
     else
     {
         if (getcwd(cwd, sizeof(cwd)) != NULL)
-        {
-            //printf("Le rep de travail courant est : %s\n", cwd);
             set_env_value((*base)->tmp_env, "PWD", cwd);
-        }
         else
-        {
-            //printf("Le rep de travail courant est : %s\n", cwd);
-            printf("erreur finish\n");
-        }
+            ft_printf("commande introuvable\n");
     }
-    //printf("chdir = %s\n", cd);
 }
 
 //utiliser chdir pour changer de folder ca permet de le faire auto

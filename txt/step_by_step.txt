@@ -94,3 +94,13 @@ format :
     
     26/05/2024 matran-d "ca me casse les couilles, mais ca marche a moitie, donc ca va"
         "ca me casse les couilles, mais ca marche a moitie, donc ca va"
+    
+    29/05/2021 matran-d "jai clean un peu tout"
+        cd -> c bon
+        pwd -> c bon
+        export -> c bon
+        unset -> c bon
+        env -> c bon
+        ls -> c bon
+        cat -> ca marche pas
+        apres je sais pas quoi d'autre tester pour le path

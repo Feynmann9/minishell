@@ -20,9 +20,6 @@ void ft_export(t_base **base, char *more) // Attention pd utilise un char ** pou
         value[j++] = more[i++];
     value[j] = '\0';
     add_export((*base)->tmp_env, folder, value);
-    ft_env(base);
-    //free(folder);
-    //free(value);
 }
 
 void    add_export(t_env *ev, char *name_folder, char *value_folder)
