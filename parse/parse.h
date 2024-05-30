@@ -6,12 +6,16 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/24 05:13:49 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:36:57 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 64
+# endif
 
 # include "../includes/minishell.h"
 # include <ctype.h>
@@ -24,15 +28,14 @@
 typedef enum s_type
 {
 	TOKEN_COMMAND,
-	TOKEN_ARGUMENT,
-	TOKEN_PIPE,
-	TOKEN_REDIRECT_IN,
-	TOKEN_REDIRECT_OUT,
-	TOKEN_REDIRECT_APPEND,
-	TOKEN_QUOTE,
-	TOKEN_ESCAPE,
-	TOKEN_ENV,
-	TOKEN_UNKNOWN
+	TOKEN_PIPE,				//	|
+	TOKEN_REDIRECT_IN,		//	<
+	TOKEN_HEREDOC,			//	<<
+	TOKEN_REDIRECT_OUT,		//	>
+	TOKEN_REDIRECT_APPEND,	//	>>
+	TOKEN_QUOTE,			//	''
+	TOKEN_D_QUOTE,			//	""
+	TOKEN_ENV,				//	$
 }					t_type;
 
 typedef struct s_token
@@ -47,40 +50,50 @@ typedef struct s_infos
 	char			**envp;
 	char			*history_file;
 	char			*input;
-	char			*buffer;
 	t_token			*tokens;
 }					t_infos;
 
+typedef struct s_tokenizer
+{
+	char	*input;
+	char	*buffer;
+	char	*new_buffer;
+	char	op[2];
+	int		buffer_size;
+	int		i;
+	int		j;
+	char	quote_char;
+	t_type	current_type;
+}			t_tokenizer;
+
+//		init.c				//
+void	ft_init_tokenizer(t_tokenizer *tok, t_infos *infos);
+t_infos	ft_init_infos(char **envp);
+
 //		out.c				//
-void				ft_quit(t_infos *s_infos, char *message, int out);
+void	ft_free_tokens(t_token **tokens);
+void	ft_quit(t_infos *s_infos, char *message, int out);
 
 //		pour_les_tests.c	//
-void				ft_print_tokens(t_token *tokens);
+void	ft_print_tokens(t_token *tokens);
 
 //		sighandler.c		//
-void				ft_handle_sigint(int sig);
-void				ft_sighandler(void);
+void	ft_handle_sigint(int sig);
+void	ft_sighandler(void);
 
 //		token_utils.c		//
-int					ft_handle_redirect_in(t_infos *s_infos, char *buffer,
-						int *buf_index, int i);
-int					ft_handle_redirect_out(t_infos *s_infos, char *buffer,
-						int *buf_index, int i);
-int					ft_handle_pipe(t_infos *s_infos, int *buf_index, int i);
+t_token	*ft_new_token(t_type type, char *value);
+void	ft_add_token(t_token **tokens, t_type type, char *value);
+void	ft_add_token_from_buffer(t_infos *infos, t_tokenizer *tok, int *j);
+void	ft_expand_buffer(t_tokenizer *tok);
 
 //		tokenize.c			//
-t_token				*ft_new_token(t_type type, char *value);
-void				ft_add_token(t_token **tokens, t_type type, char *value);
-void				ft_free_tokens(t_token **tokens);
-int					ft_process_char(t_infos *s_infos, int *buf_index, int i);
-void				ft_tokenize(t_infos *s_infos);
+t_type	ft_get_token_type(char *str);
+void	ft_tokenize(t_infos *s_infos);
 
 //		tokenize++.c		//
-int					ft_handle_double_quote(t_infos *s_infos, char *buffer,
-						int *buf_index, int i);
-int					ft_handle_single_quote(t_infos *s_infos, char *buffer,
-						int *buf_index, int i);
-int					ft_handle_env_var(t_infos *s_infos, char *buffer,
-						int *buf_index, int i);
+char	*ft_expand_env_var(char *str, char **envp);
+void	ft_handle_quote(t_tokenizer *tok);
+void	ft_handle_env_var(t_tokenizer *tok, t_infos *infos);
 
 #endif

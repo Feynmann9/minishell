@@ -17,40 +17,31 @@ Les etapes du parsing:
             (PLUS TARD : les guillemets, et les caractères d'échappement)
 
     -[T]  Séparer la commande et ses arguments
-
-    -[O]  Support des commandes de base
-        [O]  Commandes simples: ls, echo, pwd, etc.
-                (internes (implémentées directement dans le shell))
-                (externes (programmes situés dans le système de fichiers))
     
-    -[O]  Gestion des redirections d'entrée/sortie (<, >, >>)
-        [O]  Rediriger l'entrée standard (stdin) depuis un fichier (<)
-        [O]  Rediriger la sortie standard (stdout) vers un fichier (>)
-        [O]  Ajouter à un fichier (>>)
+    -[T]  Gestion des redirections d'entrée/sortie (<, >, >>)
+        [T]  Rediriger l'entrée standard (stdin) depuis un fichier (<)
+        [T]  Rediriger la sortie standard (stdout) vers un fichier (>)
+        [T]  Ajouter à un fichier (>>)
 
-    -[O]  Gestion des pipes (|)
-        [O]  Permet de chaîner plusieurs commandes ensemble via des pipes
+    -[T]  Gestion des pipes (|)
+        [T]  Permet de chaîner plusieurs commandes ensemble via des pipes
 
-    -[O]  Gestion des guillemets (" et ')
-        [O]  Permet l'utilisation de guillemets simples (')
+    -[T]  Gestion des guillemets (" et ')
+        [T]  Permet l'utilisation de guillemets simples (')
                 et doubles (") pour grouper des arguments contenant des espaces
                 ou des caractères spéciaux.
-        [O]  Les guillemets simples empêchent l'interprétation des caractères
+        [T]  Les guillemets simples empêchent l'interprétation des caractères
                 spéciaux à l'intérieur.
-        [O]  Les guillemets doubles permettent l'expansion des variables
+        [T]  Les guillemets doubles permettent l'expansion des variables
                 d'environnement et des caractères d'échappement
 
-    -[O]  Gestion des variables d'environnement
+    -[T]  Gestion des variables d'environnement
             Permet l'expansion des variables d'environnement ($HOME, $PATH)
-            [-]    > echo $HOME    = /home/gmarquis
-            [-]    > echo "$HOME"  = /home/gmarquis
-            [V]    > echo '$HOME'  = $HOME
+            [T]    > echo $HOME    = /home/gmarquis
+            [T]    > echo "$HOME"  = /home/gmarquis
+            [T]    > echo '$HOME'  = $HOME
 
-    -[O]  Gestion des caractères d'échappement (\)
-        [O]  Permet l'utilisation du caractère d'échappement \ pour traiter
-                les caractères spéciaux comme des caractères littéraux
-
-    -[O]    heredoc (<< bite > outfile)
+    -[T]    heredoc (<< bite > outfile)
 
     -[O]  Gestion des Erreurs
 

@@ -6,63 +6,40 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:29:58 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/24 05:05:07 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:29:44 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parse.h"
 
-int ft_is_valid_var_char(char c)
+char	*ft_expand_env_var(char *str, char **envp)
 {
-	return (isalnum(c) || c == '_');
-}
+	char	*var_name;
+	int		i;
 
-int ft_handle_env_var(t_infos *s_infos, char *buffer, int *buf_index, int i)
-{
-    char var_name[256];
-    int var_index = 0;
-
-    i++;
-    while (s_infos->input[i] && ft_is_valid_var_char(s_infos->input[i]))
-        var_name[var_index++] = s_infos->input[i++];
-    var_name[var_index] = '\0';
-    char *var_value = getenv(var_name);
-    if (var_value)
+	var_name = str + 1;
+	i = 0;
+	while (envp[i])
 	{
-        while (*var_value)
-            buffer[(*buf_index)++] = *var_value++;
-    }
-    return i;
+		if (ft_strncmp(envp[i], var_name, ft_strlen(var_name)) == 0
+			&& envp[i][ft_strlen(var_name)] == '=')
+			return (ft_strdup(envp[i] + ft_strlen(var_name) + 1));
+		i++;
+	}
+	return (ft_strdup(str));
 }
 
-int	ft_handle_double_quote(t_infos *s_infos, char *buffer, int *buf_index, int i)
+void	ft_handle_quote(t_tokenizer *tok)
 {
-	char	quote;
-
-	quote = s_infos->input[i];
-	i++;
-	while (s_infos->input[i] && s_infos->input[i] != quote)
-		buffer[(*buf_index)++] = s_infos->input[i++];
-	if (s_infos->input[i] == quote)
-		i++;
-	buffer[*buf_index] = '\0';
-	ft_add_token(&(s_infos->tokens), TOKEN_ARGUMENT, buffer);
-	*buf_index = 0;
-	return (i);
+	if (tok->quote_char)
+		tok->quote_char = 0;
+	else
+		tok->quote_char = tok->input[tok->i];
 }
 
-int	ft_handle_single_quote(t_infos *s_infos, char *buffer, int *buf_index, int i)
+void	ft_handle_env_var(t_tokenizer *tok, t_infos *infos)
 {
-	char	quote;
-
-	quote = s_infos->input[i];
-	i++;
-	while (s_infos->input[i] && s_infos->input[i] != quote)
-		buffer[(*buf_index)++] = s_infos->input[i++];
-	if (s_infos->input[i] == quote)
-		i++;
-	buffer[*buf_index] = '\0';
-	ft_add_token(&(s_infos->tokens), TOKEN_ARGUMENT, buffer);
-	*buf_index = 0;
-	return (i);
+	ft_add_token_from_buffer(infos, tok, &tok->j);
+	tok->current_type = TOKEN_ENV;
+	tok->buffer[tok->j++] = tok->input[tok->i];
 }

@@ -6,11 +6,12 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/23 15:29:54 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/05/30 19:36:36 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = srcs/main.c $\
+SRCS = srcs/init.c $\
+srcs/main.c $\
 srcs/out.c $\
 srcs/pour_les_tests.c $\
 srcs/sighandler.c $\

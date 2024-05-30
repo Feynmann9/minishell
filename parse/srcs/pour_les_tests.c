@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/23 15:15:09 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:21:05 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,3 +27,7 @@ void	ft_print_tokens(t_token *tokens)
 		tokens = tokens->next;
 	}
 }
+/*
+valgrind --suppressions=supp.supp ./parse
+ls -l | grep 'foo' > output.txt << >> < "    foo   1" 'foo 2    ' "'fo  o 3'" '"foo    4"' $HOME '$HOME' "$PWD"
+*/

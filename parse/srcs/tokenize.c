@@ -6,103 +6,81 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 02:56:29 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/24 05:13:03 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:45:29 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parse.h"
 
-t_token	*ft_new_token(t_type type, char *value)
+t_type	ft_get_token_type(char *str)
 {
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
-	if (!token)
-		ft_exit(2, "Error: echec malloc token.\n;");
-	token->type = type;
-	token->value = ft_split(value, ' ', ' ');
-	token->next = NULL;
-	return (token);
+	if (strcmp(str, "|") == 0)
+		return (TOKEN_PIPE);
+	else if (ft_strncmp(str, "<", 1) == 0)
+		return (TOKEN_REDIRECT_IN);
+	else if (ft_strncmp(str, ">", 1) == 0)
+		return (TOKEN_REDIRECT_OUT);
+	else if (ft_strncmp(str, ">>", 2) == 0)
+		return (TOKEN_REDIRECT_APPEND);
+	else if (ft_strncmp(str, "<<", 2) == 0)
+		return (TOKEN_HEREDOC);
+	else if (str[0] == '$')
+		return (TOKEN_ENV);
+	return (TOKEN_COMMAND);
 }
 
-void	ft_add_token(t_token **tokens, t_type type, char *value)
+void	ft_handle_operator(t_tokenizer *tok, t_infos *infos)
 {
-	t_token	*new;
-	t_token	*tmp;
-
-	new = ft_new_token(type, value);
-	tmp = *tokens;
-	if (*tokens == NULL)
-		*tokens = new;
+	ft_add_token_from_buffer(infos, tok, &tok->j);
+	if (tok->input[tok->i] == '>' && tok->input[tok->i + 1] == '>')
+	{
+		ft_add_token(&infos->tokens, TOKEN_REDIRECT_APPEND, ">>");
+		tok->i++;
+	}
+	else if (tok->input[tok->i] == '<' && tok->input[tok->i + 1] == '<')
+	{
+		ft_add_token(&infos->tokens, TOKEN_HEREDOC, "<<");
+		tok->i++;
+	}
 	else
 	{
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
+		tok->op[0] = tok->input[tok->i];
+		tok->op[1] = '\0';
+		ft_add_token(&infos->tokens, ft_get_token_type(tok->op), tok->op);
 	}
+	tok->current_type = TOKEN_COMMAND;
 }
 
-void	ft_free_tokens(t_token **tokens)
+void	ft_process_char(t_tokenizer *tok)
 {
-	t_token	*tmp;
-	t_token	*swap;
+	tok->buffer[tok->j++] = tok->input[tok->i];
+}
 
-	tmp = *tokens;
-	while (tmp)
+void	ft_tokenize(t_infos *infos)
+{
+	t_tokenizer	tok;
+
+	ft_init_tokenizer(&tok, infos);
+	while (tok.input[++tok.i])
 	{
-		swap = tmp->next;
-		ft_free_tab2d(tmp->value);
-		free(tmp);
-		tmp = swap;
-	}
-	*tokens = NULL;
-}
-
-int	ft_process_char(t_infos *s_infos, int *buf_index, int i)
-{
-	if (s_infos->input[i] == '|')
-		i = ft_handle_pipe(s_infos, buf_index, i);
-	else if (s_infos->input[i] == '>')
-		i = ft_handle_redirect_out(s_infos, buffer, buf_index, i);
-	else if (s_infos->input[i] == '<')
-		i = ft_handle_redirect_in(s_infos, buffer, buf_index, i);
-	else if (s_infos->input[i] == '\'')
-		i = ft_handle_single_quote(s_infos, buffer, buf_index, i);
-	else if (s_infos->input[i] == '"')
-		i = ft_handle_double_quote(s_infos, buffer, buf_index, i);
-	else if (s_infos->input[i] == '$')
-		i = ft_handle_env_var(s_infos, buffer, buf_index, i);
-	else
-		buffer[(*buf_index)++] = s_infos->input[i++];
-	return (i);
-}
-
-void	ft_tokenize(t_infos *s_infos)
-{
-	int		buf_index;
-	int		i;
-
-	add_history(s_infos->input);
-	s_infos->buffer = malloc(ft_strlen(s_infos->input));
-	if (!s_infos->buffer)
-		ft_quit(s_infos, "Erreur: echec malloc buffer.\n", 2);
-	buf_index = 0;
-	i = 0;
-	while (s_infos->input[i])
-	{
-		if (ft_isspace(s_infos->input[i]))
-			i++;
-		else if (s_infos->input[i] == ' ' && buf_index == 0)
-			i++;
+		if (tok.j >= tok.buffer_size - 1)
+			ft_expand_buffer(&tok);
+		if (tok.input[tok.i] == ' ' && !tok.quote_char)
+		{
+			ft_add_token_from_buffer(infos, &tok, &tok.j);
+			tok.current_type = TOKEN_COMMAND;
+		}
+		else if (tok.input[tok.i] == '|' || tok.input[tok.i] == '<'
+			|| tok.input[tok.i] == '>')
+			ft_handle_operator(&tok, infos);
+		else if ((tok.input[tok.i] == '\'' || tok.input[tok.i] == '"')
+			&& (!tok.quote_char || tok.quote_char == tok.input[tok.i]))
+			ft_handle_quote(&tok);
+		else if (tok.input[tok.i] == '$' && tok.quote_char != '\'')
+			ft_handle_env_var(&tok, infos);
 		else
-			i = ft_process_char(s_infos, &buf_index, i);
+			ft_process_char(&tok);
 	}
-	if (buf_index > 0)
-	{
-		s_infos->buffer[buf_index] = '\0';
-		ft_add_token(&(s_infos->tokens), TOKEN_ARGUMENT, s_infos->buffer);
-	}
-	s_infos->buffer = ft_free_str(s_infos->buffer);
-	ft_print_tokens(s_infos->tokens);
-	ft_free_tokens(&(s_infos->tokens));
+	ft_add_token_from_buffer(infos, &tok, &tok.j);
+	free(tok.buffer);
 }

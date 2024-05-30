@@ -81,7 +81,7 @@ format :
         (L'affichage d'erreur dans sighandler.c pour sa est faux),
         Norme sauf tokenize.c,
 
-    23/05/2024 matran-d     "il faut que je pige comment recup avec execve et acces"
+    23/05/2024  matran-d     "il faut que je pige comment recup avec execve et acces"
         Jai travaille quelques minutes et c'est deja bien trop ajd, je vais aller dormir salope
 
     23/05/2024  gmarquis    "taff sur les variable d'environemant"
@@ -92,10 +92,10 @@ format :
             "$" a faire
              $  en cours
     
-    26/05/2024 matran-d "ca me casse les couilles, mais ca marche a moitie, donc ca va"
+    26/05/2024  matran-d    "ca me casse les couilles, mais ca marche a moitie, donc ca va"
         "ca me casse les couilles, mais ca marche a moitie, donc ca va"
     
-    29/05/2021 matran-d "jai clean un peu tout"
+    29/05/2024  matran-d    "jai clean un peu tout"
         cd -> c bon
         pwd -> c bon
         export -> c bon
@@ -104,3 +104,10 @@ format :
         ls -> c bon
         cat -> ca marche pas
         apres je sais pas quoi d'autre tester pour le path
+
+    30/05/2024  gmarquis    "refonte du parse"
+        Refonte complete du parse pour ajouter la struct tok
+        Gestion des ' et "
+        Gestion des variable d'environnement
+        Nome
+        Je fait des tests mais je suis pas loin de la fin, manque les heredoc
