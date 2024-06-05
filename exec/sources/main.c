@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/29 18:15:33 by jpp              ###   ########.fr       */
+/*   Updated: 2024/06/05 17:06:58 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,22 @@ void	init_env(t_env **ev, char **env)
     }
 }
 
-void split_input(char *input, char **cmd, char **args)
+void split_input(char *input, t_cmd *command)
 {
     int i = 0;
-    *cmd = input;
+    command->cmd = input;
 
     while (input[i] != ' ' && input[i] != '\0')
         i++;
     if (input[i] == '\0')
-        *args = NULL;
+        command->more = NULL;
     else
     {
         input[i] = '\0';
-        *args = input + i + 1;
+        command->more = input + i + 1;
     }
 }
+
 
 int main(int argc, char **argv, char **env)
 {
@@ -85,10 +86,10 @@ int main(int argc, char **argv, char **env)
         input = readline("\033[32mCumShell $> \033[0m");
         if (!input)
             break ;
-        char *cmd;
-        char *args;
-        split_input(input, &cmd, &args);
-        builtin(&base, cmd, args, argv, env);
+        //char *cmd;
+        //char *args;
+        split_input(input, base->command);
+        builtin(base, argv, env);
         free(input);
     }
     return (0);

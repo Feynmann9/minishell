@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/29 18:08:23 by jpp              ###   ########.fr       */
+/*   Updated: 2024/06/05 17:03:48 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_base
 {
 	t_env			*tmp_env;
 	pid_t			pid;
-	struct s_cmd	*cmd;
+	struct s_cmd	*command;
 	struct s_base	*next;
 }					t_base;
 
@@ -47,14 +47,15 @@ typedef struct s_base
 typedef struct s_cmd
 {
 	char	*cmd;
-	void	(*builtin)(void);
+	char 	*more;
+	//void	(*builtin)(void);
 }			t_cmd;
 
 //			init.c			//
 void	init(t_base **tmp_base, t_env *ev);
 void	init_env(t_env **ev, char **env);
 char	*get_env_value(t_env *env, char *name);
-void	builtin(t_base **base, char *cmd, char *more, char **argv, char **env);
+void	builtin(t_base *base, char **argv, char **env);
 
 //			main.c			//
 void	new_env(t_env **ev, char *name_folder, char *value_folder);
@@ -86,5 +87,6 @@ void	ft_unset(t_base **base, char *more);
 int     path_or_notpath(char *cmd);
 void ft_path(t_base **base, char *cmd, char **argv, char **env);
 char *find_command(char *cmd, char *path_env);
+void    ft_echo(char *more);
 
 #endif

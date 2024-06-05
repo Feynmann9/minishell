@@ -95,20 +95,23 @@ void ft_path(t_base **base, char *cmd, char **argv, char **env)
     char *full_path;
 
     if (pid == -1)
-        return;
+        exit(EXIT_FAILURE);
     else if (pid == 0)
     {
         path_env = get_env_value((*base)->tmp_env, "PATH");
         if (!path_env)
-            return ;
+            exit(EXIT_FAILURE);
         full_path = find_command(cmd, path_env);
         if (!full_path)
-            return ;
+            exit(EXIT_FAILURE);
         execve(full_path, argv, env);
-        return ;
+        exit(EXIT_FAILURE);
     }
     else
     {
-        waitpid(pid, &rien, 0);
+        waitpid(-1, &rien, 0);
     }
 }
+
+//char *exec_args[] = {full_path, argv[0], NULL};
+//execve(full_path, exec_args, env);

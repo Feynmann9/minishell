@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/29 18:15:04 by jpp              ###   ########.fr       */
+/*   Updated: 2024/06/05 17:07:27 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ void	init(t_base **tmp_base, t_env *ev)
     {
         (*tmp_base)->tmp_env = ev;
         (*tmp_base)->pid = 0;
+        (*tmp_base)->command = malloc(sizeof(t_cmd));
+        if ((*tmp_base)->command == NULL)
+        {
+            free(*tmp_base);
+            exit(EXIT_FAILURE);
+        }
         (*tmp_base)->next = NULL;
     }
     else
@@ -40,30 +46,30 @@ char	*get_env_value(t_env *env, char *name)
 // pour test = ./exec echo "greg le fdp"
 // pour test = ./exec export nom="salope" (comment ft_env)
 
-void	builtin(t_base **base, char *cmd, char *more, char **argv, char **env)
+void builtin(t_base *base, char **argv, char **env)
 {
-    if (more == NULL)
+    if (base->command->more == NULL)
     {
-        if (strcmp(cmd, "pwd") == 0)
-            ft_pwd(base);
-        if (strcmp(cmd, "cd") == 0)
-            ft_cd(base, NULL);
-        if (strcmp(cmd, "env") == 0)
-            ft_env(base);
-        else if (path_or_notpath(cmd))
-            ft_path(base, cmd, argv, env);
+        if (strcmp(base->command->cmd, "pwd") == 0)
+            ft_pwd(&base);
+        else if (strcmp(base->command->cmd, "cd") == 0)
+            ft_cd(&base, NULL);
+        else if (strcmp(base->command->cmd, "env") == 0)
+            ft_env(&base);
+        else if (path_or_notpath(base->command->cmd))
+            ft_path(&base, base->command->cmd, argv, env);
     }
-    if (more != NULL)
+    else
     {
-        if (strcmp(cmd, "echo") == 0)
-            ft_printf("%s\n", more);
-        if (strcmp(cmd, "export") == 0)
-            ft_export(base, more);
-        if (strcmp(cmd, "unset") == 0)
-            ft_unset(base, more);
-        if (strcmp(cmd, "cd") == 0)
-            ft_cd(base, more);
-        else if (path_or_notpath(cmd))
-            ft_path(base, cmd, argv, env);
+        if (strcmp(base->command->cmd, "echo") == 0)
+            ft_echo(base->command->more);
+        else if (strcmp(base->command->cmd, "export") == 0)
+            ft_export(&base, base->command->more);
+        else if (strcmp(base->command->cmd, "unset") == 0)
+            ft_unset(&base, base->command->more);
+        else if (strcmp(base->command->cmd, "cd") == 0)
+            ft_cd(&base, base->command->more);
+        else if (path_or_notpath(base->command->cmd))
+            ft_path(&base, base->command->cmd, argv, env);
     }
 }
