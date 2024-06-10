@@ -7,10 +7,11 @@ void    ft_echo(char *more)
     i = 0;
     while (more[i])
     {
-        if (more[i] == '"')
-            i++;
-        write(1, &more[i], 1);
+        if (more[i] != '"')
+        {
+            write(1, &more[i], 1);
+        }
         i++;
     }
-    ft_printf("\n");
+    write(1, "\n", 1);
 }

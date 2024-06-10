@@ -31,7 +31,7 @@ void    ft_cd(t_base **base, const char *folder)
 
     if (folder == NULL)
         cd = get_env_value((*base)->tmp_env, "HOME");
-    if (folder != NULL)
+    else
         cd = ft_strdup(folder);
 
     if (chdir(cd) != 0)

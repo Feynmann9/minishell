@@ -60,6 +60,43 @@ char *find_command(char *cmd, char *path_env)
         if (end)
             *end = '\0';
         //printf("%s\n", end);
+        //snprintf(full_path, sizeof(full_path), "%s/%s", path_env, cmd);
+        strcpy(full_path, path_env);
+        strcat(full_path, "/");
+        strcat(full_path, cmd);
+        if (access(full_path, X_OK) == 0)
+        {
+            result = strdup(full_path);
+            //printf("Found command: %s\n", result);
+            if (end)
+                *end = ':';
+            return (result);
+        }
+        if (end)
+        {
+            *end = ':';
+            path_env = end + 1;
+        }
+        else
+        {
+            path_env = NULL;
+        }
+    }
+    return (NULL);
+}
+/*
+char *find_command(char *cmd, char *path_env)
+{
+    char *end;
+    char full_path[1000];
+    char *result;
+    
+    while (path_env)
+    {
+        end = strchr(path_env, ':');
+        if (end)
+            *end = '\0';
+        //printf("%s\n", end);
         int i = 0;
         while (path_env[i] != '\0')
         {
@@ -86,8 +123,8 @@ char *find_command(char *cmd, char *path_env)
     }
     return (NULL);
 }
-
-void ft_path(t_base **base, char *cmd, char **argv, char **env)
+*/
+void ft_path(t_base *base, char **env)
 {
     pid_t pid = fork();
     int rien;
@@ -98,13 +135,13 @@ void ft_path(t_base **base, char *cmd, char **argv, char **env)
         exit(EXIT_FAILURE);
     else if (pid == 0)
     {
-        path_env = get_env_value((*base)->tmp_env, "PATH");
+        path_env = get_env_value(base->tmp_env, "PATH");
         if (!path_env)
             exit(EXIT_FAILURE);
-        full_path = find_command(cmd, path_env);
+        full_path = find_command(base->command->cmd, path_env);
         if (!full_path)
             exit(EXIT_FAILURE);
-        execve(full_path, argv, env);
+        execve(full_path, base->command->args, env);
         exit(EXIT_FAILURE);
     }
     else

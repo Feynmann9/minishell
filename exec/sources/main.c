@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/05 17:06:58 by jpp              ###   ########.fr       */
+/*   Updated: 2024/06/10 14:51:17 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,32 @@ void	init_env(t_env **ev, char **env)
     {
         new = ft_split(*tmp, '=', '\n');
         if (new && new[0] && new[1])
+        {
             new_env(ev, new[0], new[1]);
+            //ft_free_tab2d(new);
+        }
         tmp++;
     }
 }
 
 void split_input(char *input, t_cmd *command)
 {
-    int i = 0;
-    command->cmd = input;
+    //int i = 0;
+    int arg_count = 0;
+    char *token;
+    
+    token = strtok(input, " ");
+    command->cmd = strdup(token);
 
-    while (input[i] != ' ' && input[i] != '\0')
-        i++;
-    if (input[i] == '\0')
-        command->more = NULL;
-    else
+    while (token != NULL)
     {
-        input[i] = '\0';
-        command->more = input + i + 1;
+        command->args = realloc(command->args, sizeof(char *) * (arg_count + 1));
+        command->args[arg_count] = strdup(token);
+        token = strtok(NULL, " ");
+        arg_count++;
     }
+    command->args = realloc(command->args, sizeof(char *) * (arg_count + 1));
+    command->args[arg_count] = NULL;
 }
 
 
@@ -74,7 +81,7 @@ int main(int argc, char **argv, char **env)
     t_base *base = NULL;
     char *input;
     
-    if (argc > 3)
+    if (argc > 3 || argv == NULL)
     {
         ft_printf("\033[32mToo many argc, sorry\033[0m\n");
         return (0);
@@ -89,7 +96,7 @@ int main(int argc, char **argv, char **env)
         //char *cmd;
         //char *args;
         split_input(input, base->command);
-        builtin(base, argv, env);
+        builtin(base, env);
         free(input);
     }
     return (0);
