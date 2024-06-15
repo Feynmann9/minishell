@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/30 19:36:57 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/06/15 05:25:06 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,22 @@ typedef enum s_type
 	TOKEN_ENV,				//	$
 }					t_type;
 
+typedef struct s_lists
+{
+	void			*content;
+	struct s_lists	*next;
+}					t_lists;
+
+typedef struct s_command
+{
+	char			**args;			// Arguments de la commande
+	int				args_count;		// Nombre d'arguments
+	char			*input_file;	// Fichier d'entrée (pour '<')
+	char			*output_file;	// Fichier de sortie (pour '>')
+	char			*append_file;	// Fichier pour append (pour '>>')
+	char			*heredoc_delim;	// Délimiteur pour heredoc (pour '<<')
+}					t_command;
+
 typedef struct s_token
 {
 	t_type			type;
@@ -50,6 +66,7 @@ typedef struct s_infos
 	char			**envp;
 	char			*history_file;
 	char			*input;
+	int				count_pipes;
 	t_token			*tokens;
 }					t_infos;
 
@@ -95,5 +112,8 @@ void	ft_tokenize(t_infos *s_infos);
 char	*ft_expand_env_var(char *str, char **envp);
 void	ft_handle_quote(t_tokenizer *tok);
 void	ft_handle_env_var(t_tokenizer *tok, t_infos *infos);
+
+//		surcouche.c		//
+void	ft_surcouche(t_infos *infos);
 
 #endif

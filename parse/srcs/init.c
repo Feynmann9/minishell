@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:35:26 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/30 19:45:07 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/06/15 03:15:47 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_infos	ft_init_infos(char **envp)
 
 	s_infos.envp = envp;
 	s_infos.history_file = ".minishell_history";
+	s_infos.count_pipes = 0;
 	s_infos.input = NULL;
 	s_infos.tokens = NULL;
 	return (s_infos);
