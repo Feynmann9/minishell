@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/16 04:38:46 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/06/16 21:43:32 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef enum s_type
 	TOKEN_PIPE,				//	|
 	TOKEN_REDIRECT_IN,		//	<
 	TOKEN_HEREDOC,			//	<<
+	TOKEN_HEREDOC_WORD,		//	heredoc word
+	TOKEN_HEREDOC_DELIMITER,//	heredoc delimiter
 	TOKEN_REDIRECT_OUT,		//	>
 	TOKEN_REDIRECT_APPEND,	//	>>
 	TOKEN_QUOTE,			//	''

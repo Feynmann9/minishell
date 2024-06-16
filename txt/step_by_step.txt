@@ -112,6 +112,12 @@ format :
         Norme
         Je fait des tests mais je suis pas loin de la fin, manque les heredoc
 
-    16/062024   gmarquis    "heredoc fonctionel, refonte de la struct de sortie a faire"
+    16/06/2024   gmarquis    "heredoc fonctionel, refonte de la struct de sortie a faire"
         Les Herdoc sont fonctionel mais il reste des test a faire
         Norme a faire sur tokenize.c et token_utils.c
+
+    16 /06/2024 gmarquis    "fix heredoc avant ouverture/ecriture"
+        Ajout de ft_strcmp (compare 2 str sans limite de taille) a la libft
+        Ajout de ft_strcat (concatenne 2 str sans limite de taille) a la libft
+        Ajout de ft_realloc (réallocation de la mémoire) a la libft
+        Fix de la gestion des heredoc via l'ajout de TOKEN_HEREDOC_WORD et TOKEN_HEREDOC_DELIMITER

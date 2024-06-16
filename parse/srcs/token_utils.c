@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:21:22 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/16 04:41:43 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/06/16 23:59:54 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	ft_add_token(t_token **tokens, t_type type, char *value)
 	t_token	*new;
 	t_token	*tmp;
 
+	if(value == NULL || *value == '\0')
+		return ;
 	new = malloc(sizeof(t_token));
 	if (!new)
 		ft_exit(2, "Error: echec malloc token.\n");
@@ -61,7 +63,7 @@ void	ft_add_token_from_buffer(t_infos *infos, t_tokenizer *tok, int *j)
 	{
 		tok->buffer[*j] = '\0';
 		if (tok->current_type == TOKEN_ENV || (tok->quote_char == '"'
-				&& strchr(tok->buffer, '$')))		//	a modifier
+				&& ft_strchr(tok->buffer, '$')))
 		{
 			expanded = ft_expand_env_var(tok->buffer, infos->envp);
 			ft_add_token(&infos->tokens, TOKEN_ENV, expanded);

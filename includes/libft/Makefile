@@ -6,7 +6,7 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/21 17:10:22 by gmarquis          #+#    #+#              #
-#    Updated: 2024/05/23 16:24:32 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/06/16 21:17:20 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,9 @@ srcs/ajout/ft_isnbr.c $\
 srcs/ajout/ft_isspace.c $\
 srcs/ajout/ft_isupper.c $\
 srcs/ajout/ft_memlcpy.c $\
+srcs/ajout/ft_realloc.c $\
+srcs/ajout/ft_strcat.c $\
+srcs/ajout/ft_strcmp.c $\
 srcs/ajout/ft_strndup.c $\
 srcs/ajout/ft_verif_extension.c
 
