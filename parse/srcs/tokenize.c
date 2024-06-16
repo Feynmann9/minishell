@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 02:56:29 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/15 03:15:40 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/06/16 04:43:58 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,37 @@ t_type	ft_get_token_type(char *str)
 	return (TOKEN_COMMAND);
 }
 
+void	ft_handle_heredoc(t_tokenizer *tok, t_infos *infos)
+{
+	char	*delimiter;
+	char	*line;
+	size_t	new_size;
+
+	delimiter = ft_strdup(tok->buffer);
+	tok->heredoc_buffer = malloc(BUFFER_SIZE * sizeof(char));
+	if (!tok->heredoc_buffer)
+		ft_exit(2, "Error: malloc heredoc_buffer failed\n");
+	tok->heredoc_buffer[0] = '\0';
+	while (1)
+	{
+		line = readline("> ");
+		if (!line || strcmp(line, delimiter) == 0)		//	a modifier
+			break ;
+		new_size = ft_strlen(tok->heredoc_buffer) + ft_strlen(line) + 2;
+		tok->heredoc_buffer = realloc(tok->heredoc_buffer, new_size);
+		if (!tok->heredoc_buffer)
+			ft_exit(2, "Error: realloc heredoc_buffer failed\n");
+		strcat(tok->heredoc_buffer, line);		//	a modifier
+		strcat(tok->heredoc_buffer, "\n");		//	a modifier
+		free(line);
+	}
+	free(line);
+	ft_add_token(&infos->tokens, TOKEN_HEREDOC, tok->heredoc_buffer);
+	free(delimiter);
+	free(tok->heredoc_buffer);
+	tok->heredoc_buffer = NULL;
+}
+
 void	ft_handle_operator(t_tokenizer *tok, t_infos *infos)
 {
 	ft_add_token_from_buffer(infos, tok, &tok->j);
@@ -41,6 +72,14 @@ void	ft_handle_operator(t_tokenizer *tok, t_infos *infos)
 	{
 		ft_add_token(&infos->tokens, TOKEN_HEREDOC, "<<");
 		tok->i++;
+		tok->j = 0;
+		while (tok->input[++tok->i] && tok->input[tok->i] == ' ')
+			;
+		while (tok->input[tok->i] && tok->input[tok->i] != ' ')
+			tok->buffer[tok->j++] = tok->input[tok->i++];
+		tok->buffer[tok->j] = '\0';
+		tok->i--;
+		ft_handle_heredoc(tok, infos);
 	}
 	else
 	{
@@ -51,9 +90,31 @@ void	ft_handle_operator(t_tokenizer *tok, t_infos *infos)
 	tok->current_type = TOKEN_COMMAND;
 }
 
-void	ft_process_char(t_tokenizer *tok)
+void	ft_read_heredoc(t_tokenize_state *state, t_infos *infos,
+	char *delimiter)
 {
-	tok->buffer[tok->j++] = tok->input[tok->i];
+	char	*line;
+
+	while (1)
+	{
+		line = readline("> ");
+		if (!line || strcmp(line, delimiter) == 0)
+		{
+			free(line);
+			break ;
+		}
+		while (*line)
+		{
+			if (state->j >= state->buffer_size - 1)
+				ft_resize_buffer(state);
+			state->buffer[state->j++] = *line++;
+		}
+		state->buffer[state->j++] = '\n';
+		free(line);
+	}
+	state->buffer[state->j] = '\0';
+	ft_add_token(&infos->tokens, TOKEN_HEREDOC, state->buffer);
+	state->j = 0;
 }
 
 void	ft_tokenize(t_infos *infos)
@@ -79,7 +140,7 @@ void	ft_tokenize(t_infos *infos)
 		else if (tok.input[tok.i] == '$' && tok.quote_char != '\'')
 			ft_handle_env_var(&tok, infos);
 		else
-			ft_process_char(&tok);
+			tok.buffer[tok.j++] = tok.input[tok.i];
 	}
 	ft_add_token_from_buffer(infos, &tok, &tok.j);
 	free(tok.buffer);

@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/15 04:53:34 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/06/16 01:03:44 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 			ft_tokenize(&infos);
 		ft_print_tokens(infos.tokens);
-		ft_surcouche(&infos);
+		ft_free_tokens(&infos.tokens);
 	}
 	rl_clear_history();
 	return (0);

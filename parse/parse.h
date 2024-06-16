@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/15 05:25:06 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/06/16 04:38:46 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,6 @@ typedef enum s_type
 	TOKEN_ENV,				//	$
 }					t_type;
 
-typedef struct s_lists
-{
-	void			*content;
-	struct s_lists	*next;
-}					t_lists;
-
-typedef struct s_command
-{
-	char			**args;			// Arguments de la commande
-	int				args_count;		// Nombre d'arguments
-	char			*input_file;	// Fichier d'entrée (pour '<')
-	char			*output_file;	// Fichier de sortie (pour '>')
-	char			*append_file;	// Fichier pour append (pour '>>')
-	char			*heredoc_delim;	// Délimiteur pour heredoc (pour '<<')
-}					t_command;
-
 typedef struct s_token
 {
 	t_type			type;
@@ -70,11 +54,23 @@ typedef struct s_infos
 	t_token			*tokens;
 }					t_infos;
 
+typedef struct s_tokenize_state
+{
+	char			*input;
+	char			*buffer;
+	int				buffer_size;
+	int				i;
+	int				j;
+	char			quote_char;
+	t_type			current_type;
+}					t_tokenize_state;
+
 typedef struct s_tokenizer
 {
 	char	*input;
 	char	*buffer;
 	char	*new_buffer;
+	char	*heredoc_buffer;
 	char	op[2];
 	int		buffer_size;
 	int		i;
@@ -84,6 +80,7 @@ typedef struct s_tokenizer
 }			t_tokenizer;
 
 //		init.c				//
+void	ft_init_tokenize_state(t_tokenize_state *state, t_infos *infos);
 void	ft_init_tokenizer(t_tokenizer *tok, t_infos *infos);
 t_infos	ft_init_infos(char **envp);
 
@@ -102,6 +99,7 @@ void	ft_sighandler(void);
 t_token	*ft_new_token(t_type type, char *value);
 void	ft_add_token(t_token **tokens, t_type type, char *value);
 void	ft_add_token_from_buffer(t_infos *infos, t_tokenizer *tok, int *j);
+void	ft_resize_buffer(t_tokenize_state *state);
 void	ft_expand_buffer(t_tokenizer *tok);
 
 //		tokenize.c			//
@@ -114,6 +112,6 @@ void	ft_handle_quote(t_tokenizer *tok);
 void	ft_handle_env_var(t_tokenizer *tok, t_infos *infos);
 
 //		surcouche.c		//
-void	ft_surcouche(t_infos *infos);
+//void	ft_surcouche(t_infos *infos);
 
 #endif

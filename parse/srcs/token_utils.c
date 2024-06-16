@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:21:22 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/30 19:40:37 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/06/16 04:41:43 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_add_token_from_buffer(t_infos *infos, t_tokenizer *tok, int *j)
 	{
 		tok->buffer[*j] = '\0';
 		if (tok->current_type == TOKEN_ENV || (tok->quote_char == '"'
-				&& strchr(tok->buffer, '$')))
+				&& strchr(tok->buffer, '$')))		//	a modifier
 		{
 			expanded = ft_expand_env_var(tok->buffer, infos->envp);
 			ft_add_token(&infos->tokens, TOKEN_ENV, expanded);
@@ -71,6 +71,19 @@ void	ft_add_token_from_buffer(t_infos *infos, t_tokenizer *tok, int *j)
 			ft_add_token(&infos->tokens, tok->current_type, tok->buffer);
 		*j = 0;
 	}
+}
+
+void	ft_resize_buffer(t_tokenize_state *state)
+{
+	char	*new_buffer;
+
+	new_buffer = malloc(state->buffer_size * 2 * sizeof(char));
+	if (!new_buffer)
+		ft_exit(2, "Error: malloc failed\n");
+	ft_memcpy(new_buffer, state->buffer, state->buffer_size);
+	free(state->buffer);
+	state->buffer = new_buffer;
+	state->buffer_size *= 2;
 }
 
 void	ft_expand_buffer(t_tokenizer *tok)

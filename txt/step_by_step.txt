@@ -109,5 +109,9 @@ format :
         Refonte complete du parse pour ajouter la struct tok
         Gestion des ' et "
         Gestion des variable d'environnement
-        Nome
+        Norme
         Je fait des tests mais je suis pas loin de la fin, manque les heredoc
+
+    16/062024   gmarquis    "heredoc fonctionel, refonte de la struct de sortie a faire"
+        Les Herdoc sont fonctionel mais il reste des test a faire
+        Norme a faire sur tokenize.c et token_utils.c
