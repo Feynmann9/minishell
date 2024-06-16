@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/07 18:49:38 by jpp              ###   ########.fr       */
+/*   Updated: 2024/06/16 16:00:54 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,6 @@ int     path_or_notpath(char *cmd);
 //void ft_path(t_base **base, char *cmd, char **argv, char **env);
 void ft_path(t_base *base, char **env);
 char *find_command(char *cmd, char *path_env);
-void    ft_echo(char *more);
+void    ft_echo(char **args);
 
 #endif

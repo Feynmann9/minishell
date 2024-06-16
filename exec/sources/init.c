@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/07 19:04:32 by jpp              ###   ########.fr       */
+/*   Updated: 2024/06/16 15:58:53 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,15 @@ void builtin(t_base *base, char **env)
             ft_cd(&base, NULL);
         else if (strcmp(base->command->cmd, "env") == 0)
             ft_env(&base);
+        else if (strcmp(base->command->cmd, "exit") == 0)
+            exit(EXIT_FAILURE);
         else if (find_command(base->command->cmd, get_env_value(base->tmp_env, "PATH")))
             ft_path(base, env);
     }
     else
     {
         if (strcmp(base->command->cmd, "echo") == 0)
-            ft_echo(base->command->args[1]);
+            ft_echo(base->command->args);
         else if (strcmp(base->command->cmd, "export") == 0)
             ft_export(&base, base->command->args[1]);
         else if (strcmp(base->command->cmd, "unset") == 0)

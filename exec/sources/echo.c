@@ -1,17 +1,29 @@
 # include "../exec.h"
 
-void    ft_echo(char *more)
+void    ft_echo(char **args)
 {
+    int back = 0;
     int i;
+    int j = 1;
 
-    i = 0;
-    while (more[i])
+    if (args[j] && strcmp(args[j], "-n") == 0)
     {
-        if (more[i] != '"')
-        {
-            write(1, &more[i], 1);
-        }
-        i++;
+        back = 1;
+        j++;
     }
-    write(1, "\n", 1);
+    while (args[j])
+    {
+        i = 0;
+        while (args[j][i] != '\0')
+        {
+            if (args[j][i] != '"')
+                write(1, &args[j][i], 1);
+            i++;
+        }
+        if (args[j + 1])
+            write(1, " ", 1);
+        j++;
+    }
+    if (back == 0)
+        write(1, "\n", 1);
 }
