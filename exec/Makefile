@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+         #
+#    By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/06/03 18:00:51 by jpp              ###   ########.fr        #
+#    Updated: 2024/06/17 20:45:11 by matran-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ sources/pwd.c $\
 sources/export.c $\
 sources/unset.c $\
 sources/path.c $\
-sources/echo.c
+sources/echo.c $\
+sources/ft_split_env.c
 
 LIBFT_PATH = ../includes/libft/
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/16 16:00:54 by jpp              ###   ########.fr       */
+/*   Updated: 2024/06/17 22:19:23 by matran-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,8 @@ int     path_or_notpath(char *cmd);
 void ft_path(t_base *base, char **env);
 char *find_command(char *cmd, char *path_env);
 void    ft_echo(char **args);
+
+//int	ft_countwords_env(char *str, char set, char set2, char end);
+void	ft_split_env(char *tmp, char *new_1, char *new_2);
 
 #endif
