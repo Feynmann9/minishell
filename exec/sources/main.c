@@ -6,7 +6,7 @@
 /*   By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/17 23:48:37 by matran-d         ###   ########.fr       */
+/*   Updated: 2024/06/19 21:08:53 by matran-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ void    new_env(t_env **ev, char *name_folder, char *value_folder)
     if (!(tmp = malloc(sizeof(t_env))))
         return ;
     tmp->name_folder = ft_strdup(name_folder);
+    //printf("name\n");
     tmp->value_folder = ft_strdup(value_folder);
+    //printf("folder\n");
     if (*ev != NULL)
-		ft_lstadd_back_env(ev, tmp);
+        ft_lstadd_back_env(ev, tmp);
     else
         ft_lstadd_front_env(ev, tmp);
 }
@@ -39,8 +41,8 @@ void	print_env(t_env *ev)
 void	init_env(t_env **ev, char **env)
 {
     char    **tmp;
-	char new_1[1000];
-	char new_2[1000];
+	char new_1[5000];
+	char new_2[5000];
 
     tmp = env;
     while (*tmp)
