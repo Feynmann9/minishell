@@ -6,7 +6,7 @@
 /*   By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/19 21:08:53 by matran-d         ###   ########.fr       */
+/*   Updated: 2024/06/20 15:35:40 by matran-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ void    new_env(t_env **ev, char *name_folder, char *value_folder)
     if (!(tmp = malloc(sizeof(t_env))))
         return ;
     tmp->name_folder = ft_strdup(name_folder);
-    //printf("name\n");
     tmp->value_folder = ft_strdup(value_folder);
-    //printf("folder\n");
     if (*ev != NULL)
         ft_lstadd_back_env(ev, tmp);
     else
@@ -88,7 +86,6 @@ void	ft_split_env(char *tmp, char *new_1, char *new_2)
 
 void split_input(char *input, t_cmd *command)
 {
-    //int i = 0;
     int arg_count = 0;
     char *token;
 
@@ -125,8 +122,6 @@ int main(int argc, char **argv, char **env)
         input = readline("\033[32mCumShell $> \033[0m");
         if (!input)
             break ;
-        //char *cmd;
-        //char *args;
         split_input(input, base->command);
         builtin(base, env);
         free(input);

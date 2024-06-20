@@ -6,7 +6,7 @@
 /*   By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/17 22:19:23 by matran-d         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:25:02 by matran-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,7 @@ void    ft_echo(char **args);
 
 //int	ft_countwords_env(char *str, char set, char set2, char end);
 void	ft_split_env(char *tmp, char *new_1, char *new_2);
+void    ft_order_env(t_base **base);
+void    ft_print_order(t_base **base);
 
 #endif

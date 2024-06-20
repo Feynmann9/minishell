@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/16 15:58:53 by jpp              ###   ########.fr       */
+/*   Updated: 2024/06/20 18:25:38 by matran-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ void builtin(t_base *base, char **env)
             ft_env(&base);
         else if (strcmp(base->command->cmd, "exit") == 0)
             exit(EXIT_FAILURE);
+        else if (strcmp(base->command->cmd, "export") == 0)
+        {
+            ft_order_env(&base);
+            ft_print_order(&base);
+        }
         else if (find_command(base->command->cmd, get_env_value(base->tmp_env, "PATH")))
             ft_path(base, env);
     }

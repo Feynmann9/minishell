@@ -34,7 +34,6 @@ void    ft_export(t_base **base, char *more)
     int size = 0;
     int val = 0;
 
-    //printf("more start = %s\n", more);
     while (more[size] != '=' && ft_isalpha(more[size]))
         size++;
     if (!(folder = malloc(sizeof(char) * (size + 1))) || base == NULL)
@@ -82,6 +81,7 @@ void    add_export(t_env *ev, char *name_folder, char *value_folder)
 void add_export(t_env *ev, char *name_folder, char *value_folder)
 {
     t_env *tmp;
+    int i = 0;
 
     if (!(tmp = malloc(sizeof(t_env))))
         return;
@@ -92,11 +92,60 @@ void add_export(t_env *ev, char *name_folder, char *value_folder)
     {
         t_env *current = ev;
         while (current->next)
+        {
+            if (ft_strcmp(current->next->name_folder, tmp->name_folder) == 0)
+            {
+                i = 1;
+                current->next->value_folder = tmp->value_folder;
+            }
             current = current->next;
-        current->next = tmp;
+        }
+        if (i != 1)
+            current->next = tmp;
     }
     else
-    {
         ev = tmp;
+}
+
+void    ft_order_env(t_base **base)
+{
+    t_env *sorted = NULL;
+    t_env *current = (*base)->tmp_env;
+    t_env *next;
+
+    while (current)
+    {
+        next = current->next;
+        if (!sorted || strcmp(current->name_folder, sorted->name_folder) < 0)
+        {
+            current->next = sorted;
+            sorted = current;
+        }
+        else
+        {
+            t_env *temp = sorted;
+            while (temp->next && strcmp(temp->next->name_folder, current->name_folder) < 0)
+            {
+                temp = temp->next;
+            }
+            current->next = temp->next;
+            temp->next = current;
+        }
+        current = next;
+    }
+    (*base)->tmp_env = sorted;
+}
+
+void    ft_print_order(t_base **base)
+{
+    t_env *tmp;
+
+    if (!(tmp = malloc(sizeof(t_env))))
+        return ;
+    tmp = (*base)->tmp_env;
+    while (tmp)
+    {
+        ft_printf("export %s=%s\n", tmp->name_folder, tmp->value_folder);
+        tmp = tmp->next;
     }
 }
