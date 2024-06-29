@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/20 18:25:02 by matran-d         ###   ########.fr       */
+/*   Updated: 2024/06/29 23:32:07 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+
+#define MAX_CMDS 10
 
 //	struct pour recuperer env et comme ca on peut modifier
 typedef struct s_env
@@ -48,6 +50,7 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char 	*more;
+	int 	pipe;
 	char	**args;
 	//void	(*builtin)(void);
 }			t_cmd;
@@ -95,5 +98,7 @@ void    ft_echo(char **args);
 void	ft_split_env(char *tmp, char *new_1, char *new_2);
 void    ft_order_env(t_base **base);
 void    ft_print_order(t_base **base);
+void split_input(char *input, t_cmd *command);
+void execute_pipeline(t_cmd **commands, int num_cmds, char **env);
 
 #endif

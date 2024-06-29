@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/20 18:25:38 by matran-d         ###   ########.fr       */
+/*   Updated: 2024/06/29 23:47:32 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ void	init(t_base **tmp_base, t_env *ev)
             free(*tmp_base);
             exit(EXIT_FAILURE);
         }
+        (*tmp_base)->command->cmd = NULL;
+        (*tmp_base)->command->more = NULL;
+        (*tmp_base)->command->args = NULL;
+        (*tmp_base)->command->pipe = 0;
         (*tmp_base)->next = NULL;
     }
     else

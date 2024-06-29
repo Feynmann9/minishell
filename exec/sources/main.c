@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matran-d <matran-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/20 15:35:40 by matran-d         ###   ########.fr       */
+/*   Updated: 2024/06/29 23:49:55 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,14 @@ void split_input(char *input, t_cmd *command)
 
     token = strtok(input, " ");
     command->cmd = strdup(token);
-
+    if (token)
+        command->cmd = strdup(token);
     while (token != NULL)
     {
         command->args = realloc(command->args, sizeof(char *) * (arg_count + 1));
         command->args[arg_count] = strdup(token);
+        if (strcmp(token, "|") == 0)
+            command->pipe++;
         token = strtok(NULL, " ");
         arg_count++;
     }
@@ -124,6 +127,10 @@ int main(int argc, char **argv, char **env)
             break ;
         split_input(input, base->command);
         builtin(base, env);
+        if (!path_or_notpath(base->command->cmd))
+        {
+            execute_pipeline(&(base->command), base->command->pipe + 1, env);
+        }
         free(input);
     }
     return (0);
