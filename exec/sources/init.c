@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/29 23:47:32 by jpp              ###   ########.fr       */
+/*   Updated: 2024/06/30 17:58:57 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ void builtin(t_base *base, char **env)
             ft_order_env(&base);
             ft_print_order(&base);
         }
+        else if (find_command(base->command->cmd, get_env_value(base->tmp_env, "PATH")) && base->command->pipe != 0)
+        {
+            //printf("test1\n");
+            ft_multi(base, env);
+        }
         else if (find_command(base->command->cmd, get_env_value(base->tmp_env, "PATH")))
             ft_path(base, env);
     }
@@ -80,6 +85,11 @@ void builtin(t_base *base, char **env)
             ft_unset(&base, base->command->args[1]);
         else if (strcmp(base->command->cmd, "cd") == 0)
             ft_cd(&base, base->command->args[1]);
+        else if (find_command(base->command->cmd, get_env_value(base->tmp_env, "PATH")) && base->command->pipe != 0)
+        {
+            //printf("test2\n");
+            ft_multi(base, env);
+        }
         else if (find_command(base->command->cmd, get_env_value(base->tmp_env, "PATH")))
             ft_path(base, env);
     }

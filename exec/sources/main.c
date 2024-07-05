@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/29 23:49:55 by jpp              ###   ########.fr       */
+/*   Updated: 2024/07/01 17:56:27 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,6 @@ int main(int argc, char **argv, char **env)
             break ;
         split_input(input, base->command);
         builtin(base, env);
-        if (!path_or_notpath(base->command->cmd))
-        {
-            execute_pipeline(&(base->command), base->command->pipe + 1, env);
-        }
         free(input);
     }
     return (0);

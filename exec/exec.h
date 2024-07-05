@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/29 23:32:07 by jpp              ###   ########.fr       */
+/*   Updated: 2024/07/01 17:56:05 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ void	ft_split_env(char *tmp, char *new_1, char *new_2);
 void    ft_order_env(t_base **base);
 void    ft_print_order(t_base **base);
 void split_input(char *input, t_cmd *command);
-void execute_pipeline(t_cmd **commands, int num_cmds, char **env);
+
+void    ft_multi(t_base *base, char **env);
+char    **ft_str(char **str, char **args);
 
 #endif
