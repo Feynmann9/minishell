@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/16 20:57:31 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:26:44 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(infos.input);
 		if (!infos.input)
 		{
-			printf("exit\n");
+			ft_printf("exit\n");
 			break ;
 		}
 		else

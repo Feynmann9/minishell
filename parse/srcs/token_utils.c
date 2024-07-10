@@ -6,41 +6,26 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:21:22 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/16 23:59:54 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:13:27 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parse.h"
 
-t_token	*ft_new_token(t_type type, char *value)
-{
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
-	if (!token)
-		ft_exit(2, "Error: echec malloc token.\n;");
-	token->type = type;
-	token->value = malloc(2 * sizeof(char *));
-	token->value[0] = ft_strdup(value);
-	token->value[1] = NULL;
-	token->next = NULL;
-	return (token);
-}
-
-void	ft_add_token(t_token **tokens, t_type type, char *value)
+void	ft_add_token(t_infos *infos, t_token **tokens, t_type type, char *value)
 {
 	t_token	*new;
 	t_token	*tmp;
 
-	if(value == NULL || *value == '\0')
+	if (value == NULL || *value == '\0')
 		return ;
 	new = malloc(sizeof(t_token));
 	if (!new)
-		ft_exit(2, "Error: echec malloc token.\n");
+		ft_quit(infos, "Error: malloc token failed\n", 2);
 	new->type = type;
 	new->value = malloc(2 * sizeof(char *));
 	if (!new->value)
-		ft_exit(2, "Error: echec malloc token value.\n");
+		ft_quit(infos, "Error: malloc token value failed\n", 2);
 	new->value[0] = ft_strdup(value);
 	new->value[1] = NULL;
 	new->next = NULL;
@@ -55,6 +40,24 @@ void	ft_add_token(t_token **tokens, t_type type, char *value)
 	}
 }
 
+void	ft_process_expanded_buffer(t_infos *infos, t_tokenizer *tok,
+	char *expanded)
+{
+	if (ft_strchr(tok->buffer, '$'))
+		tok->buffer = ft_new_ex(infos, tok->buffer, expanded);
+	if (tok->tmp_buffer)
+	{
+		tok->buffer = ft_strjoin(tok->tmp_buffer, tok->buffer, '\0', 2);
+		tok->tmp_buffer = NULL;
+	}
+	else if (tok->input[tok->i] == '$')
+		tok->tmp_buffer = ft_strdup(tok->buffer);
+	if (!tok->tmp_buffer)
+		ft_add_token(infos, &infos->tokens, TOKEN_ENV, tok->buffer);
+}
+
+/*		ptn d'invalid read of size 1 sur le premier passage
+			et plusieurs leaks a gere						*/
 void	ft_add_token_from_buffer(t_infos *infos, t_tokenizer *tok, int *j)
 {
 	char	*expanded;
@@ -63,38 +66,41 @@ void	ft_add_token_from_buffer(t_infos *infos, t_tokenizer *tok, int *j)
 	{
 		tok->buffer[*j] = '\0';
 		if (tok->current_type == TOKEN_ENV || (tok->quote_char == '"'
-				&& ft_strchr(tok->buffer, '$')))
+				&& ft_strchr(tok->buffer, '$')) || tok->input[tok->i] == '$')
 		{
-			expanded = ft_expand_env_var(tok->buffer, infos->envp);
-			ft_add_token(&infos->tokens, TOKEN_ENV, expanded);
-			free(expanded);
+			expanded = ft_expand_env_var(infos, tok->buffer, infos->envp);
+			if (tok->input[tok->i + ft_get_len_pre_expand(tok->buffer)] == ' ')
+				ft_add_token(infos, &infos->tokens, TOKEN_ENV, expanded);
+			else
+				ft_process_expanded_buffer(infos, tok, expanded);
+			expanded = ft_free_str(expanded);
 		}
 		else
-			ft_add_token(&infos->tokens, tok->current_type, tok->buffer);
+			ft_add_token(infos, &infos->tokens, tok->current_type, tok->buffer);
 		*j = 0;
 	}
 }
 
-void	ft_resize_buffer(t_tokenize_state *state)
+void	ft_resize_buffer(t_infos *infos, t_tokenize_state *state)
 {
 	char	*new_buffer;
 
 	new_buffer = malloc(state->buffer_size * 2 * sizeof(char));
 	if (!new_buffer)
-		ft_exit(2, "Error: malloc failed\n");
+		ft_quit(infos, "Error: malloc failed\n", 2);
 	ft_memcpy(new_buffer, state->buffer, state->buffer_size);
-	free(state->buffer);
+	state->buffer = ft_free_str(state->buffer);
 	state->buffer = new_buffer;
 	state->buffer_size *= 2;
 }
 
-void	ft_expand_buffer(t_tokenizer *tok)
+void	ft_expand_buffer(t_infos *infos, t_tokenizer *tok)
 {
 	tok->new_buffer = malloc(tok->buffer_size * 2 * sizeof(char));
 	if (!tok->new_buffer)
-		ft_exit(1, "Error: malloc failed\n");
+		ft_quit(infos, "Error: malloc failed\n", 2);
 	ft_memcpy(tok->new_buffer, tok->buffer, tok->buffer_size);
-	free(tok->buffer);
+	tok->buffer = ft_free_str(tok->buffer);
 	tok->buffer = tok->new_buffer;
 	tok->buffer_size *= 2;
 }

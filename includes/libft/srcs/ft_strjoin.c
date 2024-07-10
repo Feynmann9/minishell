@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:10:30 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/05/16 05:47:41 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/09 06:49:41 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ char	*ft_strjoin(char *s1, char *s2, char set, int flag)
 		return (0);
 	if (set != '\0')
 		str = malloc(((ft_strlen(s1) + ft_strlen(s2)) + 2) * sizeof(char));
-	str = malloc(((ft_strlen(s1) + ft_strlen(s2)) + 1) * sizeof(char));
+	else
+		str = malloc(((ft_strlen(s1) + ft_strlen(s2)) + 1) * sizeof(char));
 	if (!str)
 		return (0);
 	i = -1;

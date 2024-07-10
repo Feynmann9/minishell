@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   out.c                                              :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 15:14:56 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/10 13:33:58 by gmarquis         ###   ########.fr       */
+/*   Created: 2024/07/09 18:02:17 by gmarquis          #+#    #+#             */
+/*   Updated: 2024/07/09 18:09:53 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parse.h"
+#include "../../includes/libft.h"
 
-void	ft_free_tokens(t_token **tokens)
+static void	ft_strncpy_recursive(char *dest, const char *src, size_t n,
+	size_t i)
 {
-	t_token	*tmp;
-	t_token	*swap;
-
-	tmp = *tokens;
-	while (tmp)
+	if (i >= n || src[i] == '\0')
 	{
-		swap = tmp->next;
-		tmp->value = ft_free_tab2d(tmp->value);
-		free(tmp);
-		tmp = swap;
+		if (i < n)
+		{
+			dest[i] = '\0';
+			ft_strncpy_recursive(dest, src, n, i + 1);
+		}
+		return ;
 	}
-	*tokens = NULL;
+	dest[i] = src[i];
+	ft_strncpy_recursive(dest, src, n, i + 1);
 }
 
-void	ft_quit(t_infos *s_infos, char *message, int out)
+char	*ft_strncpy(char *dest, const char *src, size_t n)
 {
-	ft_free_tokens(&(s_infos->tokens));
-	ft_exit(out, message);
+	ft_strncpy_recursive(dest, src, n, 0);
+	return (dest);
 }

@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/06/16 21:43:32 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:09:49 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_infos
 	char			*history_file;
 	char			*input;
 	int				count_pipes;
+	int				tmpfile_counter;
 	t_token			*tokens;
 }					t_infos;
 
@@ -71,6 +72,7 @@ typedef struct s_tokenizer
 {
 	char	*input;
 	char	*buffer;
+	char	*tmp_buffer;
 	char	*new_buffer;
 	char	*heredoc_buffer;
 	char	op[2];
@@ -81,10 +83,28 @@ typedef struct s_tokenizer
 	t_type	current_type;
 }			t_tokenizer;
 
+//		ex_env.c			//
+int		ft_get_len_pre_expand(char *input);
+char	*ft_new_ex(t_infos *infos, char *buffer, char *expanded);
+char	*ft_expand_env_var(t_infos *infos, char *str, char **envp);
+void	ft_handle_env_var(t_tokenizer *tok, t_infos *infos);
+
+//		heredoc.c			//
+void	ft_clear_heredoc_buffer(t_tokenizer *tok);
+void	ft_extract_heredoc_delimiter(t_tokenizer *tok);
+void	ft_collect_heredoc_lines(t_tokenizer *tok, char *delimiter, t_infos *infos);
+void	ft_handle_heredoc(t_tokenizer *tok, t_infos *infos);
+void	ft_read_heredoc(t_tokenize_state *state, t_infos *infos,
+	char *delimiter);
+
 //		init.c				//
+t_token	*ft_new_token(t_type type, char *value);
 void	ft_init_tokenize_state(t_tokenize_state *state, t_infos *infos);
 void	ft_init_tokenizer(t_tokenizer *tok, t_infos *infos);
 t_infos	ft_init_infos(char **envp);
+
+//		make_tmp.c			//
+void	ft_generate(t_tokenizer *tok, t_infos *infos, char *delimiter);
 
 //		out.c				//
 void	ft_free_tokens(t_token **tokens);
@@ -98,20 +118,15 @@ void	ft_handle_sigint(int sig);
 void	ft_sighandler(void);
 
 //		token_utils.c		//
-t_token	*ft_new_token(t_type type, char *value);
-void	ft_add_token(t_token **tokens, t_type type, char *value);
+void	ft_add_token(t_infos *infos, t_token **tokens, t_type type, char *value);
 void	ft_add_token_from_buffer(t_infos *infos, t_tokenizer *tok, int *j);
-void	ft_resize_buffer(t_tokenize_state *state);
-void	ft_expand_buffer(t_tokenizer *tok);
+void	ft_resize_buffer(t_infos *infos, t_tokenize_state *state);
+void	ft_expand_buffer(t_infos *infos, t_tokenizer *tok);
 
 //		tokenize.c			//
-t_type	ft_get_token_type(char *str);
+void	ft_handle_quote(t_tokenizer *tok);
 void	ft_tokenize(t_infos *s_infos);
 
-//		tokenize++.c		//
-char	*ft_expand_env_var(char *str, char **envp);
-void	ft_handle_quote(t_tokenizer *tok);
-void	ft_handle_env_var(t_tokenizer *tok, t_infos *infos);
 
 //		surcouche.c		//
 //void	ft_surcouche(t_infos *infos);

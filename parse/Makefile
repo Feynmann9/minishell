@@ -6,19 +6,21 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/06/12 22:42:00 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/07/09 21:22:12 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = srcs/init.c $\
+SRCS = srcs/ex_env.c $\
+srcs/heredoc.c $\
+srcs/init.c $\
 srcs/main.c $\
+srcs/make_tmp.c $\
 srcs/out.c $\
 srcs/pour_les_tests.c $\
 srcs/sighandler.c $\
 srcs/surcouche.c $\
 srcs/token_utils.c $\
-srcs/tokenize.c $\
-srcs/tokenize++.c
+srcs/tokenize.c
 
 LIBFT_PATH = ../includes/libft/
 
