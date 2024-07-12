@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:29:58 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/10 15:50:44 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:24:29 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char	*ft_new_ex(t_infos *infos, char *buffer, char *expanded)
 		i++;
 		j++;
 	}
-	new[j] = '\0';
-	return (new);
+	buffer = ft_free_str(buffer);
+	return (new[j] = '\0', new);
 }
 
 static char	*ft_extract_env_name(t_infos *infos, const char *input)

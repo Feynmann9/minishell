@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:35:26 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/10 14:21:21 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/11 19:21:16 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_token	*ft_new_token(t_type type, char *value)
 	token->value = malloc(2 * sizeof(char *));
 	token->value[0] = ft_strdup(value);
 	token->value[1] = NULL;
-	token->next = NULL;
+	token->NEXT = NULL;
 	return (token);
 }
 

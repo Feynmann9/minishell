@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:21:22 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/10 16:13:27 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:10:59 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ void	ft_add_token(t_infos *infos, t_token **tokens, t_type type, char *value)
 		ft_quit(infos, "Error: malloc token value failed\n", 2);
 	new->value[0] = ft_strdup(value);
 	new->value[1] = NULL;
-	new->next = NULL;
+	new->NEXT = NULL;
 	if (*tokens == NULL)
 		*tokens = new;
 	else
 	{
 		tmp = *tokens;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
+		while (tmp->NEXT)
+			tmp = tmp->NEXT;
+		tmp->NEXT = new;
 	}
 }
 
@@ -56,8 +56,20 @@ void	ft_process_expanded_buffer(t_infos *infos, t_tokenizer *tok,
 		ft_add_token(infos, &infos->tokens, TOKEN_ENV, tok->buffer);
 }
 
-/*		ptn d'invalid read of size 1 sur le premier passage
-			et plusieurs leaks a gere						*/
+int	ft_verif_expand(t_tokenizer *tok)
+{
+	int	len;
+
+	len = ft_strlen(tok->input);
+	if (tok->i + ft_get_len_pre_expand(tok->buffer) < len)
+	{
+		if(tok->input[tok->i + ft_get_len_pre_expand(tok->buffer)] == ' ')
+			return(1);
+	}
+	return(0);
+}
+
+/*		1 leaks par passage						*/
 void	ft_add_token_from_buffer(t_infos *infos, t_tokenizer *tok, int *j)
 {
 	char	*expanded;
@@ -69,7 +81,7 @@ void	ft_add_token_from_buffer(t_infos *infos, t_tokenizer *tok, int *j)
 				&& ft_strchr(tok->buffer, '$')) || tok->input[tok->i] == '$')
 		{
 			expanded = ft_expand_env_var(infos, tok->buffer, infos->envp);
-			if (tok->input[tok->i + ft_get_len_pre_expand(tok->buffer)] == ' ')
+			if (ft_verif_expand(tok))
 				ft_add_token(infos, &infos->tokens, TOKEN_ENV, expanded);
 			else
 				ft_process_expanded_buffer(infos, tok, expanded);
@@ -85,18 +97,19 @@ void	ft_resize_buffer(t_infos *infos, t_tokenize_state *state)
 {
 	char	*new_buffer;
 
-	new_buffer = malloc(state->buffer_size * 2 * sizeof(char));
+	new_buffer = malloc(state->buffer_size * 2);
 	if (!new_buffer)
 		ft_quit(infos, "Error: malloc failed\n", 2);
 	ft_memcpy(new_buffer, state->buffer, state->buffer_size);
 	state->buffer = ft_free_str(state->buffer);
 	state->buffer = new_buffer;
+	new_buffer = NULL;
 	state->buffer_size *= 2;
 }
 
 void	ft_expand_buffer(t_infos *infos, t_tokenizer *tok)
 {
-	tok->new_buffer = malloc(tok->buffer_size * 2 * sizeof(char));
+	tok->new_buffer = malloc(tok->buffer_size * 2);
 	if (!tok->new_buffer)
 		ft_quit(infos, "Error: malloc failed\n", 2);
 	ft_memcpy(tok->new_buffer, tok->buffer, tok->buffer_size);

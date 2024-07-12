@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/10 13:09:49 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/12 13:23:45 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef enum s_type
 	TOKEN_PIPE,				//	|
 	TOKEN_REDIRECT_IN,		//	<
 	TOKEN_HEREDOC,			//	<<
-	TOKEN_HEREDOC_WORD,		//	heredoc word
+	TOKEN_HEREDOC_WORD,		//	heredoc file
 	TOKEN_HEREDOC_DELIMITER,//	heredoc delimiter
 	TOKEN_REDIRECT_OUT,		//	>
 	TOKEN_REDIRECT_APPEND,	//	>>
@@ -44,8 +44,25 @@ typedef struct s_token
 {
 	t_type			type;
 	char			**value;
-	struct s_token	*next;
+	struct s_token	*NEXT;
 }					t_token;
+
+//		Tu recois ca en sorti de parse		//
+
+typedef struct s_files
+{
+	int				type;		//	le type du fichier. pour in = < ou <<. pour out = > ou >>
+	char			*file;		//	le fichier
+	struct s_files	*NEXT;		//	si NEXT != NULL alors il y'a un autre infiles
+}			t_files;
+
+typedef struct s_tok
+{
+	char			**cmd;		//	La liste de comande parser
+	t_files			*infile;	//	les infiles avec leurs type
+	t_files			*outfile;	//	les outfiles avec leurs type
+	struct s_tok	*NEXT;		//	si NEXT != NULL alors il y'a un pipe
+}			t_tok;
 
 typedef struct s_infos
 {
@@ -55,6 +72,7 @@ typedef struct s_infos
 	int				count_pipes;
 	int				tmpfile_counter;
 	t_token			*tokens;
+	t_tok			*tok;
 }					t_infos;
 
 typedef struct s_tokenize_state
@@ -129,6 +147,6 @@ void	ft_tokenize(t_infos *s_infos);
 
 
 //		surcouche.c		//
-//void	ft_surcouche(t_infos *infos);
+void	ft_surcouche(t_infos *infos);
 
 #endif

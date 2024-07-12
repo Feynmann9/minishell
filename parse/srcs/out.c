@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:14:56 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/10 13:33:58 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/11 09:38:25 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_free_tokens(t_token **tokens)
 	tmp = *tokens;
 	while (tmp)
 	{
-		swap = tmp->next;
+		swap = tmp->NEXT;
 		tmp->value = ft_free_tab2d(tmp->value);
 		free(tmp);
 		tmp = swap;

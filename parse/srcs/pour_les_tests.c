@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/10 13:12:07 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/12 10:46:32 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	ft_print_tokens(t_token *tokens)
 			ft_printf(", %s", tmp->value[i]);
 		ft_printf("\n");
 		count_token++;
-		tmp = tmp->next;
+		tmp = tmp->NEXT;
 	}
-	ft_printf("Nombre de tokens: %d\n", count_token);
+	ft_printf("Nombre de tokens: %d\n\n", count_token);
 }
 /*
 bash --posix
