@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/12 10:46:32 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/13 11:41:43 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,61 @@ void	ft_print_tokens(t_token *tokens)
 		tmp = tmp->NEXT;
 	}
 	ft_printf("Nombre de tokens: %d\n\n", count_token);
+}
+
+//		print surcouche		//
+
+void	ft_print_files(t_files *files)
+{
+	while (files)
+	{
+		if (files->type == TOKEN_REDIRECT_IN)
+			ft_printf("  File: %s, Type: IN_FILE\n", files->file);
+		else if (files->type == TOKEN_HEREDOC_WORD)
+			ft_printf("  File: %s, Type: HEREDOC\n", files->file);
+		else if (files->type == TOKEN_REDIRECT_OUT)
+			ft_printf("  File: %s, Type: OUT_FILE\n", files->file);
+		else if (files->type == TOKEN_REDIRECT_APPEND)
+			ft_printf("  File: %s, Type: APPEND\n", files->file);
+		files = files->NEXT;
+	}
+}
+
+void	ft_print_tok(t_tok *tok)
+{
+	int	i;
+
+	while (tok)
+	{
+		ft_printf("Command: ");
+		if (tok->cmd)
+		{
+			i = 0;
+			while (tok->cmd[i])
+			{
+				ft_printf("%s ", tok->cmd[i]);
+				i++;
+			}
+		}
+		ft_printf("\nInput files:\n");
+		ft_print_files(tok->infile);
+		ft_printf("Output files:\n");
+		ft_print_files(tok->outfile);
+		tok = tok->NEXT;
+		if (tok)
+			ft_printf("\n--- Next Command ---\n\n");
+	}
+}
+
+void	ft_check_and_print_tok(t_infos *infos)
+{
+	ft_printf("\n/----PRINT----\\\n\n");
+	if (!infos->tok)
+	{
+		ft_printf("No commands found.\n");
+		return ;
+	}
+	ft_print_tok(infos->tok);
 }
 /*
 bash --posix

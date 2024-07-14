@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:40:38 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/12 13:46:25 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/13 11:40:47 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void ft_free_files(t_files *files)
 	while (files)
 	{
 		temp = files;
-		files = files->NEXT;
+		if(files->NEXT != NULL)
+			files = files->NEXT;
 		temp->file = ft_free_str(temp->file);
 		free(temp);
 	}
@@ -32,6 +33,7 @@ void ft_free_tok(t_tok *tok)
 	t_tok	*temp;
 	int		i;
 
+	ft_printf("/-----FREE-----\\\n");
 	while (tok)
 	{
 		temp = tok;
@@ -52,62 +54,6 @@ void ft_free_tok(t_tok *tok)
 	}
 }
 
-//		print tok		//
-
-void ft_print_files(t_files *files)
-{
-	while (files)
-	{
-		if (files->type == TOKEN_REDIRECT_IN)
-			ft_printf("  File: %s, Type: IN_FILE\n", files->file);
-		else if (files->type == TOKEN_HEREDOC_WORD)
-			ft_printf("  File: %s, Type: HEREDOC\n", files->file);
-		else if (files->type == TOKEN_REDIRECT_OUT)
-			ft_printf("  File: %s, Type: OUT_FILE\n", files->file);
-		else if (files->type == TOKEN_REDIRECT_APPEND)
-			ft_printf("  File: %s, Type: APPEND\n", files->file);
-		files = files->NEXT;
-	}
-}
-
-void ft_print_tok(t_tok *tok)
-{
-	int	i;
-
-	while (tok)
-	{
-		ft_printf("Command: ");
-		if (tok->cmd)
-		{
-			i = 0;
-			while (tok->cmd[i])
-			{
-				ft_printf("%s ", tok->cmd[i]);
-				i++;
-			}
-		}
-		ft_printf("\n");
-		ft_printf("Input files:\n");
-		ft_print_files(tok->infile);
-		ft_printf("Output files:\n");
-		ft_print_files(tok->outfile);
-		tok = tok->NEXT;
-		if (tok)
-			ft_printf("\n--- Next Command ---\n\n");
-	}
-}
-
-void ft_check_and_print_tok(t_infos *infos)
-{
-	ft_printf("PRINT:\n");
-	if (!infos->tok)
-	{
-		ft_printf("No commands found.\n");
-		return ;
-	}
-	ft_print_tok(infos->tok);
-}
-
 //		init/add		//
 
 t_tok	*ft_init_tok()
@@ -124,36 +70,22 @@ t_tok	*ft_init_tok()
 	return (new_tok);
 }
 
-void ft_add_file(t_files **file_list, int type, char *file)
-{
-	t_files *new_file;
-	new_file = malloc(sizeof(t_files));
-	if (!new_file)
-		return ;
-	new_file->type = type;
-	new_file->file = ft_strdup(file);
-	new_file->NEXT = *file_list;
-	*file_list = new_file;
-}
-
 void ft_add_cmd(t_tok *current_tok, char *cmd)
 {
 	int count = 0;
 	int i = 0;
 	char **new_cmds;
-	char **old_cmds = current_tok->cmd;
+	char **old_cmds;
 
+	old_cmds = current_tok->cmd;
 	if (old_cmds)
 	{
 		while (old_cmds[count])
-		{
 			count++;
-		}
 	}
 	new_cmds = malloc(sizeof(char *) * (count + 2));
 	if (!new_cmds)
 		return;
-
 	while (i < count)
 	{
 		new_cmds[i] = old_cmds[i];
@@ -164,6 +96,45 @@ void ft_add_cmd(t_tok *current_tok, char *cmd)
 	new_cmds[count + 1] = NULL;
 	free(current_tok->cmd);
 	current_tok->cmd = new_cmds;
+}
+
+void ft_add_file(t_tok *current_tok, int type, char *file)
+{
+	t_tok *new_tok = NULL;
+	t_files *new_file;
+
+	if (!current_tok)
+	{
+		new_tok = ft_init_tok();
+		ft_add_cmd(new_tok, NULL);
+		current_tok = new_tok;
+	}
+	else
+		new_tok = current_tok;
+	new_file = malloc(sizeof(t_files));
+	if (!new_file)
+		return ;
+	new_file->type = type;
+	new_file->file = ft_strdup(file);
+	new_file->NEXT = NULL;
+	if (type == TOKEN_REDIRECT_IN || type == TOKEN_HEREDOC)
+	{
+		if(new_file->NEXT != NULL)
+		{
+			while (new_file->NEXT != NULL)
+				new_file->NEXT = new_tok->infile;
+		}
+		current_tok->infile = new_file;
+	}
+	else if (type == TOKEN_REDIRECT_OUT || type == TOKEN_REDIRECT_APPEND)
+	{
+		if(new_file->NEXT != NULL)
+		{
+			while (new_file->NEXT != NULL)
+				new_file->NEXT = new_tok->outfile;
+		}
+		current_tok->outfile = new_file;
+	}
 }
 
 //		code principal		//
@@ -177,10 +148,9 @@ void	ft_surcouche(t_infos *infos)
 	int	tmp_type = 0;
 
 	ft_print_tokens(infos->tokens);
-	ft_printf("SURCOUCHE:\n");
+	ft_printf("/--SURCOUCHE--\\\n");
 	while (tokens)
 	{
-		ft_printf("ici\n");		//	test en cours, degfault avec "< out bla"
 		if (tokens->type == TOKEN_COMMAND || tokens->type == TOKEN_ENV)
 		{
 			if (!current_tok)
@@ -204,9 +174,9 @@ void	ft_surcouche(t_infos *infos)
 			{
 				tokens = tokens->NEXT;
 				if (tokens->type == TOKEN_COMMAND)
-					ft_add_file(&current_tok->infile, TOKEN_REDIRECT_IN, tokens->value[0]);
+					ft_add_file(current_tok, TOKEN_REDIRECT_IN, tokens->value[0]);
 				else if (tokens->type == TOKEN_HEREDOC_WORD)
-					ft_add_file(&current_tok->infile, TOKEN_HEREDOC_WORD, tokens->value[0]);
+					ft_add_file(current_tok, TOKEN_HEREDOC_WORD, tokens->value[0]);
 			}
 		}
 		else if (tokens->type == TOKEN_REDIRECT_OUT || tokens->type == TOKEN_REDIRECT_APPEND)
@@ -216,9 +186,9 @@ void	ft_surcouche(t_infos *infos)
 				tmp_type = tokens->type;
 				tokens = tokens->NEXT;
 				if (tmp_type == TOKEN_REDIRECT_OUT && tokens->type == TOKEN_COMMAND)
-					ft_add_file(&current_tok->outfile, TOKEN_REDIRECT_OUT, tokens->value[0]);
+					ft_add_file(current_tok, TOKEN_REDIRECT_OUT, tokens->value[0]);
 				else if (tmp_type == TOKEN_REDIRECT_APPEND && tokens->type == TOKEN_COMMAND)
-					ft_add_file(&current_tok->outfile, TOKEN_REDIRECT_APPEND, tokens->value[0]);
+					ft_add_file(current_tok, TOKEN_REDIRECT_APPEND, tokens->value[0]);
 				tmp_type = 0;
 			}
 		}
@@ -227,7 +197,10 @@ void	ft_surcouche(t_infos *infos)
 			current_tok = NULL;
 			infos->count_pipes++;
 		}
-		tokens = tokens->NEXT;
+		if(tokens->NEXT != NULL)
+			tokens = tokens->NEXT;
+		else
+			break ;
 	}
 	infos->tok = head;
 	ft_check_and_print_tok(infos);
