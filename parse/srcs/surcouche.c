@@ -6,53 +6,11 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:40:38 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/13 11:40:47 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:57:03 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parse.h"
-
-//		free tok		//
-
-void ft_free_files(t_files *files)
-{
-	t_files *temp;
-
-	while (files)
-	{
-		temp = files;
-		if(files->NEXT != NULL)
-			files = files->NEXT;
-		temp->file = ft_free_str(temp->file);
-		free(temp);
-	}
-}
-
-void ft_free_tok(t_tok *tok)
-{
-	t_tok	*temp;
-	int		i;
-
-	ft_printf("/-----FREE-----\\\n");
-	while (tok)
-	{
-		temp = tok;
-		if (tok->cmd)
-		{
-			i = 0;
-			while (tok->cmd[i])
-			{
-				free(tok->cmd[i]);
-				i++;
-			}
-			free(tok->cmd);
-		}
-		ft_free_files(tok->infile);
-		ft_free_files(tok->outfile);
-		tok = tok->NEXT;
-		free(temp);
-	}
-}
 
 //		init/add		//
 
@@ -85,55 +43,48 @@ void ft_add_cmd(t_tok *current_tok, char *cmd)
 	}
 	new_cmds = malloc(sizeof(char *) * (count + 2));
 	if (!new_cmds)
-		return;
+		return ;
 	while (i < count)
 	{
 		new_cmds[i] = old_cmds[i];
 		i++;
 	}
-
 	new_cmds[count] = ft_strdup(cmd);
 	new_cmds[count + 1] = NULL;
 	free(current_tok->cmd);
 	current_tok->cmd = new_cmds;
 }
-
 void ft_add_file(t_tok *current_tok, int type, char *file)
 {
-	t_tok *new_tok = NULL;
 	t_files *new_file;
+	t_files **file_list;
+	t_files *tmp;
 
 	if (!current_tok)
 	{
-		new_tok = ft_init_tok();
-		ft_add_cmd(new_tok, NULL);
-		current_tok = new_tok;
+		current_tok = ft_init_tok();
+		ft_add_cmd(current_tok, NULL);
 	}
-	else
-		new_tok = current_tok;
 	new_file = malloc(sizeof(t_files));
 	if (!new_file)
 		return ;
 	new_file->type = type;
 	new_file->file = ft_strdup(file);
 	new_file->NEXT = NULL;
-	if (type == TOKEN_REDIRECT_IN || type == TOKEN_HEREDOC)
-	{
-		if(new_file->NEXT != NULL)
-		{
-			while (new_file->NEXT != NULL)
-				new_file->NEXT = new_tok->infile;
-		}
-		current_tok->infile = new_file;
-	}
+	if (type == TOKEN_REDIRECT_IN || type == TOKEN_HEREDOC_WORD)
+		file_list = &current_tok->infile;
 	else if (type == TOKEN_REDIRECT_OUT || type == TOKEN_REDIRECT_APPEND)
+		file_list = &current_tok->outfile;
+	else
+		return ;
+	if (*file_list == NULL)
+		*file_list = new_file;
+	else
 	{
-		if(new_file->NEXT != NULL)
-		{
-			while (new_file->NEXT != NULL)
-				new_file->NEXT = new_tok->outfile;
-		}
-		current_tok->outfile = new_file;
+		tmp = *file_list;
+		while (tmp->NEXT)
+			tmp = tmp->NEXT;
+		tmp->NEXT = new_file;
 	}
 }
 
@@ -172,11 +123,13 @@ void	ft_surcouche(t_infos *infos)
 		{
 			if (tokens->NEXT != NULL)
 			{
+				tmp_type = tokens->type;
 				tokens = tokens->NEXT;
-				if (tokens->type == TOKEN_COMMAND)
+				if (tmp_type == TOKEN_REDIRECT_IN && tokens->type == TOKEN_COMMAND)
 					ft_add_file(current_tok, TOKEN_REDIRECT_IN, tokens->value[0]);
-				else if (tokens->type == TOKEN_HEREDOC_WORD)
+				else if (tmp_type == TOKEN_HEREDOC && tokens->type == TOKEN_HEREDOC_WORD)
 					ft_add_file(current_tok, TOKEN_HEREDOC_WORD, tokens->value[0]);
+				tmp_type = 0;
 			}
 		}
 		else if (tokens->type == TOKEN_REDIRECT_OUT || tokens->type == TOKEN_REDIRECT_APPEND)
@@ -197,10 +150,7 @@ void	ft_surcouche(t_infos *infos)
 			current_tok = NULL;
 			infos->count_pipes++;
 		}
-		if(tokens->NEXT != NULL)
-			tokens = tokens->NEXT;
-		else
-			break ;
+		tokens = tokens->NEXT;
 	}
 	infos->tok = head;
 	ft_check_and_print_tok(infos);

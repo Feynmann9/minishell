@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/12 13:23:45 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:40:13 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,11 @@ void	ft_generate(t_tokenizer *tok, t_infos *infos, char *delimiter);
 //		out.c				//
 void	ft_free_tokens(t_token **tokens);
 void	ft_quit(t_infos *s_infos, char *message, int out);
+void	ft_free_tok(t_tok *tok);
 
 //		pour_les_tests.c	//
 void	ft_print_tokens(t_token *tokens);
+void	ft_check_and_print_tok(t_infos *infos);
 
 //		sighandler.c		//
 void	ft_handle_sigint(int sig);

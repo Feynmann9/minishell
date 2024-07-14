@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/13 11:41:43 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:16:31 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_print_tokens(t_token *tokens)
 
 //		print surcouche		//
 
-void	ft_print_files(t_files *files)
+static void	ft_print_files(t_files *files)
 {
 	while (files)
 	{
@@ -52,7 +52,7 @@ void	ft_print_files(t_files *files)
 	}
 }
 
-void	ft_print_tok(t_tok *tok)
+static void	ft_print_tok(t_tok *tok)
 {
 	int	i;
 
