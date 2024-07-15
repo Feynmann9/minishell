@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/15 19:33:23 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/15 22:37:14 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../exec.h"
+#include "../../merge.h"
 
 void	init(t_base **tmp_base, t_env *ev)
 {
@@ -50,24 +50,24 @@ char	*get_env_value(t_env *env, char *name)
 // pour test = ./exec echo "greg le fdp"
 // pour test = ./exec export nom="salope" (comment ft_env)
 
-void builtin(t_base *base, char **env)
+void builtin(t_infos *infos, char **env)
 {
-    if (base->command->args[1] == NULL)
+    if (infos->tok->cmd[1] == NULL)
     {
-        if (strcmp(base->command->cmd, "pwd") == 0)
+        if (strcmp(infos->tok->cmd[0], "pwd") == 0)
             ft_pwd(&base);
-        else if (strcmp(base->command->cmd, "cd") == 0)
+        else if (strcmp(infos->tok->cmd[0], "cd") == 0)
             ft_cd(&base, NULL);
-        else if (strcmp(base->command->cmd, "env") == 0)
+        else if (strcmp(infos->tok->cmd[0], "env") == 0)
             ft_env(&base);
-        else if (strcmp(base->command->cmd, "exit") == 0)
+        else if (strcmp(infos->tok->cmd[0], "exit") == 0)
             exit(EXIT_FAILURE);
-        else if (strcmp(base->command->cmd, "export") == 0)
+        else if (strcmp(infos->tok->cmd[0], "export") == 0)
         {
             ft_order_env(&base);
             ft_print_order(&base);
         }
-        else if (find_command(base->command->cmd, get_env_value(base->tmp_env, "PATH")) && base->command->pipe != 0)
+        else if (find_command(base->command->cmd, get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT != 0)
         {
             //printf("test1\n");
             ft_multi(base, env);
@@ -77,20 +77,20 @@ void builtin(t_base *base, char **env)
     }
     else
     {
-        if (strcmp(base->command->cmd, "echo") == 0)
+        if (strcmp(infos->tok->cmd[0], "echo") == 0)
             ft_echo(base->command->args);
-        else if (strcmp(base->command->cmd, "export") == 0)
+        else if (strcmp(infos->tok->cmd[0], "export") == 0)
             ft_export(&base, base->command->args[1]);
-        else if (strcmp(base->command->cmd, "unset") == 0)
+        else if (strcmp(infos->tok->cmd[0], "unset") == 0)
             ft_unset(&base, base->command->args[1]);
-        else if (strcmp(base->command->cmd, "cd") == 0)
+        else if (strcmp(infos->tok->cmd[0], "cd") == 0)
             ft_cd(&base, base->command->args[1]);
-        else if (find_command(base->command->cmd, get_env_value(base->tmp_env, "PATH")) && base->command->pipe != 0)
+        else if (find_command(infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT != 0)
         {
             //printf("test2\n");
             ft_multi(base, env);
         }
-        else if (find_command(base->command->cmd, get_env_value(base->tmp_env, "PATH")))
+        else if (find_command(infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
             ft_path(base, env);
     }
 }

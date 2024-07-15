@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/14 17:40:13 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:35:12 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,7 @@ typedef struct s_token
 	struct s_token	*NEXT;
 }					t_token;
 
-//		Tu recois ca en sorti de parse		//
-
-typedef struct s_files
-{
-	int				type;		//	le type du fichier. pour in = < ou <<. pour out = > ou >>
-	char			*file;		//	le fichier
-	struct s_files	*NEXT;		//	si NEXT != NULL alors il y'a un autre infiles
-}			t_files;
-
-typedef struct s_tok
-{
-	char			**cmd;		//	La liste de comande parser
-	t_files			*infile;	//	les infiles avec leurs type
-	t_files			*outfile;	//	les outfiles avec leurs type
-	struct s_tok	*NEXT;		//	si NEXT != NULL alors il y'a un pipe
-}			t_tok;
-
-typedef struct s_infos
-{
-	char			**envp;
-	char			*history_file;
-	char			*input;
-	int				count_pipes;
-	int				tmpfile_counter;
-	t_token			*tokens;
-	t_tok			*tok;
-}					t_infos;
+//		pour le taff		//
 
 typedef struct s_tokenize_state
 {
@@ -100,6 +74,34 @@ typedef struct s_tokenizer
 	char	quote_char;
 	t_type	current_type;
 }			t_tokenizer;
+
+//		Tu recois ca en sorti de parse		//
+
+typedef struct s_files
+{
+	int				type;		//	le type du fichier. pour in = < ou <<. pour out = > ou >>
+	char			*file;		//	le fichier
+	struct s_files	*NEXT;		//	si NEXT != NULL alors il y'a un autre infiles
+}			t_files;
+
+typedef struct s_tok
+{
+	char			**cmd;		//	La liste de comande parser
+	t_files			*infile;	//	les infiles avec leurs type
+	t_files			*outfile;	//	les outfiles avec leurs type
+	struct s_tok	*NEXT;		//	si NEXT != NULL alors il y'a un pipe
+}			t_tok;
+
+typedef struct s_infos
+{
+	char			**envp;
+	char			*history_file;
+	char			*input;
+	int				count_pipes;
+	int				tmpfile_counter;
+	t_token			*tokens;	//	NULL
+	t_tok			*tok;		//	ta partie
+}					t_infos;
 
 //		ex_env.c			//
 int		ft_get_len_pre_expand(char *input);

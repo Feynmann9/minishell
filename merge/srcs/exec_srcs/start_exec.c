@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   start_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/15 19:33:18 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/15 22:29:38 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../exec.h"
+#include "../../merge.h"
 
 void    new_env(t_env **ev, char *name_folder, char *value_folder)
 {
@@ -131,3 +131,5 @@ int main(int argc, char **argv, char **env)
     }
     return (0);
 }
+
+

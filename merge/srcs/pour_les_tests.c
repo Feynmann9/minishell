@@ -6,11 +6,11 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/15 20:17:00 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/15 22:28:06 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parse.h"
+#include "../merge.h"
 
 void	ft_print_tokens(t_token *tokens)
 {
@@ -74,7 +74,7 @@ static void	ft_print_tok(t_tok *tok)
 		ft_print_files(tok->outfile);
 		tok = tok->NEXT;
 		if (tok)
-			ft_printf("\n--- Next Command ---\n\n");
+			ft_printf("\n--- Next cmd via pipe ---\n\n");
 	}
 }
 
