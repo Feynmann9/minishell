@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 21:19:00 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/10 13:31:11 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:38:17 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	ft_give_index(int num, char *str)
 	int	len;
 	int	n;
 
+	ft_printf("nb = %d\n", num);
 	if (num == 0)
 	{
 		str[0] = '0';
@@ -44,7 +45,7 @@ static void	ft_give_index(int num, char *str)
 static void	ft_generate_temp_filename(char *buffer, size_t buffer_size,
 	int counter)
 {
-	char		counter_str[20];
+	char		counter_str[23];
 	const char	*prefix = "minishell_tmpfile_";
 	size_t		prefix_len;
 	size_t		counter_len;

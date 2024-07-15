@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 02:56:29 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/10 13:10:46 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:51:06 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	ft_tokenize(t_infos *infos)
 			ft_add_token_from_buffer(infos, &tok, &tok.j);
 			tok.current_type = TOKEN_COMMAND;
 		}
-		else if (tok.input[tok.i] == '|' || tok.input[tok.i] == '<'
-			|| tok.input[tok.i] == '>')
+		else if ((tok.input[tok.i] == '|' || tok.input[tok.i] == '<'
+			|| tok.input[tok.i] == '>') && !tok.quote_char)
 			ft_handle_operator(&tok, infos);
 		else if ((tok.input[tok.i] == '\'' || tok.input[tok.i] == '"')
 			&& (!tok.quote_char || tok.quote_char == tok.input[tok.i]))

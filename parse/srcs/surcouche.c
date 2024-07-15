@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:40:38 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/14 17:57:03 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:31:38 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,23 +102,21 @@ void	ft_surcouche(t_infos *infos)
 	ft_printf("/--SURCOUCHE--\\\n");
 	while (tokens)
 	{
-		if (tokens->type == TOKEN_COMMAND || tokens->type == TOKEN_ENV)
+		if (!current_tok)
 		{
-			if (!current_tok)
+			current_tok = ft_init_tok();
+			if (!head)
+				head = current_tok;
+			else
 			{
-				current_tok = ft_init_tok();
-				if (!head)
-					head = current_tok;
-				else
-				{
-					temp = head;
-					while (temp->NEXT)
-						temp = temp->NEXT;
-					temp->NEXT = current_tok;
-				}
+				temp = head;
+				while (temp->NEXT)
+					temp = temp->NEXT;
+				temp->NEXT = current_tok;
 			}
-			ft_add_cmd(current_tok, tokens->value[0]);
 		}
+		if (tokens->type == TOKEN_COMMAND || tokens->type == TOKEN_ENV)
+			ft_add_cmd(current_tok, tokens->value[0]);
 		else if (tokens->type == TOKEN_REDIRECT_IN || tokens->type == TOKEN_HEREDOC)
 		{
 			if (tokens->NEXT != NULL)
