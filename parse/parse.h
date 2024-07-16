@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:51 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/15 19:35:12 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:36:37 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #  define BUFFER_SIZE 64
 # endif
 
-# include "../includes/minishell.h"
+# include "../includes/libft/includes/libft.h"
 # include <ctype.h>
 # include <readline/history.h>
 # include <readline/readline.h>

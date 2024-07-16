@@ -6,11 +6,11 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:38:32 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/15 22:29:41 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:50:51 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../merge.h"
+#include "../../minishell.h"
 
 void	ft_lstadd_front_env(t_env **lst, t_env *new)
 {
@@ -41,11 +41,11 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 
 t_env   *ft_lstnew_env(char *name_folder, char *value_folder)
 {
-    t_env   *new = malloc(sizeof(t_env));
-    if (new == NULL)
-        return (NULL);
-    new->name_folder = name_folder;
-    new->value_folder = value_folder;
-    new->next = NULL;
-    return (new);
+	t_env   *new = malloc(sizeof(t_env));
+	if (new == NULL)
+		return (NULL);
+	new->name_folder = name_folder;
+	new->value_folder = value_folder;
+	new->next = NULL;
+	return (new);
 }

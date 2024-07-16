@@ -1,47 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 12:38:00 by gmarquis          #+#    #+#             */
+/*   Updated: 2024/07/16 13:49:44 by gmarquis         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../../merge.h"
+#include "../../minishell.h"
+
 /*
 void ft_unset(t_base **base, char *more) // Attention pd utilise un char ** pour le cas ou il y a plusieurs argument (Charles a dit)
 {
-    t_env *current = (*base)->tmp_env;
+	t_env *current = (*base)->tmp_env;
 
-    while (current)
+	while (current)
 	{
-        if (strcmp(current->name_folder, more) == 0)
+		if (strcmp(current->name_folder, more) == 0)
 		{
-            free(current->name_folder);
-            free(current->value_folder);
-            free(current);
-            return ;
-        }
-        current = current->next;
-    }
+			free(current->name_folder);
+			free(current->value_folder);
+			free(current);
+			return ;
+		}
+		current = current->next;
+	}
 }*/
 
-
-void ft_unset(t_base **base, char *more)
+void	ft_unset(t_base **base, char *more)
 {
-    t_env *current = (*base)->tmp_env;
-    t_env *prev = NULL;
+	t_env *current = (*base)->tmp_env;
+	t_env *prev = NULL;
 
-    while (current)
-    {
-        if (strcmp(current->name_folder, more) == 0)
-        {
-            if (prev)
-            {
-                prev->next = current->next;
-            }
-            else
-            {
-                (*base)->tmp_env = current->next;
-            }
-            free(current->name_folder);
-            free(current->value_folder);
-            free(current);
-            return;
-        }
-        prev = current;
-        current = current->next;
-    }
+	while (current)
+	{
+		if (strcmp(current->name_folder, more) == 0)
+		{
+			if (prev)
+			{
+				prev->next = current->next;
+			}
+			else
+			{
+				(*base)->tmp_env = current->next;
+			}
+			free(current->name_folder);
+			free(current->value_folder);
+			free(current);
+			return;
+		}
+		prev = current;
+		current = current->next;
+	}
 }

@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   merge.h                                            :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/15 21:18:11 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:51:19 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXEC_H
-# define EXEC_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-# include "../includes/minishell.h"
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 64
+# endif
+
+# include "../includes/libft/includes/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/stat.h>
@@ -25,10 +29,6 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <ctype.h>
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 64
-# endif
 
 	//		STRUCT EXEC		//
 
@@ -44,7 +44,7 @@ typedef struct s_env
 typedef struct s_base
 {
 	t_env			*tmp_env;
-	pid_t			pid;
+	//pid_t			pid;
 	struct s_cmd	*command;
 	struct s_base	*next;
 }					t_base;
@@ -59,49 +59,6 @@ typedef struct s_cmd
 }			t_cmd;
 
 	//		STRUCT PARSE		//
-
-typedef enum s_type
-{
-	TOKEN_COMMAND,
-	TOKEN_PIPE,				//	|
-	TOKEN_REDIRECT_IN,		//	<
-	TOKEN_HEREDOC,			//	<<
-	TOKEN_HEREDOC_WORD,		//	heredoc file
-	TOKEN_HEREDOC_DELIMITER,//	heredoc delimiter
-	TOKEN_REDIRECT_OUT,		//	>
-	TOKEN_REDIRECT_APPEND,	//	>>
-	TOKEN_QUOTE,			//	''
-	TOKEN_D_QUOTE,			//	""
-	TOKEN_ENV,				//	$
-}					t_type;
-
-//		pour l'exec		//
-
-typedef struct s_files
-{
-	int				type;		//	le type du fichier. pour in = < ou <<. pour out = > ou >>
-	char			*file;		//	le fichier
-	struct s_files	*NEXT;		//	si NEXT != NULL alors il y'a un autre infiles
-}			t_files;
-
-typedef struct s_tok
-{
-	char			**cmd;		//	La liste de comande parser; ls -l == cmd[0] = ls; cmd[1] = -l;
-	t_files			*infile;	//	les infiles avec leurs type
-	t_files			*outfile;	//	les outfiles avec leurs type
-	struct s_tok	*NEXT;		//	si NEXT != NULL alors il y'a un pipe
-}			t_tok;
-
-typedef struct s_infos
-{
-	char			*history_file;
-	char			*input;
-	int				count_pipes;
-	int				tmpfile_counter;
-	t_env			*tmp_env;
-	t_token			*tokens;	//	NULL
-	t_tok			*tok;		//	ta partie
-}					t_infos;
 
 //		pour le parse		//
 
@@ -138,13 +95,56 @@ typedef struct s_tokenizer
 	t_type	current_type;
 }			t_tokenizer;
 
+//		pour l'exec		//
+
+typedef enum s_type
+{
+	TOKEN_COMMAND,
+	TOKEN_PIPE,				//	|
+	TOKEN_REDIRECT_IN,		//	<
+	TOKEN_HEREDOC,			//	<<
+	TOKEN_HEREDOC_WORD,		//	heredoc file
+	TOKEN_HEREDOC_DELIMITER,//	heredoc delimiter
+	TOKEN_REDIRECT_OUT,		//	>
+	TOKEN_REDIRECT_APPEND,	//	>>
+	TOKEN_QUOTE,			//	''
+	TOKEN_D_QUOTE,			//	""
+	TOKEN_ENV,				//	$
+}					t_type;
+
+typedef struct s_files
+{
+	int				type;		//	le type du fichier. pour in = < ou <<. pour out = > ou >>
+	char			*file;		//	le fichier
+	struct s_files	*NEXT;		//	si NEXT != NULL alors il y'a un autre infiles
+}			t_files;
+
+typedef struct s_tok
+{
+	char			**cmd;		//	La liste de comande parser; ls -l == cmd[0] = ls; cmd[1] = -l;
+	t_files			*infile;	//	les infiles avec leurs type
+	t_files			*outfile;	//	les outfiles avec leurs type
+	struct s_tok	*NEXT;		//	si NEXT != NULL alors il y'a un pipe
+}			t_tok;
+
+typedef struct s_infos
+{
+	char			*history_file;
+	char			*input;
+	int				count_pipes;
+	int				tmpfile_counter;
+	t_env			*tmp_env;
+	t_token			*tokens;	//	NULL
+	t_tok			*tok;		//	ta partie
+}					t_infos;
+
 //			EXEC			//
 
 //			init_exec.c			//
 void	init(t_base **tmp_base, t_env *ev);
 void	init_env(t_env **ev, char **env);
 char	*get_env_value(t_env *env, char *name);
-void	builtin(t_base *base, char **env);
+void	builtin(t_infos *infos);
 
 //			start_exec.c			//
 void	new_env(t_env **ev, char *name_folder, char *value_folder);
@@ -156,37 +156,35 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env	*ft_lstnew_env(char *name_folder, char *value_folder);
 
 //			cd.c
-void	ft_cd(t_base **base, const char *folder);
-void set_env_value(t_env *env, const char *name, const char *value);
-//void set_env_value(t_env **env, const char *name, const char *value);
-//			pwd.c
+void	ft_cd(t_infos *infos, const char *folder);
+
 void	ft_pwd(t_base **base);
 
 //			env.c
-void    ft_env(t_base **base);
+void	ft_env(t_base **base);
 
 //			export.c
-void    ft_export(t_base **base, char *more);
-void    add_export(t_env *ev, char *name_folder, char *value_folder);
+void	ft_export(t_base **base, char *more);
+void	add_export(t_env *ev, char *name_folder, char *value_folder);
 
 //			unset.c
 void	ft_unset(t_base **base, char *more);
 
 //			path.c
-int     path_or_notpath(char *cmd);
+int		path_or_notpath(char *cmd);
 //void ft_path(t_base **base, char *cmd, char **argv, char **env);
-void ft_path(t_base *base, char **env);
-char *find_command(char *cmd, char *path_env);
-void    ft_echo(char **args);
+void	ft_path(t_base *base, char **env);
+char	*find_command(char *cmd, char *path_env);
+void	ft_echo(char **args);
 
 //int	ft_countwords_env(char *str, char set, char set2, char end);
 void	ft_split_env(char *tmp, char *new_1, char *new_2);
-void    ft_order_env(t_base **base);
-void    ft_print_order(t_base **base);
-void split_input(char *input, t_cmd *command);
+void	ft_order_env(t_base **base);
+void	ft_print_order(t_base **base);
+void	split_input(char *input, t_cmd *command);
 
-void    ft_multi(t_base *base, char **env);
-char    **ft_str(char **str, char **args);
+void	ft_multi(t_base *base, char **env);
+char	**ft_str(char **str, char **args);
 
 //		PARSE		//
 

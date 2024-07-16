@@ -6,14 +6,14 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/15 19:16:15 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:36:12 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
-#include "../includes/minishell.h"
+#include "../includes/libft/includes/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/stat.h>

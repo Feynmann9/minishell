@@ -6,11 +6,11 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:29:58 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/15 22:29:52 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:38:47 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../merge.h"
+#include "../../minishell.h"
 
 int	ft_get_len_pre_expand(char *input)
 {

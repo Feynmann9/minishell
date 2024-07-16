@@ -6,37 +6,37 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/07/15 22:38:08 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/07/16 13:02:38 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = main.c $\
-pour_les_tests
+SRCS = srcs/main.c $\
+srcs/pour_les_tests.c
 
-SRCS_BUIL = builtin/cd.c $\
-builtin/echo.c $\
-builtin/export.c $\
-builtin/pwd.c $\
-builtin/unset.c
+SRCS_BUIL = srcs/builtin/cd.c $\
+srcs/builtin/echo.c $\
+srcs/builtin/export.c $\
+srcs/builtin/pwd.c $\
+srcs/builtin/unset.c
 
-SRCS_EXEC = exec_srcs/env.c $\
-exec_srcs/exec.c $\
-exec_srcs/init_exec.c $\
-exec_srcs/path.c $\
-exec_srcs/start_exec.c $\
-exec_srcs/utils.c
+SRCS_EXEC = srcs/exec_srcs/env.c $\
+srcs/exec_srcs/exec.c $\
+srcs/exec_srcs/init_exec.c $\
+srcs/exec_srcs/path.c $\
+srcs/exec_srcs/start_exec.c $\
+srcs/exec_srcs/utils.c
 
 
-SRCS_PARS = pars_srcs/ex_env.c $\
-pars_srcs/heredoc.c $\
-pars_srcs/init_parse.c $\
-pars_srcs/make_tmp.c $\
-pars_srcs/out.c $\
-pars_srcs/pour_les_tests.c $\
-pars_srcs/sighandler.c $\
-pars_srcs/surcouche.c $\
-pars_srcs/token_utils.c $\
-pars_srcs/tokenize.c
+SRCS_PARS = srcs/pars_srcs/ex_env.c $\
+srcs/pars_srcs/heredoc.c $\
+srcs/pars_srcs/init_parse.c $\
+srcs/pars_srcs/make_tmp.c $\
+srcs/pars_srcs/out.c $\
+srcs/pars_srcs/pour_les_tests.c $\
+srcs/pars_srcs/sighandler.c $\
+srcs/pars_srcs/surcouche.c $\
+srcs/pars_srcs/token_utils.c $\
+srcs/pars_srcs/tokenize.c
 
 LIBFT_PATH = ../includes/libft/
 

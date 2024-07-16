@@ -6,11 +6,11 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:21:22 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/15 22:30:17 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:39:11 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../merge.h"
+#include "../../minishell.h"
 
 void	ft_add_token(t_infos *infos, t_token **tokens, t_type type, char *value)
 {

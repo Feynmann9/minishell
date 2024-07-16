@@ -6,11 +6,11 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:40:38 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/15 22:30:15 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:39:08 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../merge.h"
+#include "../../minishell.h"
 
 //		init/add		//
 

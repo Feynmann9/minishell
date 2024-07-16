@@ -6,49 +6,49 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/15 22:29:38 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:50:42 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../merge.h"
+#include "../../minishell.h"
 
 void    new_env(t_env **ev, char *name_folder, char *value_folder)
 {
-    t_env *tmp;
+	t_env *tmp;
 
-    if (!(tmp = malloc(sizeof(t_env))))
-        return ;
-    tmp->name_folder = ft_strdup(name_folder);
-    tmp->value_folder = ft_strdup(value_folder);
-    if (*ev != NULL)
-        ft_lstadd_back_env(ev, tmp);
-    else
-        ft_lstadd_front_env(ev, tmp);
+	if (!(tmp = malloc(sizeof(t_env))))
+		return ;
+	tmp->name_folder = ft_strdup(name_folder);
+	tmp->value_folder = ft_strdup(value_folder);
+	if (*ev != NULL)
+		ft_lstadd_back_env(ev, tmp);
+	else
+		ft_lstadd_front_env(ev, tmp);
 }
 
 void	print_env(t_env *ev)
 {
-    while (ev)
-    {
-        if (strcmp(ev->name_folder, "PWD") == 0)
+	while (ev)
+	{
+		if (strcmp(ev->name_folder, "PWD") == 0)
 			printf("%s\n", ev->value_folder);
-        ev = ev->next;
-    }
+		ev = ev->next;
+	}
 }
 
 void	init_env(t_env **ev, char **env)
 {
-    char    **tmp;
+	char    **tmp;
 	char new_1[5000];
 	char new_2[5000];
 
-    tmp = env;
-    while (*tmp)
-    {
+	tmp = env;
+	while (*tmp)
+	{
 		ft_split_env(*tmp, new_1, new_2);
-        new_env(ev, new_1, new_2);
-        tmp++;
-    }
+		new_env(ev, new_1, new_2);
+		tmp++;
+	}
 }
 
 void	ft_split_env(char *tmp, char *new_1, char *new_2)
@@ -86,50 +86,49 @@ void	ft_split_env(char *tmp, char *new_1, char *new_2)
 
 void split_input(char *input, t_cmd *command)
 {
-    int arg_count = 0;
-    char *token;
+	int arg_count = 0;
+	char *token;
 
-    token = strtok(input, " ");
-    command->cmd = strdup(token);
-    if (token)
-        command->cmd = strdup(token);
-    while (token != NULL)
-    {
-        command->args = realloc(command->args, sizeof(char *) * (arg_count + 1));
-        command->args[arg_count] = strdup(token);
-        if (strcmp(token, "|") == 0)
-            command->pipe++;
-        token = strtok(NULL, " ");
-        arg_count++;
-    }
-    command->args = realloc(command->args, sizeof(char *) * (arg_count + 1));
-    command->args[arg_count] = NULL;
+	token = strtok(input, " ");
+	command->cmd = strdup(token);
+	if (token)
+		command->cmd = strdup(token);
+	while (token != NULL)
+	{
+		command->args = realloc(command->args, sizeof(char *) * (arg_count + 1));
+		command->args[arg_count] = strdup(token);
+		if (strcmp(token, "|") == 0)
+			command->pipe++;
+		token = strtok(NULL, " ");
+		arg_count++;
+	}
+	command->args = realloc(command->args, sizeof(char *) * (arg_count + 1));
+	command->args[arg_count] = NULL;
 }
 
-
-int main(int argc, char **argv, char **env)
+/*int main(int argc, char **argv, char **env)
 {
-    t_env *ev = NULL;
-    t_base *base = NULL;
-    char *input;
+	t_env *ev = NULL;
+	t_base *base = NULL;
+	char *input;
 
-    if (argc > 3 || argv == NULL)
-    {
-        ft_printf("\033[32mToo many argc, sorry\033[0m\n");
-        return (0);
-    }
-    init_env(&ev, env);
-    init(&base, ev);
-    while (1)
-    {
-        input = readline("\033[32mCumShell $> \033[0m");
-        if (!input)
-            break ;
-        split_input(input, base->command);
-        builtin(base, env);
-        free(input);
-    }
-    return (0);
-}
+	if (argc > 3 || argv == NULL)
+	{
+		ft_printf("\033[32mToo many argc, sorry\033[0m\n");
+		return (0);
+	}
+	init_env(&ev, env);
+	init(&base, ev);
+	while (1)
+	{
+		input = readline("\033[32mCumShell $> \033[0m");
+		if (!input)
+			break ;
+		split_input(input, base->command);
+		builtin(base, env);
+		free(input);
+	}
+	return (0);
+}*/
 
 
