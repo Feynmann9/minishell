@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 15:10:31 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 23:00:20 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,7 @@ void	builtin(t_infos *infos)
 		}
 		else if (find_command(infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
 			ft_path(infos);
+		/*else if (infos->tok->infile || infos->tok->outfile)
+			handle_redirections(infos->tok);*/
 	}
 }

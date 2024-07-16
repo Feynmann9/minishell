@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:21:22 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 12:39:11 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:15:55 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_add_token(t_infos *infos, t_token **tokens, t_type type, char *value)
 	}
 }
 
-void	ft_process_expanded_buffer(t_infos *infos, t_tokenizer *tok,
+static void	ft_process_expanded_buffer(t_infos *infos, t_tokenizer *tok,
 	char *expanded)
 {
 	if (ft_strchr(tok->buffer, '$'))
@@ -54,19 +54,6 @@ void	ft_process_expanded_buffer(t_infos *infos, t_tokenizer *tok,
 		tok->tmp_buffer = ft_strdup(tok->buffer);
 	if (!tok->tmp_buffer)
 		ft_add_token(infos, &infos->tokens, TOKEN_ENV, tok->buffer);
-}
-
-int	ft_verif_expand(t_tokenizer *tok)
-{
-	int	len;
-
-	len = ft_strlen(tok->input);
-	if (tok->i + ft_get_len_pre_expand(tok->buffer) < len)
-	{
-		if(tok->input[tok->i + ft_get_len_pre_expand(tok->buffer)] == ' ')
-			return(1);
-	}
-	return(0);
 }
 
 /*		1 leaks par passage						*/

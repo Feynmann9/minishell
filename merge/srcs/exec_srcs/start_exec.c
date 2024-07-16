@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 14:40:20 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 23:13:21 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	new_env(t_env **ev, char *name_folder, char *value_folder)
 		return ;
 	tmp->name_folder = ft_strdup(name_folder);
 	tmp->value_folder = ft_strdup(value_folder);
-	if (*ev != NULL)
+	if (ev)
 		ft_lstadd_back_env(ev, tmp);
 	else
 		ft_lstadd_front_env(ev, tmp);
@@ -39,10 +39,11 @@ void	print_env(t_env *ev)
 void	init_env(t_env **ev, char **env)
 {
 	char	**tmp;
-	char	new_1[5000];
-	char	new_2[5000];
+	char	*new_1 = ft_calloc(100, sizeof(char));
+	char	*new_2 = ft_calloc(100, sizeof(char));
 
 	tmp = env;
+	ev = NULL;
 	while (*tmp)
 	{
 		ft_split_env(*tmp, new_1, new_2);
@@ -65,19 +66,15 @@ void	ft_split_env(char *tmp, char *new_1, char *new_2)
 			i++;
 			j++;
 		}
-		while (new_1[j])
-			new_1[j++] = '\0';
 		//printf("new_1 = %s\n", new_1);
 		j = 0;
 		i++;
-		while (tmp[i] != '\0')
+		while (tmp[i])
 		{
 			new_2[j] = tmp[i];
 			i++;
 			j++;
 		}
-		while (new_2[j])
-			new_2[j++] = '\0';
 		//printf("new_2 = %s\n", new_2);
 		//free(new_1);
 		//free(new_2);

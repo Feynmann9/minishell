@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:35:26 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 14:22:03 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 23:10:19 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,18 @@ t_infos	ft_init_infos(char **envp)
 	infos.tokens = NULL;
 	infos.tok = NULL;
 	return (infos);
+}
+
+t_tok	*ft_init_tok(void)
+{
+	t_tok	*new_tok;
+
+	new_tok = malloc(sizeof(t_tok));
+	if (!new_tok)
+		ft_exit(2, "Error: echec malloc new_tok.\n;");
+	new_tok->cmd = NULL;
+	new_tok->infile = NULL;
+	new_tok->outfile = NULL;
+	new_tok->NEXT = NULL;
+	return (new_tok);
 }

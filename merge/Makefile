@@ -6,7 +6,7 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/07/16 15:14:33 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/07/16 22:59:29 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ srcs/pars_srcs/out.c $\
 srcs/pars_srcs/sighandler.c $\
 srcs/pars_srcs/surcouche.c $\
 srcs/pars_srcs/token_utils.c $\
-srcs/pars_srcs/tokenize.c
+srcs/pars_srcs/tokenize.c $\
+srcs/pars_srcs/verif.c
 
 LIBFT_PATH = ../includes/libft/
 
@@ -43,7 +44,7 @@ NAME = minishell
 
 MK = mkdir
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -MMD -MP
+CFLAGS = -Wall -Wextra -Werror -MMD -MP -g3
 LDFLAGS = -L/usr/lib -lreadline
 CPPFLAGS = -I/usr/include/readline
 RM = rm -rf

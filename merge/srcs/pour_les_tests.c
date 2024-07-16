@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 15:25:02 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 21:24:43 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,11 @@ static void	ft_print_tok(t_tok *tok)
 			}
 		}
 		ft_printf("\nInput files:\n");
+
 		ft_print_files(tok->infile);
+
 		ft_printf("Output files:\n");
+
 		ft_print_files(tok->outfile);
 		tok = tok->NEXT;
 		if (tok)

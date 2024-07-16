@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:14:56 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 12:39:03 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:08:34 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	ft_quit(t_infos *s_infos, char *message, int out)
 }
 
 //		free tok		//
-
 static void	ft_free_files(t_files *files)
 {
 	t_files	*tmp;
@@ -50,11 +49,11 @@ static void	ft_free_files(t_files *files)
 	}
 }
 
+	//ft_printf("/-----FREE-----\\\n");
 void	ft_free_tok(t_tok *tok)
 {
 	t_tok	*tmp;
 
-	//ft_printf("/-----FREE-----\\\n");
 	while (tok)
 	{
 		tmp = tok;

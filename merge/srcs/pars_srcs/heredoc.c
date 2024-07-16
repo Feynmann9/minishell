@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 18:30:41 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 12:38:50 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:48:14 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	ft_extract_heredoc_delimiter(t_tokenizer *tok)
 	while (tok->input[tok->i] == '<' || tok->input[tok->i] == ' ')
 		tok->i++;
 	while (tok->input[tok->i] && tok->input[tok->i] != ' '
-		&& tok->input[tok->i] != '<' && tok->input[tok->i] != '>' && tok->input[tok->i] != '|')
+		&& tok->input[tok->i] != '<' && tok->input[tok->i] != '>'
+		&& tok->input[tok->i] != '|')
 		tok->buffer[tok->j++] = tok->input[tok->i++];
 	tok->buffer[tok->j] = '\0';
 	tok->i--;

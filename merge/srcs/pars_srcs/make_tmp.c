@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 21:19:00 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 12:39:00 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 21:47:48 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ static void	ft_give_index(int num, char *str)
 	{
 		rem = num % 10;
 		num = num / 10;
-		str[i] = rem + '0';
-		i--;
+		str[i--] = rem + '0';
 	}
 	str[len] = '\0';
 }
 
+//		erreur: si plus de 10 fichiers = boucle infinie		//
 static void	ft_generate_temp_filename(char *buffer, size_t buffer_size,
 	int counter)
 {

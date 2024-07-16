@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 15:08:46 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:26:37 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,8 @@ typedef struct s_files
 typedef struct s_tok
 {
 	char			**cmd;		//	La liste de comande parser; ls -l == cmd[0] = ls; cmd[1] = -l;
-	t_files			*infile;	//	les infiles avec leurs type
-	t_files			*outfile;	//	les outfiles avec leurs type
+	t_files			*infile;	//	les infiles avec leurs type < <<
+	t_files			*outfile;	//	les outfiles avec leurs type > >>
 	struct s_tok	*NEXT;		//	si NEXT != NULL alors il y'a un pipe
 }			t_tok;
 
@@ -167,6 +167,7 @@ void	ft_env(t_infos *infos);
 	//			exec.c			//
 char	**ft_str(char **str, char **args);
 void	ft_multi(t_infos *infos);
+void	handle_redirections(t_tok *tok, int *fd);
 
 	//			init_exec.c		//
 void	init(t_base **tmp_base, t_env *ev);
@@ -212,6 +213,7 @@ t_token	*ft_new_token(t_type type, char *value);
 void	ft_init_tokenize_state(t_tokenize_state *state, t_infos *infos);
 void	ft_init_tokenizer(t_tokenizer *tok, t_infos *infos);
 t_infos	ft_init_infos(char **envp);
+t_tok	*ft_init_tok(void);
 
 	//		make_tmp.c			//
 void	ft_generate(t_tokenizer *tok, t_infos *infos, char *delimiter);
@@ -221,13 +223,12 @@ void	ft_free_tokens(t_token **tokens);
 void	ft_quit(t_infos *s_infos, char *message, int out);
 void	ft_free_tok(t_tok *tok);
 
-	//		pour_les_tests.c	//
-void	ft_print_tokens(t_token *tokens);
-void	ft_check_and_print_tok(t_infos *infos);
-
 	//		sighandler.c		//
 void	ft_handle_sigint(int sig);
 void	ft_sighandler(void);
+
+	//		surcouche.c		//
+void	ft_surcouche(t_infos *infos);
 
 	//		token_utils.c		//
 void	ft_add_token(t_infos *infos, t_token **tokens, t_type type, char *value);
@@ -239,7 +240,11 @@ void	ft_expand_buffer(t_infos *infos, t_tokenizer *tok);
 void	ft_handle_quote(t_tokenizer *tok);
 void	ft_tokenize(t_infos *s_infos);
 
-	//		surcouche.c		//
-void	ft_surcouche(t_infos *infos);
+	//		verif.c				//
+int	ft_verif_expand(t_tokenizer *tok);
+
+	//		pour_les_tests.c	//
+void	ft_print_tokens(t_token *tokens);
+void	ft_check_and_print_tok(t_infos *infos);
 
 #endif
