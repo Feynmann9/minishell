@@ -6,14 +6,13 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:37:45 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 13:49:08 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:06:46 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-/*
-void ft_export(t_base **base, char *more) // Attention pd utilise un char ** pour le cas ou il y a plusieurs argument (Charles a dit)
+/*void ft_export(t_base **base, char *more) // Attention pd utilise un char ** pour le cas ou il y a plusieurs argument (Charles a dit)
 {
 	char (*folder) = NULL;
 	char (*value) = NULL;
@@ -37,18 +36,18 @@ void ft_export(t_base **base, char *more) // Attention pd utilise un char ** pou
 	free(value);
 }*/
 
-void	ft_export(t_base **base, char *more)
+void	ft_export(t_infos *infos, char *more)
 {
 	char	*folder;
 	char	*value;
-	int i = 0;
-	int j = 0;
-	int size = 0;
-	int val = 0;
+	int		i = 0;
+	int		j = 0;
+	int		size = 0;
+	int		val = 0;
 
 	while (more[size] != '=' && ft_isalpha(more[size]))
 		size++;
-	if (!(folder = malloc(sizeof(char) * (size + 1))) || base == NULL)
+	if (!(folder = malloc(sizeof(char) * (size + 1))) || infos)
 		return ;
 	while (more[size] != '\0')
 	{
@@ -71,12 +70,12 @@ void	ft_export(t_base **base, char *more)
 	}
 	value[j] = '\0';
 	//printf("value = %s\n", value);
-	add_export((*base)->tmp_env, folder, value);
+	add_export(infos->tmp_env, folder, value);
 	free(folder);
 	free(value);
 }
-/*
-void    add_export(t_env *ev, char *name_folder, char *value_folder)
+
+/*void    add_export(t_env *ev, char *name_folder, char *value_folder)
 {
 	t_env *tmp;
 
@@ -90,7 +89,7 @@ void    add_export(t_env *ev, char *name_folder, char *value_folder)
 		ft_lstadd_front_env(&ev, tmp);
 }*/
 
-void add_export(t_env *ev, char *name_folder, char *value_folder)
+void	add_export(t_env *ev, char *name_folder, char *value_folder)
 {
 	t_env *tmp;
 	int i = 0;
@@ -119,11 +118,12 @@ void add_export(t_env *ev, char *name_folder, char *value_folder)
 		ev = tmp;
 }
 
-void    ft_order_env(t_base **base)
+void	ft_order_env(t_infos *infos)
 {
-	t_env *sorted = NULL;
-	t_env *current = (*base)->tmp_env;
-	t_env *next;
+	t_env	*sorted = NULL;
+	t_env	*current = infos->tmp_env;
+	t_env	*next;
+	t_env	*temp;
 
 	while (current)
 	{
@@ -135,7 +135,7 @@ void    ft_order_env(t_base **base)
 		}
 		else
 		{
-			t_env *temp = sorted;
+			temp = sorted;
 			while (temp->next && strcmp(temp->next->name_folder, current->name_folder) < 0)
 			{
 				temp = temp->next;
@@ -145,16 +145,14 @@ void    ft_order_env(t_base **base)
 		}
 		current = next;
 	}
-	(*base)->tmp_env = sorted;
+	infos->tmp_env = sorted;
 }
 
-void    ft_print_order(t_base **base)
+void	ft_print_order(t_infos *infos)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
-	if (!(tmp = malloc(sizeof(t_env))))
-		return ;
-	tmp = (*base)->tmp_env;
+	tmp = infos->tmp_env;
 	while (tmp)
 	{
 		ft_printf("export %s=%s\n", tmp->name_folder, tmp->value_folder);

@@ -6,14 +6,13 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:38:00 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 13:49:44 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:07:47 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-/*
-void ft_unset(t_base **base, char *more) // Attention pd utilise un char ** pour le cas ou il y a plusieurs argument (Charles a dit)
+/*void ft_unset(t_base **base, char *more) // Attention pd utilise un char ** pour le cas ou il y a plusieurs argument (Charles a dit)
 {
 	t_env *current = (*base)->tmp_env;
 
@@ -30,9 +29,9 @@ void ft_unset(t_base **base, char *more) // Attention pd utilise un char ** pour
 	}
 }*/
 
-void	ft_unset(t_base **base, char *more)
+void	ft_unset(t_infos *infos, char *more)
 {
-	t_env *current = (*base)->tmp_env;
+	t_env *current = infos->tmp_env;
 	t_env *prev = NULL;
 
 	while (current)
@@ -45,7 +44,7 @@ void	ft_unset(t_base **base, char *more)
 			}
 			else
 			{
-				(*base)->tmp_env = current->next;
+				infos->tmp_env = current->next;
 			}
 			free(current->name_folder);
 			free(current->value_folder);

@@ -6,13 +6,13 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 13:50:42 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:40:20 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void    new_env(t_env **ev, char *name_folder, char *value_folder)
+void	new_env(t_env **ev, char *name_folder, char *value_folder)
 {
 	t_env *tmp;
 
@@ -38,9 +38,9 @@ void	print_env(t_env *ev)
 
 void	init_env(t_env **ev, char **env)
 {
-	char    **tmp;
-	char new_1[5000];
-	char new_2[5000];
+	char	**tmp;
+	char	new_1[5000];
+	char	new_2[5000];
 
 	tmp = env;
 	while (*tmp)
@@ -130,5 +130,3 @@ void split_input(char *input, t_cmd *command)
 	}
 	return (0);
 }*/
-
-

@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 12:39:27 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:25:02 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	ft_print_tok(t_tok *tok)
 
 void	ft_check_and_print_tok(t_infos *infos)
 {
-	//ft_printf("\n/----PRINT----\\\n\n");
+	ft_printf("--- PARSE ---\n");
 	if (!infos->tok)
 	{
 		ft_printf("No commands found.\n");

@@ -6,14 +6,14 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:29:24 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 13:50:29 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:02:37 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 
-int     path_or_notpath(char *cmd)
+int	path_or_notpath(char *cmd)
 {
 	if (strcmp(cmd, "pwd") == 0)
 		return (0);
@@ -30,7 +30,7 @@ int     path_or_notpath(char *cmd)
 	return (1);
 }
 
-char *find_command(char *cmd, char *path_env)
+char	*find_command(char *cmd, char *path_env)
 {
 	char *end;
 	char full_path[1000];
@@ -67,24 +67,24 @@ char *find_command(char *cmd, char *path_env)
 	return (NULL);
 }
 
-void ft_path(t_base *base, char **env)
+void	ft_path(t_infos *infos)
 {
-	pid_t pid = fork();
-	int rien;
-	char *path_env;
-	char *full_path;
+	pid_t	pid = fork();
+	int		rien;
+	char	*path_env;
+	char	*full_path = NULL;
 
 	if (pid == -1)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		path_env = get_env_value(base->tmp_env, "PATH");
+		path_env = get_env_value(infos->tmp_env, "PATH");
 		if (!path_env)
 			exit(EXIT_FAILURE);
-		full_path = find_command(base->command->cmd, path_env);
+		full_path = find_command(infos->tok->cmd[0], path_env);
 		if (!full_path)
 			exit(EXIT_FAILURE);
-		execve(full_path, base->command->args, env);
+		execve(full_path, infos->tok->cmd, infos->envp);
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -93,7 +93,7 @@ void ft_path(t_base *base, char **env)
 	}
 }
 
-void execute_pipeline(t_cmd **commands, int num_cmds, char **env)
+void	execute_pipeline(t_cmd **commands, int num_cmds, char **env)
 {
 	int i = 0;
 	int fd[2];
@@ -127,8 +127,6 @@ void execute_pipeline(t_cmd **commands, int num_cmds, char **env)
 		}
 	}
 }
-
-
 
 //char *exec_args[] = {full_path, argv[0], NULL};
 //execve(full_path, exec_args, env);

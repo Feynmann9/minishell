@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:40:38 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 12:39:08 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:00:36 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,6 @@ void	ft_surcouche(t_infos *infos)
 	}
 	infos->tok = head;
 	ft_check_and_print_tok(infos);
-	ft_free_tok(infos->tok);
+	//ft_free_tok(infos->tok);
 	ft_free_tokens(&infos->tokens);
 }

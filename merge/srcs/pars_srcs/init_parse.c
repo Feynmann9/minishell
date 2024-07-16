@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:35:26 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 12:38:57 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:22:03 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,16 @@ void	ft_init_tokenizer(t_tokenizer *tok, t_infos *infos)
 
 t_infos	ft_init_infos(char **envp)
 {
-	t_infos	s_infos;
+	t_infos	infos;
 
-	s_infos.history_file = ".minishell_history";
-	s_infos.count_pipes = 0;
-	s_infos.input = NULL;
-	s_infos.tokens = NULL;
-	s_infos.tmpfile_counter = 0;
-	init_env(&s_infos.tmp_env, envp);
-	s_infos.tokens = NULL;
-	s_infos.tok = NULL;
-	return (s_infos);
+	infos.envp = envp;
+	infos.history_file = ".minishell_history";
+	infos.count_pipes = 0;
+	infos.input = NULL;
+	infos.tokens = NULL;
+	infos.tmpfile_counter = 0;
+	init_env(&infos.tmp_env, envp);
+	infos.tokens = NULL;
+	infos.tok = NULL;
+	return (infos);
 }

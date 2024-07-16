@@ -6,7 +6,7 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/07/16 13:02:38 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/07/16 15:14:33 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ srcs/pars_srcs/heredoc.c $\
 srcs/pars_srcs/init_parse.c $\
 srcs/pars_srcs/make_tmp.c $\
 srcs/pars_srcs/out.c $\
-srcs/pars_srcs/pour_les_tests.c $\
 srcs/pars_srcs/sighandler.c $\
 srcs/pars_srcs/surcouche.c $\
 srcs/pars_srcs/token_utils.c $\
