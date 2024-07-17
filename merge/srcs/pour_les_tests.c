@@ -6,11 +6,20 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 21:24:43 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:31:40 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	ft_print_env(t_env *ev)
+{
+	while (ev)
+	{
+		ft_printf("%s %s\n\n", ev->name_folder, ev->value_folder);
+		ev = ev->next;
+	}
+}
 
 void	ft_print_tokens(t_token *tokens)
 {

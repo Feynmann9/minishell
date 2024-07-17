@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 22:26:37 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:28:20 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,7 @@ char	**ft_str(char **str, char **args);
 void	ft_multi(t_infos *infos);
 void	handle_redirections(t_tok *tok, int *fd);
 
-	//			init_exec.c		//
-void	init(t_base **tmp_base, t_env *ev);
+	//			start.c		//
 char	*get_env_value(t_env *env, char *name);
 void	builtin(t_infos *infos);
 
@@ -180,16 +179,15 @@ char	*find_command(char *cmd, char *path_env);
 void	ft_path(t_infos *infos);
 void	execute_pipeline(t_cmd **commands, int num_cmds, char **env);
 
-	//			start_exec.c	//
+	//			init_exec.c	//
 void	new_env(t_env **ev, char *name_folder, char *value_folder);
-void	print_env(t_env *ev);
-void	init_env(t_env **ev, char **env);
-void	ft_split_env(char *tmp, char *new_1, char *new_2);
+t_env	*ft_init_env(char **env);
+char	**ft_split_env(char *tmp);
 void	split_input(char *input, t_cmd *command);
 
 	//			utils.c			//
 void	ft_lstadd_front_env(t_env **lst, t_env *new);
-void	ft_lstadd_back_env(t_env **lst, t_env *new);
+void	ft_lstadd_back_env(t_env **lst, t_env **new);
 t_env	*ft_lstnew_env(char *name_folder, char *value_folder);
 
 //		PARSE		//
@@ -244,6 +242,7 @@ void	ft_tokenize(t_infos *s_infos);
 int	ft_verif_expand(t_tokenizer *tok);
 
 	//		pour_les_tests.c	//
+void	ft_print_env(t_env *ev);
 void	ft_print_tokens(t_token *tokens);
 void	ft_check_and_print_tok(t_infos *infos);
 

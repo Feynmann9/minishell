@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:35:26 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 23:10:19 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:35:09 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_infos	ft_init_infos(char **envp)
 	infos.input = NULL;
 	infos.tokens = NULL;
 	infos.tmpfile_counter = 0;
-	init_env(&infos.tmp_env, envp);
+	infos.tmp_env = ft_init_env(envp);
 	infos.tokens = NULL;
 	infos.tok = NULL;
 	return (infos);

@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 22:30:47 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:13:43 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,12 @@ int	main(int argc, char **argv, char **envp)
 		add_history(infos.input);
 		if (!infos.input)
 		{
-			ft_printf("exit\n");
-			break ;
+			rl_clear_history();
+			ft_quit(&infos, "exit\n", 1);
 		}
-		else
-			ft_tokenize(&infos);
+		ft_tokenize(&infos);
 		ft_surcouche(&infos);
 		ft_free_tokens(&infos.tokens);
-
-		ft_check_and_print_tok(&infos);
-		ft_printf("\n--- EXEC ---\n");
-
 		builtin(&infos);
 		ft_free_tok(infos.tok);
 	}

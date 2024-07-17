@@ -6,7 +6,7 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/07/16 22:59:29 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/07/17 17:25:53 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,9 @@ srcs/builtin/unset.c
 
 SRCS_EXEC = srcs/exec_srcs/env.c $\
 srcs/exec_srcs/exec.c $\
-srcs/exec_srcs/init_exec.c $\
+srcs/exec_srcs/start.c $\
 srcs/exec_srcs/path.c $\
-srcs/exec_srcs/start_exec.c $\
+srcs/exec_srcs/init_exec.c $\
 srcs/exec_srcs/utils.c
 
 

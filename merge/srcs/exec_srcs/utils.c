@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:38:32 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 14:41:01 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:28:43 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ void	ft_lstadd_front_env(t_env **lst, t_env *new)
 	}
 }
 
-void	ft_lstadd_back_env(t_env **lst, t_env *new)
+void	ft_lstadd_back_env(t_env **lst, t_env **new)
 {
 	t_env	*temp;
 
 	if (*lst == NULL)
 	{
-		*lst = new;
+		*lst = *new;
 		return ;
 	}
 	temp = *lst;
 	while (temp->next != NULL)
 		temp = temp->next;
-	temp->next = new;
+	temp->next = *new;
 }
 
 t_env	*ft_lstnew_env(char *name_folder, char *value_folder)

@@ -5,35 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 23:00:20 by gmarquis         ###   ########.fr       */
+/*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
+/*   Updated: 2024/07/17 17:34:47 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-void	init(t_base **tmp_base, t_env *ev)
-{
-	(*tmp_base) = malloc(sizeof(t_base));
-	if ((*tmp_base) != NULL)
-	{
-		(*tmp_base)->tmp_env = ev;
-		//(*tmp_base)->pid = 0;
-		(*tmp_base)->command = malloc(sizeof(t_cmd));
-		if ((*tmp_base)->command == NULL)
-		{
-			free(*tmp_base);
-			exit(EXIT_FAILURE);
-		}
-		(*tmp_base)->command->cmd = NULL;
-		(*tmp_base)->command->more = NULL;
-		(*tmp_base)->command->args = NULL;
-		(*tmp_base)->command->pipe = 0;
-		(*tmp_base)->next = NULL;
-	}
-	else
-		exit(EXIT_FAILURE);
-}
 
 char	*get_env_value(t_env *env, char *name)
 {
@@ -45,54 +22,62 @@ char	*get_env_value(t_env *env, char *name)
 	}
 	return (NULL);
 }
-// pour test = ./exec pwd
-// pour test = ./exec env
-// pour test = ./exec echo "greg le fdp"
-// pour test = ./exec export nom="salope" (comment ft_env)
 
-void	builtin(t_infos *infos)
+void	ft_make_env(t_env **tmp_env, char **env_var)
 {
-	if (infos->tok->cmd[1] == NULL)
+	t_env	*new;
+
+	new = malloc(sizeof(t_env));
+	if (!new)
+		return ;
+	new->name_folder = ft_strdup(env_var[0]);
+	new->value_folder = ft_strdup(env_var[1]);
+	new->next = NULL;
+	ft_lstadd_back_env(tmp_env, &new);
+}
+
+char	**ft_split_env(char *ligne)
+{
+	char	**env_var;
+
+	int (i) = 0;
+	int (j) = 0;
+	int (len_name) = ft_countuntil(ligne, '=');
+	int (len_value) = (ft_strlen(ligne) - len_name) - 1;
+	env_var = malloc(3 * sizeof(char *));
+	if (!env_var)
+		return (NULL);
+	env_var[2] = NULL;
+	env_var[0] = malloc(len_name * sizeof(char) + 1);
+	if (!env_var[0])
+		return (NULL);
+	env_var[1] = malloc(len_value * sizeof(char) + 1);
+	if (!env_var[1])
+		return (NULL);
+	while (ligne[i] != '=')
 	{
-		if (strcmp(infos->tok->cmd[0], "pwd") == 0)
-			ft_pwd(infos);
-		else if (strcmp(infos->tok->cmd[0], "cd") == 0)
-			ft_cd(infos, NULL);
-		else if (strcmp(infos->tok->cmd[0], "env") == 0)
-			ft_env(infos);
-		else if (strcmp(infos->tok->cmd[0], "exit") == 0)
-			exit(EXIT_FAILURE);
-		else if (strcmp(infos->tok->cmd[0], "export") == 0)
-		{
-			ft_order_env(infos);
-			ft_print_order(infos);
-		}
-		else if (find_command(infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT)
-		{
-			//printf("test1\n");
-			ft_multi(infos);
-		}
-		else if (find_command(infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
-			ft_path(infos);
+		env_var[0][i] = ligne[i];
+		i++;
 	}
-	else
+	env_var[0][i++] = '\0';
+	while (ligne[i])
+		env_var[1][j++] = ligne[i++];
+	return (env_var[1][j] = '\0', env_var);
+}
+
+t_env	*ft_init_env(char **env)
+{
+	t_env	*tmp_env;
+	char	**env_var;
+	int		i;
+
+	tmp_env = NULL;
+	i = 0;
+	while (env[i])
 	{
-		if (strcmp(infos->tok->cmd[0], "echo") == 0)
-			ft_echo(infos->tok->cmd);
-		else if (strcmp(infos->tok->cmd[0], "export") == 0)
-			ft_export(infos, infos->tok->cmd[1]);
-		else if (strcmp(infos->tok->cmd[0], "unset") == 0)
-			ft_unset(infos, infos->tok->cmd[1]);
-		else if (strcmp(infos->tok->cmd[0], "cd") == 0)
-			ft_cd(infos, infos->tok->cmd[1]);
-		else if (find_command(infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT)
-		{
-			//printf("test2\n");
-			ft_multi(infos);
-		}
-		else if (find_command(infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
-			ft_path(infos);
-		/*else if (infos->tok->infile || infos->tok->outfile)
-			handle_redirections(infos->tok);*/
+		env_var = ft_split_env(env[i]);
+		ft_make_env(&tmp_env, env_var);
+		i++;
 	}
+	return (tmp_env);
 }
