@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:14:56 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/17 18:10:39 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/17 22:36:27 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	ft_free_files(t_files *files)
 {
 	t_files	*tmp;
 
-	while (files != NULL)
+	while (files)
 	{
 		tmp = files;
 		files = files->NEXT;
@@ -24,6 +24,7 @@ static void	ft_free_files(t_files *files)
 		free(tmp);
 		tmp = NULL;
 	}
+	files = NULL;
 }
 
 void	ft_free_tok(t_tok *tok)
@@ -42,6 +43,7 @@ void	ft_free_tok(t_tok *tok)
 		tok = tok->NEXT;
 		free(tmp);
 	}
+	tok = NULL;
 }
 
 static void	ft_free_env(t_env **env)
@@ -81,6 +83,8 @@ void	ft_quit(t_infos *infos, char *message, int out)
 {
 	ft_free_tokens(&(infos->tokens));
 	ft_free_env(&(infos->tmp_env));
+	ft_printf("ok_1\n");
 	ft_free_tok(infos->tok);
+	ft_printf("ok_2\n");
 	ft_exit(out, message);
 }
