@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:29:58 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 12:38:47 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:32:51 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_new_ex(t_infos *infos, char *buffer, char *expanded)
 	j = ft_strlen(expanded);
 	new = malloc(j + (i - ft_get_len_pre_expand(buffer)) + 1);
 	if (!new)
-		ft_quit(infos, "Error: malloc failed\n", 2);
+		ft_quit(infos, "Error: echec malloc new.\n", 2);
 	i = ft_get_len_pre_expand(buffer);
 	j = 0;
 	while (expanded[j])
@@ -67,7 +67,7 @@ static char	*ft_extract_env_name(t_infos *infos, const char *input)
 		len++;
 	env_name = malloc((len + 1));
 	if (!env_name)
-		ft_quit(infos, "Error: malloc failed\n", 2);
+		ft_quit(infos, "Error: echec malloc env_name.\n", 2);
 	ft_strncpy(env_name, input, len);
 	env_name[len] = '\0';
 	return (env_name);
@@ -76,6 +76,7 @@ static char	*ft_extract_env_name(t_infos *infos, const char *input)
 char	*ft_expand_env_var(t_infos *infos, char *str, char **envp)
 {
 	char	*var_name;
+	char	*tmp;
 	int		i;
 
 	var_name = ft_extract_env_name(infos, str);
@@ -84,9 +85,16 @@ char	*ft_expand_env_var(t_infos *infos, char *str, char **envp)
 	{
 		if (ft_strncmp(envp[i], var_name, ft_strlen(var_name)) == 0
 			&& envp[i][ft_strlen(var_name)] == '=')
-			return (ft_strdup(envp[i] + ft_strlen(var_name) + 1));
+			{
+				tmp = ft_strdup(envp[i] + ft_strlen(var_name) + 1);
+				var_name = ft_free_str(var_name);
+				if (!tmp)
+					ft_quit(infos, "Error: echec malloc tmp.\n", 2);
+				return (tmp);
+			}
 		i++;
 	}
+	var_name = ft_free_str(var_name);
 	return (ft_strdup(str));
 }
 

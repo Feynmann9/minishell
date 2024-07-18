@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:21:22 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 22:15:55 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:40:15 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	ft_add_token(t_infos *infos, t_token **tokens, t_type type, char *value)
 {
-	t_token	*new;
-	t_token	*tmp;
-
+	t_token *(new) = NULL;
+	t_token *(tmp) = NULL;
 	if (value == NULL || *value == '\0')
 		return ;
 	new = malloc(sizeof(t_token));
@@ -25,8 +24,10 @@ void	ft_add_token(t_infos *infos, t_token **tokens, t_type type, char *value)
 	new->type = type;
 	new->value = malloc(2 * sizeof(char *));
 	if (!new->value)
-		ft_quit(infos, "Error: malloc token value failed\n", 2);
+		ft_quit(infos, "Error: malloc token->value failed\n", 2);
 	new->value[0] = ft_strdup(value);
+	if (!new->value[0])
+		ft_quit(infos, "Error: malloc new->value[0].\n", 2);
 	new->value[1] = NULL;
 	new->NEXT = NULL;
 	if (*tokens == NULL)
@@ -48,10 +49,16 @@ static void	ft_process_expanded_buffer(t_infos *infos, t_tokenizer *tok,
 	if (tok->tmp_buffer)
 	{
 		tok->buffer = ft_strjoin(tok->tmp_buffer, tok->buffer, '\0', 2);
+		if (!tok->buffer)
+			ft_quit(infos, "Error: echec malloc tok->buffer.\n", 2);
 		tok->tmp_buffer = NULL;
 	}
 	else if (tok->input[tok->i] == '$')
+	{
 		tok->tmp_buffer = ft_strdup(tok->buffer);
+		if (!tok->tmp_buffer)
+			ft_quit(infos, "Error: echec malloc tok->tmp_buffer.\n", 2);
+	}
 	if (!tok->tmp_buffer)
 		ft_add_token(infos, &infos->tokens, TOKEN_ENV, tok->buffer);
 }

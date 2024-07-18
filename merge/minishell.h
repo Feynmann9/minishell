@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/17 17:28:20 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:55:32 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,10 +180,10 @@ void	ft_path(t_infos *infos);
 void	execute_pipeline(t_cmd **commands, int num_cmds, char **env);
 
 	//			init_exec.c	//
-void	new_env(t_env **ev, char *name_folder, char *value_folder);
-t_env	*ft_init_env(char **env);
-char	**ft_split_env(char *tmp);
-void	split_input(char *input, t_cmd *command);
+char	*get_env_value(t_env *env, char *name);
+void	ft_make_env(t_infos *infos, t_env **tmp_env, char **env_var);
+char	**ft_split_env(t_infos *infos, char *ligne);
+t_env	*ft_init_env(t_infos *infos, char **env);
 
 	//			utils.c			//
 void	ft_lstadd_front_env(t_env **lst, t_env *new);
@@ -207,11 +207,11 @@ void	ft_read_heredoc(t_tokenize_state *state, t_infos *infos,
 	char *delimiter);
 
 	//		init_parse.c				//
-t_token	*ft_new_token(t_type type, char *value);
+t_token	*ft_new_token(t_infos *infos, t_type type, char *value);
 void	ft_init_tokenize_state(t_tokenize_state *state, t_infos *infos);
 void	ft_init_tokenizer(t_tokenizer *tok, t_infos *infos);
 t_infos	ft_init_infos(char **envp);
-t_tok	*ft_init_tok(void);
+t_tok	*ft_init_tok(t_infos *infos);
 
 	//		make_tmp.c			//
 void	ft_generate(t_tokenizer *tok, t_infos *infos, char *delimiter);
@@ -219,7 +219,7 @@ void	ft_generate(t_tokenizer *tok, t_infos *infos, char *delimiter);
 	//		out.c				//
 void	ft_free_tokens(t_token **tokens);
 void	ft_quit(t_infos *s_infos, char *message, int out);
-void	ft_free_tok(t_tok *tok);
+void	ft_free_tok(t_tok **tok);
 
 	//		sighandler.c		//
 void	ft_handle_sigint(int sig);

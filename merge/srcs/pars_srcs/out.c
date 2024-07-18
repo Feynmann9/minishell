@@ -6,13 +6,13 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:14:56 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/17 22:36:27 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:06:20 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	ft_free_files(t_files *files)
+static t_files	*ft_free_files(t_files *files)
 {
 	t_files	*tmp;
 
@@ -24,26 +24,29 @@ static void	ft_free_files(t_files *files)
 		free(tmp);
 		tmp = NULL;
 	}
-	files = NULL;
+	return (NULL);
 }
 
-void	ft_free_tok(t_tok *tok)
+void	ft_free_tok(t_tok **tok)
 {
 	t_tok	*tmp;
+	t_tok	*swap;
 
-	while (tok)
+	tmp = *tok;
+	while (tmp)
 	{
-		tmp = tok;
-		if (tok->cmd)
-			tok->cmd = ft_free_tab2d(tok->cmd);
-		if (tok->infile)
-			ft_free_files(tok->infile);
-		if (tok->outfile)
-			ft_free_files(tok->outfile);
-		tok = tok->NEXT;
-		free(tmp);
+		swap = tmp;
+		if (tmp->cmd)
+			tmp->cmd = ft_free_tab2d(tmp->cmd);
+		if (tmp->infile)
+			tmp->infile = ft_free_files(tmp->infile);
+		if (tmp->outfile)
+			tmp->outfile = ft_free_files(tmp->outfile);
+		tmp = tmp->NEXT;
+		free(swap);
+		swap = NULL;
 	}
-	tok = NULL;
+	*tok = NULL;
 }
 
 static void	ft_free_env(t_env **env)
@@ -83,8 +86,6 @@ void	ft_quit(t_infos *infos, char *message, int out)
 {
 	ft_free_tokens(&(infos->tokens));
 	ft_free_env(&(infos->tmp_env));
-	ft_printf("ok_1\n");
-	ft_free_tok(infos->tok);
-	ft_printf("ok_2\n");
+	ft_free_tok(&(infos->tok));
 	ft_exit(out, message);
 }

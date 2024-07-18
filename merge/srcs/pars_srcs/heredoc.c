@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 18:30:41 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 17:48:14 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:33:56 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_handle_heredoc(t_tokenizer *tok, t_infos *infos)
 	delimiter = ft_strdup(tok->buffer);
 	tok->heredoc_buffer = malloc(BUFFER_SIZE);
 	if (!tok->heredoc_buffer)
-		ft_quit(infos, "Error: malloc heredoc_buffer failed\n", 2);
+		ft_quit(infos, "Error: echec malloc heredoc_buffer.\n", 2);
 	tok->heredoc_buffer[0] = '\0';
 	ft_collect_heredoc_lines(tok, delimiter, infos);
 	ft_generate(tok, infos, delimiter);
