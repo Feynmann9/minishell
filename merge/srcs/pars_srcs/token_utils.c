@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:21:22 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 14:40:15 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:41:34 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,11 @@ void	ft_resize_buffer(t_infos *infos, t_tokenize_state *state)
 
 void	ft_expand_buffer(t_infos *infos, t_tokenizer *tok)
 {
-	tok->new_buffer = malloc(tok->buffer_size * 2);
+	tok->new_buffer = malloc(tok->buffer_size + BUFFER_SIZE);
 	if (!tok->new_buffer)
 		ft_quit(infos, "Error: malloc failed\n", 2);
 	ft_memcpy(tok->new_buffer, tok->buffer, tok->buffer_size);
 	tok->buffer = ft_free_str(tok->buffer);
 	tok->buffer = tok->new_buffer;
-	tok->buffer_size *= 2;
+	tok->buffer_size += BUFFER_SIZE;
 }

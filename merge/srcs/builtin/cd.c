@@ -6,54 +6,88 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:37:21 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 13:45:34 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:11:28 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	set_env_value(t_env *env, const char *name, const char *value)
+static void	set_env_value(t_infos *infos, t_env *env, char *name, char *value)
 {
 	t_env	*new_env;
 	t_env	*current;
 
 	while (env)
 	{
-		if (strcmp(env->name_folder, name) == 0)
+		if (ft_strcmp(env->name_folder, name) == 0)
 		{
-			free(env->value_folder);
-			env->value_folder = strdup(value);
+			env->value_folder = ft_free_str(env->value_folder);
+			env->value_folder = ft_strdup(value);
+			if (!env->value_folder)
+			{
+				value = ft_free_str(value);
+				ft_quit(infos, "Error: echec malloc env->value_folder.\n", 2);
+			}
 			return ;
 		}
 		env = env->next;
 	}
 	new_env = malloc(sizeof(t_env));
-	new_env->name_folder = strdup(name);
-	new_env->value_folder = strdup(value);
+	if (!new_env)
+		ft_quit(infos, "Error: echec malloc new_env.\n", 2);
+	new_env->name_folder = ft_strdup(name);
+	if (!new_env->name_folder)
+		ft_quit(infos, "Error: echec malloc new_env->name_folder.\n", 2);
+	new_env->value_folder = ft_strdup(value);
+	value = ft_free_str(value);
+	if (!new_env->value_folder)
+		ft_quit(infos, "Error: echec malloc new_env->value_folder.\n", 2);
 	new_env->next = NULL;
 	current = env;
-	while (current->next != NULL)
+	while (current && current->next != NULL)
 		current = current->next;
-	current->next = new_env;
+	if (current)
+		current->next = new_env;
 }
 
-void	ft_cd(t_infos *infos, const char *folder)
+void	ft_cd(t_infos *infos, char *folder)
 {
 	char	*cd;
-	char	cwd[1000];
 
+	int (buf_size) = BUFFER_SIZE;
+	char *(cwd) = malloc(buf_size);
+	if (!cwd)
+		ft_quit(infos, "Error: echec malloc cwd.\n", 2);
 	if (folder == NULL)
 		cd = get_env_value(infos->tmp_env, "HOME");
 	else
+	{
 		cd = ft_strdup(folder);
+		if(!cd)
+			ft_quit(infos, "Error: echec malloc cd.\n", 2);
+	}
 	if (chdir(cd) != 0)
 		ft_printf("commande introuvable\n");
 	else
 	{
-		if (getcwd(cwd, sizeof(cwd)) != NULL)
-			set_env_value(infos->tmp_env, "PWD", cwd);
-		else
-			ft_printf("commande introuvable\n");
+		while (getcwd(cwd, sizeof(cwd)) == NULL)
+		{
+			if (errno == ERANGE)		// Si le buffer est trop petit
+			{
+				cwd = ft_realloc(cwd, ft_strlen(cwd) + 1, buf_size);
+				if (!cwd)
+					ft_quit(infos, "Error: echec realloc cwd.\n", 2);
+				buf_size += BUFFER_SIZE;
+			}
+			else
+			{
+				ft_printf("commande introuvable\n");
+				free(cwd);
+				cwd = NULL;
+				break ;
+			}
+		}
+		set_env_value(infos, infos->tmp_env, "PWD", cwd);
 	}
 }
 

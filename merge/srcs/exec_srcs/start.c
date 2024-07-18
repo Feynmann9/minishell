@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 15:09:10 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:55:12 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	builtin(t_infos *infos)
 			ft_order_env(infos);
 			ft_print_order(infos);
 		}
-		else if (find_command(infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT)
+		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT)
 		{
 			//printf("test1\n");
 			ft_multi(infos);
 		}
-		else if (find_command(infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
+		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
 			ft_path(infos);
 	}
 	else if(infos->tok->cmd[0])
@@ -52,14 +52,14 @@ void	builtin(t_infos *infos)
 			ft_unset(infos, infos->tok->cmd[1]);
 		else if (ft_strcmp(infos->tok->cmd[0], "cd") == 0)
 			ft_cd(infos, infos->tok->cmd[1]);
-		else if (find_command(infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT)
+		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && (infos->tok->infile || infos->tok->outfile))
+			handle_redirections(infos);
+		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT)
 		{
 			//printf("test2\n");
 			ft_multi(infos);
 		}
-		else if (find_command(infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
+		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
 			ft_path(infos);
-		/*else if (infos->tok->infile || infos->tok->outfile)
-			handle_redirections(infos->tok);*/
 	}
 }

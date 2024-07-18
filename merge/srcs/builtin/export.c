@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:37:45 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 15:06:46 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:43:21 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ void	add_export(t_env *ev, char *name_folder, char *value_folder)
 
 	if (!(tmp = malloc(sizeof(t_env))))
 		return;
-	tmp->name_folder = strdup(name_folder);
-	tmp->value_folder = strdup(value_folder);
+	tmp->name_folder = ft_strdup(name_folder);
+	tmp->value_folder = ft_strdup(value_folder);
 	tmp->next = NULL;
 	if (ev != NULL)
 	{
@@ -128,7 +128,7 @@ void	ft_order_env(t_infos *infos)
 	while (current)
 	{
 		next = current->next;
-		if (!sorted || strcmp(current->name_folder, sorted->name_folder) < 0)
+		if (!sorted || ft_strcmp(current->name_folder, sorted->name_folder) < 0)
 		{
 			current->next = sorted;
 			sorted = current;
@@ -136,7 +136,7 @@ void	ft_order_env(t_infos *infos)
 		else
 		{
 			temp = sorted;
-			while (temp->next && strcmp(temp->next->name_folder, current->name_folder) < 0)
+			while (temp->next && ft_strcmp(temp->next->name_folder, current->name_folder) < 0)
 			{
 				temp = temp->next;
 			}

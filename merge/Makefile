@@ -6,7 +6,7 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/07/17 17:25:53 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/07/18 20:01:06 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,3 +109,6 @@ re : fclean
 .PHONY : all bonus libft clean fclean re
 
 -include $(DEPENDENCIES)
+-include $(DEPENDENCIES_BUIL)
+-include $(DEPENDENCIES_EXEC)
+-include $(DEPENDENCIES_PARS)

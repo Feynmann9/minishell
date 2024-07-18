@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 14:55:32 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:17:11 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ typedef struct s_infos
 //			BUILTIN			//
 
 	//			cd.c			//
-void	ft_cd(t_infos *infos, const char *folder);
+void	ft_cd(t_infos *infos, char *folder);
 
 	//			echo.c			//
 void	ft_echo(char **args);
@@ -165,9 +165,9 @@ void	ft_unset(t_infos *infos, char *more);
 void	ft_env(t_infos *infos);
 
 	//			exec.c			//
-char	**ft_str(char **str, char **args);
+char	**ft_str(t_infos *infos, char **str, char **args);
 void	ft_multi(t_infos *infos);
-void	handle_redirections(t_tok *tok, int *fd);
+void	handle_redirections(t_infos *infos);
 
 	//			start.c		//
 char	*get_env_value(t_env *env, char *name);
@@ -175,9 +175,9 @@ void	builtin(t_infos *infos);
 
 	//			path.c			//
 int		path_or_notpath(char *cmd);
-char	*find_command(char *cmd, char *path_env);
+char	*find_command(t_infos *infos, char *cmd, char *path_env);
 void	ft_path(t_infos *infos);
-void	execute_pipeline(t_cmd **commands, int num_cmds, char **env);
+void	execute_pipeline(t_infos *infos, t_cmd **commands, int num_cmds, char **env);
 
 	//			init_exec.c	//
 char	*get_env_value(t_env *env, char *name);
@@ -188,7 +188,6 @@ t_env	*ft_init_env(t_infos *infos, char **env);
 	//			utils.c			//
 void	ft_lstadd_front_env(t_env **lst, t_env *new);
 void	ft_lstadd_back_env(t_env **lst, t_env **new);
-t_env	*ft_lstnew_env(char *name_folder, char *value_folder);
 
 //		PARSE		//
 

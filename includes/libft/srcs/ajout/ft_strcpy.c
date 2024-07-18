@@ -1,40 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/12 15:38:32 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 21:17:02 by gmarquis         ###   ########.fr       */
+/*   Created: 2024/07/18 19:53:12 by gmarquis          #+#    #+#             */
+/*   Updated: 2024/07/18 19:53:43 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
-
-void	ft_lstadd_front_env(t_env **lst, t_env *new)
+char	*ft_strcpy(char *dst, const char *src)
 {
+	char	*ptr;
 
-	if (lst == NULL || new == NULL)
-		return ;
-	else
+	ptr = dst;
+	while (*src != '\0')
 	{
-		new->next = *lst;
-		*lst = new;
+		*ptr = *src;
+		ptr++;
+		src++;
 	}
-}
-
-void	ft_lstadd_back_env(t_env **lst, t_env **new)
-{
-	t_env	*temp;
-
-	if (*lst == NULL)
-	{
-		*lst = *new;
-		return ;
-	}
-	temp = *lst;
-	while (temp->next != NULL)
-		temp = temp->next;
-	temp->next = *new;
+	*ptr = '\0';
+	return (dst);
 }

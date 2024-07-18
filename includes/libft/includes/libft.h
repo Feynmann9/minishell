@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:11:44 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/09 18:06:49 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:55:21 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,9 @@ int					ft_isupper(char c);
 char				*ft_memlcpy(char *s, size_t len);
 void				*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 char				*ft_strcat(char *dest, const char *src);
-char				*ft_strncpy(char *dest, const char *src, size_t n);
 int					ft_strcmp(const char *str1, const char *str2);
+char				*ft_strcpy(char *dst, const char *src);
+char				*ft_strncpy(char *dest, const char *src, size_t n);
 char				*ft_strndup(char *s, int len);
 void				ft_verif_extention(char *filename, char *exe);
 

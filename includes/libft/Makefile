@@ -6,7 +6,7 @@
 #    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/21 17:10:22 by gmarquis          #+#    #+#              #
-#    Updated: 2024/07/09 18:07:37 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/07/18 20:00:07 by gmarquis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,8 +67,9 @@ srcs/ajout/ft_isupper.c $\
 srcs/ajout/ft_memlcpy.c $\
 srcs/ajout/ft_realloc.c $\
 srcs/ajout/ft_strcat.c $\
-srcs/ajout/ft_strncpy.c $\
 srcs/ajout/ft_strcmp.c $\
+srcs/ajout/ft_strcpy.c $\
+srcs/ajout/ft_strncpy.c $\
 srcs/ajout/ft_strndup.c $\
 srcs/ajout/ft_verif_extension.c
 
@@ -130,14 +131,14 @@ GNL_DEPENDENCIES = $(patsubst %.o,%.d,$(OBJS_GNL_PREF))
 OBJS_DIR_PRINTF = objs/printf/
 OBJS_PRINTF = $(notdir $(SRCS_PRINTF:.c=.o))
 OBJS_PRINTF_PREF = $(addprefix $(OBJS_DIR_PRINTF), $(OBJS_PRINTF))
-GNL_PRINTF_DEPENDENCIES = $(patsubst %.o,%.d,$(OBJS_PRINTF_PREF))
+PRINTF_DEPENDENCIES = $(patsubst %.o,%.d,$(OBJS_PRINTF_PREF))
 
 NAME = libft.a
 NAME_BNS = libft_bns.a
 
 MK = mkdir
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -MMD -MP
+CFLAGS = -Wall -Wextra -Werror -MMD -MP -g3
 
 all : $(NAME_BNS)
 
@@ -181,3 +182,7 @@ fclean : clean
 re : fclean all
 
 -include $(DEPENDENCIES)
+-include $(AJT_DEPENDENCIES)
+-include $(BNS_DEPENDENCIES)
+-include $(GNL_DEPENDENCIES)
+-include $(PRINTF_DEPENDENCIES)
