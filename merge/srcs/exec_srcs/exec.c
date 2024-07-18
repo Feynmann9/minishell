@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:29:05 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 21:45:39 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:32:56 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,24 +148,20 @@ void	handle_redirections(t_infos *infos)
 				ft_quit(infos, "Error: echec dup2 fd[0].\n", 2);
 			close(fd[0]);
 		}
-		printf("1\n");
-		if (infos->tok->outfile == NULL)
-		{
-			printf("2\n");
-			dup2(fd[1], STDOUT_FILENO);
-			close(fd[1]);
-			path_env = get_env_value(infos->tmp_env, "PATH");
-			if (!path_env)
-				ft_quit(infos, "Error: no env path\n", 2);
-			full_path = find_command(infos, infos->tok->cmd[0], path_env);
-			if (!full_path)
-				ft_quit(infos, "Error: no full path\n", 2);
-			printf("3\n");
-			strs = ft_str(infos, strs, infos->tok->cmd);
-			execve(full_path, strs, infos->envp);
-			exit(EXIT_FAILURE);
-		}
-		printf("4\n");
+		close(fd[0]);
+		printf("2\n");
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		path_env = get_env_value(infos->tmp_env, "PATH");
+		if (!path_env)
+			ft_quit(infos, "Error: no env path\n", 2);
+		full_path = find_command(infos, infos->tok->cmd[0], path_env);
+		if (!full_path)
+			ft_quit(infos, "Error: no full path\n", 2);
+		printf("3\n");
+		strs = ft_str(infos, strs, infos->tok->cmd);
+		execve(full_path, strs, infos->envp);
+		exit(EXIT_FAILURE);
 	}
 	printf("test before11 pid2\n");
 	pid2 = fork();
@@ -194,20 +190,18 @@ void	handle_redirections(t_infos *infos)
 				ft_quit(infos, "Error: echec dup2 fd[1].\n", 2);
 			close(fd[1]);
 		}
-		if (infos->tok->infile == NULL)
-		{
-			dup2(fd[0], STDIN_FILENO);
-			close(fd[0]);
-			path_env2 = get_env_value(infos->tmp_env, "PATH");
-			if (!path_env2)
-				ft_quit(infos, "Error: echec path_env2.\n", 2);
-			full_path2 = find_command(infos, infos->tok->cmd[0], path_env2);
-			if (!full_path2)
-				ft_quit(infos, "Error: echec full_path2_2.\n", 2);
-			strs2 = ft_str(infos, strs2, infos->tok->cmd);
-			execve(full_path2, strs2, infos->envp);
-			exit(EXIT_FAILURE);
-		}
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		path_env2 = get_env_value(infos->tmp_env, "PATH");
+		if (!path_env2)
+			ft_quit(infos, "Error: echec path_env2.\n", 2);
+		full_path2 = find_command(infos, infos->tok->cmd[0], path_env2);
+		if (!full_path2)
+			ft_quit(infos, "Error: echec full_path2_2.\n", 2);
+		strs2 = ft_str(infos, strs2, infos->tok->cmd);
+		execve(full_path2, strs2, infos->envp);
+		exit(EXIT_FAILURE);
 	}
 	close(fd[0]);
 	close(fd[1]);
