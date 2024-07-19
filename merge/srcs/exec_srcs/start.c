@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 21:55:12 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/19 19:13:58 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	builtin(t_infos *infos)
 		else if (ft_strcmp(infos->tok->cmd[0], "env") == 0)
 			ft_env(infos);
 		else if (ft_strcmp(infos->tok->cmd[0], "exit") == 0)
-			exit(EXIT_FAILURE);
+		{
+			ft_jedois_exit(infos);
+			//exit(EXIT_FAILURE);
+		}
 		else if (ft_strcmp(infos->tok->cmd[0], "export") == 0)
 		{
 			ft_order_env(infos);
@@ -61,5 +64,11 @@ void	builtin(t_infos *infos)
 		}
 		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
 			ft_path(infos);
+		else if (ft_strcmp(infos->tok->cmd[0], "exit") == 0)
+		{
+			ft_jedois_exit(infos);
+			//exit(EXIT_FAILURE);
+		}
 	}
+	//ft_printf("histoiry = %s\n", infos->history_file);
 }

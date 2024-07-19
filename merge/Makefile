@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+         #
+#    By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 14:36:58 by gmarquis          #+#    #+#              #
-#    Updated: 2024/07/18 20:01:06 by gmarquis         ###   ########.fr        #
+#    Updated: 2024/07/19 18:35:48 by jpp              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRCS_BUIL = srcs/builtin/cd.c $\
 srcs/builtin/echo.c $\
 srcs/builtin/export.c $\
 srcs/builtin/pwd.c $\
-srcs/builtin/unset.c
+srcs/builtin/unset.c $\
+srcs/builtin/exit.c
 
 SRCS_EXEC = srcs/exec_srcs/env.c $\
 srcs/exec_srcs/exec.c $\
@@ -36,7 +37,7 @@ srcs/pars_srcs/sighandler.c $\
 srcs/pars_srcs/surcouche.c $\
 srcs/pars_srcs/token_utils.c $\
 srcs/pars_srcs/tokenize.c $\
-srcs/pars_srcs/verif.c
+srcs/pars_srcs/verif.c 
 
 LIBFT_PATH = ../includes/libft/
 

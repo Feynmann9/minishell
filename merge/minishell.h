@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 21:17:11 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/19 19:09:02 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,9 @@ void	ft_pwd(t_infos *infos);
 
 	//			unset			//
 void	ft_unset(t_infos *infos, char *more);
+int     ft_jedoistoutfaire(char *str);
+void    ft_jedois_exit(t_infos *infos);
+int get_last_exit_status(const char *history_file);
 
 //			EXEC			//
 
