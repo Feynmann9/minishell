@@ -6,11 +6,17 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:14:56 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 15:06:20 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:46:56 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+static void	ft_delete_file(char *filename)
+{
+	if (unlink(filename) == -1)
+		ft_printf("cannot remove '%s': %s\n", filename, strerror(errno));
+}
 
 static t_files	*ft_free_files(t_files *files)
 {
@@ -18,6 +24,7 @@ static t_files	*ft_free_files(t_files *files)
 
 	while (files)
 	{
+		ft_delete_file(files->file);
 		tmp = files;
 		files = files->NEXT;
 		tmp->file = ft_free_str(tmp->file);
