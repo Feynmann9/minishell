@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 22:40:38 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 15:12:30 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:38:02 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,12 +147,16 @@ void	ft_surcouche(t_infos *infos)
 			{
 				if (tokens->NEXT)
 					ft_surcouche_util(infos, tokens, current_tok, tmp_type);
+				else
+					infos->error = "bash: syntax error near unexpected token `newline'";
 			}
 		else if (tokens->type == TOKEN_REDIRECT_OUT
 			|| tokens->type == TOKEN_REDIRECT_APPEND)
 			{
 				if (tokens->NEXT)
 					ft_surcouche_util(infos, tokens, current_tok, tmp_type);
+				else
+					infos->error = "bash: syntax error near unexpected token `newline'";
 			}
 		else if (tokens->type == TOKEN_PIPE)
 		{

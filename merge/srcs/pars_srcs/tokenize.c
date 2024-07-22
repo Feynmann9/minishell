@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 02:56:29 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/16 17:48:48 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:30:18 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,14 @@ static void	ft_handle_heredoc_operator(t_tokenizer *tok, t_infos *infos)
 		|| tok->input[tok->i] == '\v' || tok->input[tok->i] == '\n'
 		|| tok->input[tok->i] == '\t')
 		tok->i++;
-	ft_extract_heredoc_delimiter(tok);
-	ft_handle_heredoc(tok, infos);
-	ft_clear_heredoc_buffer(tok);
+	if (tok->input[tok->i + 1])
+	{
+		ft_extract_heredoc_delimiter(tok);
+		ft_handle_heredoc(tok, infos);
+		ft_clear_heredoc_buffer(tok);
+	}
+	else
+		return ;
 }
 
 static void	ft_handle_operator(t_tokenizer *tok, t_infos *infos)

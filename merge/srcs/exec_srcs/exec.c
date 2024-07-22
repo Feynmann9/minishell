@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:29:05 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 22:32:56 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:46:26 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_multi(t_infos *infos)	//t_base *base, char **env
 			ft_quit(infos, "Error: no full path\n", 2);
 		strs = ft_str(infos, strs, infos->tok->cmd);
 		execve(full_path, strs, infos->envp);
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
 	}
 
 /*
@@ -106,7 +106,7 @@ infos->tok->cmd --> [1] minishell
 			ft_quit(infos, "Error: no full path 2\n", 2);
 		strs2 = ft_str(infos, strs2, infos->tok->cmd);
 		execve(full_path2, strs2, infos->envp);
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
 	}
 	close(fd[0]);
 	close(fd[1]);

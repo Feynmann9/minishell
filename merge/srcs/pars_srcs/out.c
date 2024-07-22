@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:14:56 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/19 16:46:56 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:57:11 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 static void	ft_delete_file(char *filename)
 {
-	if (unlink(filename) == -1)
-		ft_printf("cannot remove '%s': %s\n", filename, strerror(errno));
+	if (!ft_strncmp(filename, "minishell_tmpfile_", 18))
+	{
+		if (unlink(filename) == -1)
+			ft_printf("cannot remove '%s': %s\n", filename, strerror(errno));
+	}
 }
 
 static t_files	*ft_free_files(t_files *files)

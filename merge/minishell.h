@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/19 19:09:02 by jpp              ###   ########.fr       */
+/*   Updated: 2024/07/22 17:28:04 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ typedef struct s_infos
 	char			**envp;
 	char			*history_file;
 	char			*input;
+	char			*error;
 	int				count_pipes;
 	int				tmpfile_counter;
 	t_env			*tmp_env;

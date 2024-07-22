@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/19 19:13:58 by jpp              ###   ########.fr       */
+/*   Updated: 2024/07/22 18:49:50 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@ void	builtin(t_infos *infos)
 			ft_order_env(infos);
 			ft_print_order(infos);
 		}
+		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && (infos->tok->infile || infos->tok->outfile))
+			handle_redirections(infos);
 		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT)
 		{
-			//printf("test1\n");
-			ft_multi(infos);
+			ft_printf("test1\n");
+			//ft_multi(infos);
+			handle_redirections(infos);
 		}
 		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
 			ft_path(infos);
@@ -59,8 +62,9 @@ void	builtin(t_infos *infos)
 			handle_redirections(infos);
 		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT)
 		{
-			//printf("test2\n");
-			ft_multi(infos);
+			ft_printf("test2\n");
+			//ft_multi(infos);
+			handle_redirections(infos);
 		}
 		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
 			ft_path(infos);

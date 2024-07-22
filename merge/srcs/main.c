@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/19 18:46:21 by jpp              ###   ########.fr       */
+/*   Updated: 2024/07/22 18:11:45 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,17 @@ int	main(int argc, char **argv, char **envp)
 		ft_surcouche(&infos);
 		ft_free_tokens(&infos.tokens);
 		//ft_check_and_print_tok(&infos);
-		ft_printf("exec\n");
-		builtin(&infos);
-		ft_printf("post_exec\n");
+		if (infos.error)
+		{
+			ft_printf("%s\n", infos.error);
+			infos.error = NULL;
+		}
+		else if (infos.error == NULL && infos.tok)
+		{
+			ft_printf("exec\n");
+			builtin(&infos);
+			ft_printf("post_exec\n");
+		}
 		ft_free_tok(&infos.tok);
 	}
 	rl_clear_history();
