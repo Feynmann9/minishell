@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/22 17:28:04 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/22 21:49:32 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct s_infos
 	char			*history_file;
 	char			*input;
 	char			*error;
+	int				in_heredoc;
 	int				count_pipes;
 	int				tmpfile_counter;
 	t_env			*tmp_env;
@@ -225,8 +226,8 @@ void	ft_quit(t_infos *s_infos, char *message, int out);
 void	ft_free_tok(t_tok **tok);
 
 	//		sighandler.c		//
-void	ft_handle_sigint(int sig);
 void	ft_sighandler(void);
+void	ft_setup_signal_handlers(void);
 
 	//		surcouche.c		//
 void	ft_surcouche(t_infos *infos);

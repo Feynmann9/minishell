@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 18:30:41 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 14:33:56 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/22 21:54:10 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,29 @@ void	ft_handle_heredoc(t_tokenizer *tok, t_infos *infos)
 	tok->heredoc_buffer = ft_free_str(tok->heredoc_buffer);
 }
 
+static void	ft_handle_sigint_here(int sig)
+{
+	if (sig == SIGINT)
+	{
+		exit(1);
+	}
+}
+void	ft_sighandler_here(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = ft_handle_sigint_here;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+		exit(EXIT_SUCCESS);
+	sa.sa_handler = SIG_IGN;
+	if (sigaction(SIGTSTP, &sa, NULL) == -1)
+		exit(EXIT_SUCCESS);
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+		exit(EXIT_SUCCESS);
+}
+
 void	ft_read_heredoc(t_tokenize_state *state, t_infos *infos,
 	char *delimiter)
 {
@@ -90,6 +113,7 @@ void	ft_read_heredoc(t_tokenize_state *state, t_infos *infos,
 
 	while (1)
 	{
+		ft_sighandler_here();
 		line = readline("> ");
 		if (!line || ft_strcmp(line, delimiter) == 0)
 		{

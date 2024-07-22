@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:29:05 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/22 18:46:26 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:15:22 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_multi(t_infos *infos)	//t_base *base, char **env
 			ft_quit(infos, "Error: no full path\n", 2);
 		strs = ft_str(infos, strs, infos->tok->cmd);
 		execve(full_path, strs, infos->envp);
-		//exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 
 /*
@@ -106,14 +106,14 @@ infos->tok->cmd --> [1] minishell
 			ft_quit(infos, "Error: no full path 2\n", 2);
 		strs2 = ft_str(infos, strs2, infos->tok->cmd);
 		execve(full_path2, strs2, infos->envp);
-		//exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
 }
-
+/*
 void	handle_redirections(t_infos *infos)
 {
 	int		fd[2];
@@ -126,6 +126,7 @@ void	handle_redirections(t_infos *infos)
 	char	*full_path2 = NULL;
 	char	**strs2;
 
+	//printf("%d\n", infos->count_pipes);
 	if (infos->envp == NULL || infos == NULL)
 		return ;
 	if (pipe(fd) == -1)
@@ -134,7 +135,7 @@ void	handle_redirections(t_infos *infos)
 	if (pid1 < 0)
 		return ;
 	strs = NULL;
-	printf("0\n");
+	printf("000000\n");
 	if (pid1 == 0)
 	{
 		if (infos->tok->infile)
@@ -208,7 +209,89 @@ void	handle_redirections(t_infos *infos)
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
 }
+*/
+void handle_redirections(t_infos *infos) {
+    int *pipes; // Tableau de descripteurs de fichiers pour les pipes
+    int num_pipes = infos->count_pipes;
+    int num_cmds = num_pipes + 1;
+    pid_t pid;
+    int i;
 
+    if (infos->envp == NULL || infos == NULL)
+        return;
+
+    // Allouer mémoire pour les descripteurs de fichiers des pipes
+    pipes = malloc(2 * num_pipes * sizeof(int));
+    if (!pipes) {
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
+    // Créer les pipes
+    for (i = 0; i < num_pipes; i++) {
+        if (pipe(pipes + i * 2) == -1) {
+            perror("pipe");
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    // Forker pour chaque commande
+    for (i = 0; i < num_cmds; i++) {
+        pid = fork();
+        if (pid == -1) {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        } else if (pid == 0) {
+            // Redirection de l'entrée
+            if (i > 0) {
+                dup2(pipes[(i - 1) * 2], STDIN_FILENO);
+            }
+
+            // Redirection de la sortie
+            if (i < num_pipes) {
+                dup2(pipes[i * 2 + 1], STDOUT_FILENO);
+            }
+
+            // Fermer tous les descripteurs de fichiers
+            for (int j = 0; j < 2 * num_pipes; j++) {
+                close(pipes[j]);
+            }
+
+            // Exécuter la commande
+            char *path_env = get_env_value(infos->tmp_env, "PATH");
+            if (!path_env) {
+                perror("get_env_value");
+                exit(EXIT_FAILURE);
+            }
+            char *full_path = find_command(infos, infos->tok->cmd[0], path_env);
+            if (!full_path) {
+                perror("find_command");
+                exit(EXIT_FAILURE);
+            }
+            char **strs = ft_str(infos, NULL, infos->tok->cmd);
+            execve(full_path, strs, infos->envp);
+            perror("execve");
+            exit(EXIT_FAILURE);
+        }
+
+        // Passer à la commande suivante
+        if (i < num_pipes) {
+            infos->tok = infos->tok->NEXT;
+        }
+    }
+
+    // Fermer tous les descripteurs de fichiers dans le processus parent
+    for (i = 0; i < 2 * num_pipes; i++) {
+        close(pipes[i]);
+    }
+
+    // Attendre la fin de tous les processus enfants
+    for (i = 0; i < num_cmds; i++) {
+        wait(NULL);
+    }
+
+    // Libérer la mémoire
+    free(pipes);
+}
 /*
 void	handle_redirections(t_tok *tok)
 {

@@ -6,11 +6,25 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/22 18:11:45 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:14:26 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	ft_free_envp(t_env *envp)
+{
+	t_env *tmp;
+
+	while (envp)
+	{
+		tmp = envp;
+		envp = envp->next;
+		free(tmp->name_folder);
+		free(tmp->value_folder);
+		free(tmp);
+	}
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -18,8 +32,8 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 1 || argv[1])
 		ft_exit(2, "Erreur: too many arguments.\n");
-	ft_sighandler();
 	infos = ft_init_infos(envp);
+	ft_sighandler();
 	while (1)
 	{
 		infos.input = readline("minishell> ");
@@ -45,6 +59,8 @@ int	main(int argc, char **argv, char **envp)
 			ft_printf("post_exec\n");
 		}
 		ft_free_tok(&infos.tok);
+		ft_free_envp(infos.tmp_env);
+		infos = ft_init_infos(envp);
 	}
 	rl_clear_history();
 	return (0);
