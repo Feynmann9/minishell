@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:26:58 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/22 21:52:01 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:51:11 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 static void	ft_handle_sigint(int sig)
 {
-	if (sig == SIGINT)
+	if (g_signal == 1)
+	{
+		g_signal = 0;
+		exit(1);
+	}
+	else if (sig == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();

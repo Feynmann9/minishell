@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 18:30:41 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/22 21:54:10 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:50:50 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,59 +77,10 @@ void	ft_handle_heredoc(t_tokenizer *tok, t_infos *infos)
 	if (!tok->heredoc_buffer)
 		ft_quit(infos, "Error: echec malloc heredoc_buffer.\n", 2);
 	tok->heredoc_buffer[0] = '\0';
+	g_signal = 1;
 	ft_collect_heredoc_lines(tok, delimiter, infos);
+	g_signal = 0;
 	ft_generate(tok, infos, delimiter);
 	delimiter = ft_free_str(delimiter);
 	tok->heredoc_buffer = ft_free_str(tok->heredoc_buffer);
-}
-
-static void	ft_handle_sigint_here(int sig)
-{
-	if (sig == SIGINT)
-	{
-		exit(1);
-	}
-}
-void	ft_sighandler_here(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = ft_handle_sigint_here;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		exit(EXIT_SUCCESS);
-	sa.sa_handler = SIG_IGN;
-	if (sigaction(SIGTSTP, &sa, NULL) == -1)
-		exit(EXIT_SUCCESS);
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		exit(EXIT_SUCCESS);
-}
-
-void	ft_read_heredoc(t_tokenize_state *state, t_infos *infos,
-	char *delimiter)
-{
-	char	*line;
-
-	while (1)
-	{
-		ft_sighandler_here();
-		line = readline("> ");
-		if (!line || ft_strcmp(line, delimiter) == 0)
-		{
-			line = ft_free_str(line);
-			break ;
-		}
-		while (*line)
-		{
-			if (state->j >= state->buffer_size - 1)
-				ft_resize_buffer(infos, state);
-			state->buffer[state->j++] = *line++;
-		}
-		state->buffer[state->j++] = '\n';
-		line = ft_free_str(line);
-	}
-	state->buffer[state->j] = '\0';
-	ft_add_token(infos, &infos->tokens, TOKEN_HEREDOC, state->buffer);
-	state->j = 0;
 }

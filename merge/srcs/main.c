@@ -6,11 +6,13 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/22 22:14:26 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:41:05 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	g_signal = 0;
 
 void	ft_free_envp(t_env *envp)
 {

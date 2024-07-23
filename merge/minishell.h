@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/22 21:49:32 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:50:43 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <ctype.h>
+
+extern int	g_signal;
 
 //		STRUCT EXEC		//
 
@@ -207,8 +209,6 @@ void	ft_clear_heredoc_buffer(t_tokenizer *tok);
 void	ft_extract_heredoc_delimiter(t_tokenizer *tok);
 void	ft_collect_heredoc_lines(t_tokenizer *tok, char *delimiter, t_infos *infos);
 void	ft_handle_heredoc(t_tokenizer *tok, t_infos *infos);
-void	ft_read_heredoc(t_tokenize_state *state, t_infos *infos,
-	char *delimiter);
 
 	//		init_parse.c				//
 t_token	*ft_new_token(t_infos *infos, t_type type, char *value);
