@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/23 18:50:43 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:22:37 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ void	ft_env(t_infos *infos);
 char	**ft_str(t_infos *infos, char **str, char **args);
 void	ft_multi(t_infos *infos);
 void	handle_redirections(t_infos *infos);
+void handle_pipe(t_infos *infos);
 
 	//			start.c		//
 char	*get_env_value(t_env *env, char *name);

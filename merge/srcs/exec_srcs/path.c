@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:29:24 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 21:44:10 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:36:40 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	path_or_notpath(char *cmd)
 
 char	*find_command(t_infos *infos, char *cmd, char *path_env)
 {
+	if (!cmd)
+		ft_quit(infos, "Error: echec malloc full_path.\n", 2);
 	char *end;
 	char *full_path;
 	char *result;
@@ -39,7 +41,7 @@ char	*find_command(t_infos *infos, char *cmd, char *path_env)
 
 	full_path = malloc(len + 1);
 	if (!full_path)
-		ft_quit(infos, "Error: echec mallo full_path.\n", 2);
+		ft_quit(infos, "Error: echec malloc full_path.\n", 2);
 	full_path[len] = '\0';
 	while (path_env && infos)
 	{

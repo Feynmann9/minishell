@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/23 18:41:05 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/23 22:20:48 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ int	main(int argc, char **argv, char **envp)
 			ft_quit(&infos, "exit\n", 1);
 		}
 		ft_tokenize(&infos);
+		//ft_print_tokens(infos.tokens);
 		ft_surcouche(&infos);
 		ft_free_tokens(&infos.tokens);
-		//ft_check_and_print_tok(&infos);
+		ft_check_and_print_tok(&infos);
 		if (infos.error)
 		{
 			ft_printf("%s\n", infos.error);
@@ -56,9 +57,9 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else if (infos.error == NULL && infos.tok)
 		{
-			ft_printf("exec\n");
+			ft_printf("\n--- EXEC ---\n");
 			builtin(&infos);
-			ft_printf("post_exec\n");
+			ft_printf("--- POST_EXEC ---\n");
 		}
 		ft_free_tok(&infos.tok);
 		ft_free_envp(infos.tmp_env);

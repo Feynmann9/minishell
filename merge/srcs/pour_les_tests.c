@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/19 15:38:30 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/23 22:20:38 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,52 +47,57 @@ void	ft_print_tokens(t_token *tokens)
 
 static void	ft_print_files(t_files *files)
 {
-	while (files)
+	t_files	*tmp;
+
+	tmp = files;
+	while (tmp)
 	{
-		if (files->type == TOKEN_REDIRECT_IN)
-			ft_printf("  File: %s, Type: IN_FILE\n", files->file);
-		else if (files->type == TOKEN_HEREDOC_WORD)
-			ft_printf("  File: %s, Type: HEREDOC\n", files->file);
-		else if (files->type == TOKEN_REDIRECT_OUT)
-			ft_printf("  File: %s, Type: OUT_FILE\n", files->file);
-		else if (files->type == TOKEN_REDIRECT_APPEND)
-			ft_printf("  File: %s, Type: APPEND\n", files->file);
-		files = files->NEXT;
+		if (tmp->type == TOKEN_REDIRECT_IN)
+			ft_printf("  File_name: %s, Type: IN_FILE\n", tmp->file);
+		else if (tmp->type == TOKEN_HEREDOC_WORD)
+			ft_printf("  File_name: %s, Type: HEREDOC\n", tmp->file);
+		else if (tmp->type == TOKEN_REDIRECT_OUT)
+			ft_printf("  File_name: %s, Type: OUT_FILE\n", tmp->file);
+		else if (tmp->type == TOKEN_REDIRECT_APPEND)
+			ft_printf("  File_name: %s, Type: APPEND\n", tmp->file);
+		tmp = tmp->NEXT;
 	}
 }
 
 static void	ft_print_tok(t_tok *tok)
 {
 	int	i;
+	t_tok	*tmp;
 
-	while (tok)
+	tmp = tok;
+	while (tmp)
 	{
-		ft_printf("Command: ");
-		if (tok->cmd)
+		ft_printf("infos->tok->cmd: ");
+		if (tmp->cmd)
 		{
 			i = 0;
-			while (tok->cmd[i])
+			while (tmp->cmd[i])
 			{
-				ft_printf("%s ", tok->cmd[i]);
+				ft_printf("%s ", tmp->cmd[i]);
 				i++;
 			}
 		}
-		ft_printf("\nInput files:\n");
+		ft_printf("\ninfos->tok->infile:\n");
 
-		ft_print_files(tok->infile);
+		ft_print_files(tmp->infile);
 
-		ft_printf("Output files:\n");
+		ft_printf("infos->tok->outfile:\n");
 
-		ft_print_files(tok->outfile);
-		tok = tok->NEXT;
-		if (tok)
-			ft_printf("\n--- Next cmd via pipe ---\n\n");
+		ft_print_files(tmp->outfile);
+		tmp = tmp->NEXT;
+		if (tmp)
+			ft_printf("\n--- Next tok via pipe ---\n\n");
 	}
 }
 
 void	ft_check_and_print_tok(t_infos *infos)
 {
-	ft_printf("--- PARSE ---\n");
+	ft_printf("\n--- PARSE ---\n\n");
 	if (!infos->tok)
 	{
 		ft_printf("No commands found.\n");
