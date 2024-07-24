@@ -55,7 +55,10 @@ void	ft_cd(t_infos *infos, const char *folder)
 	{
 		cwd = getcwd(NULL, 0);
 		if (cwd != NULL)
+		{
 			set_env_value(infos, infos->tmp_env, "PWD", cwd);
+			free(cwd);
+		}
 		else
 			ft_printf("commande introuvable\n");
 	}
