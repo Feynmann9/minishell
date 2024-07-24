@@ -1,0 +1,24 @@
+Exécution de cat < Makefile > out :
+
+    cat lit le contenu du fichier Makefile (grâce à la redirection d'entrée <).
+    cat écrit ce contenu dans le fichier out (grâce à la redirection de sortie >).
+
+Le Pipe (|) :
+
+    Le pipe essaie de connecter la sortie standard de cat à l'entrée standard de echo.
+    Mais dans ce cas, la sortie de cat est redirigée vers le fichier out, donc il n'y a 
+    pas de données envoyées à travers le pipe.
+
+Exécution de echo mathieu :
+
+    echo reçoit les données depuis le pipe (si le pipe avait des données à transmettre) et 
+    affiche "mathieu".
+    Comme cat a écrit dans le fichier out et non dans le pipe, echo mathieu ne reçoit rien via 
+    le pipe. Il affiche simplement "mathieu".
+
+
+Chaque pipe est constitué de deux descripteurs de fichiers : un pour lire et un pour écrire. 
+Nous devons donc allouer de la mémoire pour chaque pipe.
+
+Le processus parent est le processus qui appelle fork().
+Le processus enfant est le processus qui est créé par fork().
