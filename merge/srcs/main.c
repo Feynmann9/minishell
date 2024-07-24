@@ -6,13 +6,31 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/23 22:20:48 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/24 22:40:00 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 int	g_signal = 0;
+
+static t_infos	ft_re_init_infos(char **envp, t_env *tmp_env)
+{
+	t_infos	infos;
+
+	infos.in_heredoc = 0;
+	infos.envp = envp;
+	infos.history_file = ".minishell_history";
+	infos.count_pipes = 0;
+	infos.input = NULL;
+	infos.error = NULL;
+	infos.tokens = NULL;
+	infos.tmpfile_counter = 0;
+	infos.tokens = NULL;
+	infos.tok = NULL;
+	infos.tmp_env = tmp_env;
+	return (infos);
+}
 
 void	ft_free_envp(t_env *envp)
 {
@@ -49,7 +67,7 @@ int	main(int argc, char **argv, char **envp)
 		//ft_print_tokens(infos.tokens);
 		ft_surcouche(&infos);
 		ft_free_tokens(&infos.tokens);
-		ft_check_and_print_tok(&infos);
+		//ft_check_and_print_tok(&infos);
 		if (infos.error)
 		{
 			ft_printf("%s\n", infos.error);
@@ -57,13 +75,13 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else if (infos.error == NULL && infos.tok)
 		{
-			ft_printf("\n--- EXEC ---\n");
+			//ft_printf("\n--- EXEC ---\n");
 			builtin(&infos);
-			ft_printf("--- POST_EXEC ---\n");
+			//ft_printf("--- POST_EXEC ---\n");
 		}
 		ft_free_tok(&infos.tok);
-		ft_free_envp(infos.tmp_env);
-		infos = ft_init_infos(envp);
+		//ft_free_envp(infos.tmp_env);
+		infos = ft_re_init_infos(envp, infos.tmp_env);
 	}
 	rl_clear_history();
 	return (0);

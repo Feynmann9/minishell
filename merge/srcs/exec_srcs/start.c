@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/24 00:35:44 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:23:44 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 void	builtin(t_infos *infos)
 {
+	//if (ft_strcmp(infos->tok->cmd[0], "./minishell") == 0)
+	//	g_signal = 2;
 	if ((infos->tok->infile || infos->tok->outfile))
 		handle_redirections(infos);
 	else if (infos->tok->cmd[0] && infos->tok->cmd[1] == NULL)
@@ -40,7 +42,6 @@ void	builtin(t_infos *infos)
 			handle_redirections(infos);
 		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT)
 			handle_redirections(infos);
-		//handle_pipe(infos);
 		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
 			ft_path(infos);
 	}
@@ -58,7 +59,6 @@ void	builtin(t_infos *infos)
 			handle_redirections(infos);
 		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT)
 			handle_redirections(infos);
-		//handle_pipe(infos);
 		else if (find_command(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
 			ft_path(infos);
 		else if (ft_strcmp(infos->tok->cmd[0], "exit") == 0)

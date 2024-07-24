@@ -6,11 +6,12 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:37:21 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 19:11:28 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:09:03 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
 
 static void	set_env_value(t_infos *infos, t_env *env, char *name, char *value)
 {
@@ -31,7 +32,7 @@ static void	set_env_value(t_infos *infos, t_env *env, char *name, char *value)
 			return ;
 		}
 		env = env->next;
-	}
+	t_e}
 	new_env = malloc(sizeof(t_env));
 	if (!new_env)
 		ft_quit(infos, "Error: echec malloc new_env.\n", 2);
@@ -50,45 +51,28 @@ static void	set_env_value(t_infos *infos, t_env *env, char *name, char *value)
 		current->next = new_env;
 }
 
-void	ft_cd(t_infos *infos, char *folder)
+void    ft_cd(t_infos *infos, const char *folder)
 {
-	char	*cd;
+    char *cd;
+    char *cwd;
 
-	int (buf_size) = BUFFER_SIZE;
-	char *(cwd) = malloc(buf_size);
-	if (!cwd)
-		ft_quit(infos, "Error: echec malloc cwd.\n", 2);
+    if (folder == NULL)
+        cd = get_env_value(infos->tmp_env, "HOME");
+    else
+        cd = ft_strdup(folder);
+
+    if (chdir(cd) != 0)
+        ft_printf("commande introuvable\n");
+    else
+    {
+		cwd = getcwd(NULL, 0);
+        if (cwd != NULL)
+            set_env_value(infos, infos->tmp_env, "PWD", cwd);
+        else
+            ft_printf("commande introuvable\n");
+    }
 	if (folder == NULL)
-		cd = get_env_value(infos->tmp_env, "HOME");
-	else
-	{
-		cd = ft_strdup(folder);
-		if(!cd)
-			ft_quit(infos, "Error: echec malloc cd.\n", 2);
-	}
-	if (chdir(cd) != 0)
-		ft_printf("commande introuvable\n");
-	else
-	{
-		while (getcwd(cwd, sizeof(cwd)) == NULL)
-		{
-			if (errno == ERANGE)		// Si le buffer est trop petit
-			{
-				cwd = ft_realloc(cwd, ft_strlen(cwd) + 1, buf_size);
-				if (!cwd)
-					ft_quit(infos, "Error: echec realloc cwd.\n", 2);
-				buf_size += BUFFER_SIZE;
-			}
-			else
-			{
-				ft_printf("commande introuvable\n");
-				free(cwd);
-				cwd = NULL;
-				break ;
-			}
-		}
-		set_env_value(infos, infos->tmp_env, "PWD", cwd);
-	}
+        free(cd);
 }
 
 //utiliser chdir pour changer de folder ca permet de le faire auto

@@ -1,39 +1,5 @@
 
-/* fonctionel */
-0
-test before11 pid2
-0
-1
-4
-test before11 pid2
-test before22 pid2
-test before22 pid2
-test start outfile
-test for outfile
-test before22 pid2
-test before22 pid2
-test start outfile
-test for outfile
-test for create outfile
+Bug trouver >
 
-test for create outfile
-
-/* non-fonctionel */
-0
-test before11 pid2
-0
-1
-4
-test before11 pid2
-test before22 pid2
-test before22 pid2
-test start outfile
-test for outfile
-test before22 pid2
-test before22 pid2
-test start outfile
-test for create outfile
-
-test for outfile
-test for create outfile
-minishell> exit
+cat : Ctrl+C
+<<1<<2 : bash: syntax error near unexpected token `1'

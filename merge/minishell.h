@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/23 21:22:37 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:52:15 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ typedef struct s_infos
 //			BUILTIN			//
 
 	//			cd.c			//
-void	ft_cd(t_infos *infos, char *folder);
+void	ft_cd(t_infos *infos, const char *folder);
 
 	//			echo.c			//
 void	ft_echo(char **args);
