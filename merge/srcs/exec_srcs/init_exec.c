@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/24 22:13:55 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:54:53 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_env	*ft_init_env(t_infos *infos, char **env)
 	{
 		env_var = ft_split_env(infos, env[i]);
 		ft_make_env(infos, &tmp_env, env_var);
+		env_var = ft_free_tab2d(env_var);
 		i++;
 	}
 	return (tmp_env);
