@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/24 21:52:15 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/26 19:39:56 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void	ft_env(t_infos *infos);
 char	**ft_str(t_infos *infos, char **str, char **args);
 void	ft_multi(t_infos *infos);
 void	handle_redirections(t_infos *infos);
-void handle_pipe(t_infos *infos);
+void	handle_pipe(t_infos *infos);
 
 	//			start.c		//
 char	*get_env_value(t_env *env, char *name);
@@ -183,6 +183,7 @@ void	builtin(t_infos *infos);
 
 	//			path.c			//
 int		path_or_notpath(char *cmd);
+int		find_command_unleak(t_infos *infos, char *cmd, char *path_env);
 char	*find_command(t_infos *infos, char *cmd, char *path_env);
 void	ft_path(t_infos *infos);
 void	execute_pipeline(t_infos *infos, t_cmd **commands, int num_cmds, char **env);

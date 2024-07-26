@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:29:24 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/24 21:24:40 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/26 19:29:08 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,49 @@ int	path_or_notpath(char *cmd)
 	if (ft_strcmp(cmd, "unset") == 0)
 		return (0);
 	return (1);
+}
+
+int	find_command_unleak(t_infos *infos, char *cmd, char *path_env)
+{
+	if (!cmd)
+		ft_quit(infos, "Error: echec malloc full_path.\n", 2);
+	char *end;
+	char *full_path;
+	char *result;
+	int	len = ft_strlen(path_env) + ft_strlen(cmd) + 1;
+
+	full_path = malloc(len + 1);
+	if (!full_path)
+		ft_quit(infos, "Error: echec malloc full_path.\n", 2);
+	full_path[len] = '\0';
+	while (path_env && infos)
+	{
+		end = ft_strchr(path_env, ':');
+		if (end)
+			*end = '\0';
+		ft_strcpy(full_path, path_env);
+		ft_strcat(full_path, "/");
+		ft_strcat(full_path, cmd);
+		if (access(full_path, X_OK) == 0)
+		{
+			result = ft_strdup(full_path);
+			full_path = ft_free_str(full_path);
+			if (!result)
+				ft_quit(infos, "Error: Echec malloc result.\n", 2);
+			if (end)
+				*end = ':';
+			result = ft_free_str(result);
+			return (1);
+		}
+		if (end)
+		{
+			*end = ':';
+			path_env = end + 1;
+		}
+		else
+			path_env = NULL;
+	}
+	return (0);
 }
 
 char	*find_command(t_infos *infos, char *cmd, char *path_env)
@@ -54,6 +97,8 @@ char	*find_command(t_infos *infos, char *cmd, char *path_env)
 		if (access(full_path, X_OK) == 0)
 		{
 			result = ft_strdup(full_path);
+			if (!result)
+				ft_quit(infos, "Error: Echec malloc result.\n", 2);
 			if (end)
 				*end = ':';
 			return (result);

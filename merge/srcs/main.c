@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/24 22:40:00 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/26 19:39:52 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	ft_free_envp(t_env *envp)
 	{
 		tmp = envp;
 		envp = envp->next;
-		free(tmp->name_folder);
-		free(tmp->value_folder);
+		tmp->name_folder = ft_free_str(tmp->name_folder);
+		tmp->value_folder = ft_free_str(tmp->value_folder);
 		free(tmp);
 	}
 }
@@ -80,7 +80,6 @@ int	main(int argc, char **argv, char **envp)
 			//ft_printf("--- POST_EXEC ---\n");
 		}
 		ft_free_tok(&infos.tok);
-		//ft_free_envp(infos.tmp_env);
 		infos = ft_re_init_infos(envp, infos.tmp_env);
 	}
 	rl_clear_history();
