@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:29:24 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/26 19:29:08 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/27 20:08:42 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ int	find_command_unleak(t_infos *infos, char *cmd, char *path_env)
 {
 	if (!cmd)
 		ft_quit(infos, "Error: echec malloc full_path.\n", 2);
+	if (cmd[0] == '/')
+	{
+		if (access(cmd, X_OK) == 0)
+			return (1);
+		else
+			return (0);
+	}
 	char *end;
 	char *full_path;
 	char *result;
@@ -75,13 +82,20 @@ int	find_command_unleak(t_infos *infos, char *cmd, char *path_env)
 
 char	*find_command(t_infos *infos, char *cmd, char *path_env)
 {
-	if (!cmd)
-		ft_quit(infos, "Error: echec malloc full_path.\n", 2);
+	if (cmd[0] == '/')
+	{
+		if (access(cmd, X_OK) == 0)
+			return (cmd);
+		else
+			return (NULL);
+	}
 	char *end;
 	char *full_path;
 	char *result;
 	int	len = ft_strlen(path_env) + ft_strlen(cmd) + 1;
 
+	if (!cmd)
+		ft_quit(infos, "Error: echec malloc full_path.\n", 2);
 	full_path = malloc(len + 1);
 	if (!full_path)
 		ft_quit(infos, "Error: echec malloc full_path.\n", 2);
@@ -114,6 +128,26 @@ char	*find_command(t_infos *infos, char *cmd, char *path_env)
 	return (NULL);
 }
 
+void	ft_double_minishell(t_infos *infos)
+{
+	pid_t	pid = fork();
+	int		rien;
+	char	*path_env;
+
+	if (pid == -1)
+		exit(EXIT_FAILURE);
+	else if (pid == 0)
+	{
+		path_env = get_env_value(infos->tmp_env, "PATH");
+		if (!path_env)
+			exit(EXIT_FAILURE);
+		execve(infos->tok->cmd[0], infos->tok->cmd, infos->envp);
+		exit(EXIT_FAILURE);
+	}
+	else
+		waitpid(-1, &rien, 0);
+}
+
 void	ft_path(t_infos *infos)
 {
 	pid_t	pid = fork();
@@ -135,7 +169,14 @@ void	ft_path(t_infos *infos)
 		exit(EXIT_FAILURE);
 	}
 	else
+	{
 		waitpid(-1, &rien, 0);
+		if (WIFEXITED(rien))
+		{
+			infos->code_error = WEXITSTATUS(rien);
+			printf("le code = %d\n", infos->code_error);
+		}
+	}
 }
 
 void	execute_pipeline(t_infos *infos, t_cmd **commands, int num_cmds, char **env)

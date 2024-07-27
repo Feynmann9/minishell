@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:26:58 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/26 19:39:46 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:50:40 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_handle_sigint(int sig)
 	}
 }
 
-void	ft_sighandler(void)
+void	ft_sighandler(t_infos *infos)
 {
 	struct sigaction	sa;
 
@@ -36,7 +36,10 @@ void	ft_sighandler(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
+	{
+		infos->code_error = 130;
 		exit(EXIT_SUCCESS);
+	}
 	sa.sa_handler = SIG_IGN;
 	if (sigaction(SIGTSTP, &sa, NULL) == -1)
 		exit(EXIT_SUCCESS);

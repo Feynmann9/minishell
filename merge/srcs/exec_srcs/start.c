@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/26 18:10:57 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:24:18 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 void	builtin(t_infos *infos)
 {
-	//if (ft_strcmp(infos->tok->cmd[0], "./minishell") == 0)
-	//	g_signal = 2;
+	if (ft_strcmp(infos->tok->cmd[0], "./minishell") == 0)
+		ft_double_minishell(infos);
 	if ((infos->tok->infile || infos->tok->outfile))
 		handle_redirections(infos);
 	else if (infos->tok->cmd[0] && infos->tok->cmd[1] == NULL)
@@ -39,11 +39,20 @@ void	builtin(t_infos *infos)
 			ft_print_order(infos);
 		}
 		else if (find_command_unleak(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && (infos->tok->infile || infos->tok->outfile))
+		{
 			handle_redirections(infos);
+			ft_printf("ok1\n");
+		}
 		else if (find_command_unleak(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")) && infos->tok->NEXT)
+		{
 			handle_redirections(infos);
+			ft_printf("ok2\n");
+		}
 		else if (find_command_unleak(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
+		{
 			ft_path(infos);
+			ft_printf("ok3\n");
+		}
 	}
 	else if(infos->tok->cmd[0])
 	{

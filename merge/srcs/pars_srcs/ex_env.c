@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:29:58 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 14:32:51 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:42:38 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,14 @@ void	ft_handle_env_var(t_tokenizer *tok, t_infos *infos)
 	ft_add_token_from_buffer(infos, tok, &tok->j);
 	if (tok->input[tok->i + 1] == '\'' || tok->input[tok->i + 1] == '"')
 		return ;
+	else if (tok->input[tok->i + 1] == '?' && tok->input[tok->i + 2] == '\0')
+	{
+		tok->current_type = TOKEN_COMMAND;
+		tok->buffer = ft_free_str(tok->buffer);
+		tok->buffer = ft_itoa(infos->code_error);
+		tok->j = ft_strlen(tok->buffer);
+		tok->i++;
+	}
 	else
 	{
 		tok->current_type = TOKEN_ENV;

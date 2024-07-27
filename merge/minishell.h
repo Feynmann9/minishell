@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/26 19:39:56 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:23:04 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ typedef struct s_infos
 	int				in_heredoc;
 	int				count_pipes;
 	int				tmpfile_counter;
+	int				code_error;
 	t_env			*tmp_env;
 	t_token			*tokens;	//	NULL
 	t_tok			*tok;		//	ta partie
@@ -187,6 +188,7 @@ int		find_command_unleak(t_infos *infos, char *cmd, char *path_env);
 char	*find_command(t_infos *infos, char *cmd, char *path_env);
 void	ft_path(t_infos *infos);
 void	execute_pipeline(t_infos *infos, t_cmd **commands, int num_cmds, char **env);
+void	ft_double_minishell(t_infos *infos);
 
 	//			init_exec.c	//
 char	*get_env_value(t_env *env, char *name);
@@ -228,7 +230,7 @@ void	ft_quit(t_infos *s_infos, char *message, int out);
 void	ft_free_tok(t_tok **tok);
 
 	//		sighandler.c		//
-void	ft_sighandler(void);
+void	ft_sighandler(t_infos *infos);
 void	ft_setup_signal_handlers(void);
 
 	//		surcouche.c		//

@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/26 19:39:52 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/27 20:00:53 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1 || argv[1])
 		ft_exit(2, "Erreur: too many arguments.\n");
 	infos = ft_init_infos(envp);
-	ft_sighandler();
+	ft_sighandler(&infos);
 	while (1)
 	{
 		infos.input = readline("minishell> ");
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **envp)
 		//ft_print_tokens(infos.tokens);
 		ft_surcouche(&infos);
 		ft_free_tokens(&infos.tokens);
-		//ft_check_and_print_tok(&infos);
+		ft_check_and_print_tok(&infos);
 		if (infos.error)
 		{
 			ft_printf("%s\n", infos.error);
@@ -79,6 +79,7 @@ int	main(int argc, char **argv, char **envp)
 			builtin(&infos);
 			//ft_printf("--- POST_EXEC ---\n");
 		}
+		printf("le code %d\n", infos.code_error);
 		ft_free_tok(&infos.tok);
 		infos = ft_re_init_infos(envp, infos.tmp_env);
 	}

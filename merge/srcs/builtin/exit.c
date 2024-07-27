@@ -59,5 +59,5 @@ void    ft_jedois_exit(t_infos *infos)
     }
     else
         exot = get_last_exit_status(infos->history_file);
-    exit(exot);    
-} 
+    exit(exot);
+}

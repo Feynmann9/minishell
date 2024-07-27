@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:35:26 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/23 17:36:36 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:03:30 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ t_infos	ft_init_infos(char **envp)
 	infos.error = NULL;
 	infos.tokens = NULL;
 	infos.tmpfile_counter = 0;
+	infos.code_error = 0;
 	infos.tokens = NULL;
 	infos.tok = NULL;
 	infos.tmp_env = NULL;

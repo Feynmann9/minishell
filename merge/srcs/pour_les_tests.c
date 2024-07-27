@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:09:23 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/26 17:55:15 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:07:10 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,5 @@ void	ft_check_and_print_tok(t_infos *infos)
 }
 /*
 bash --posix
-valgrind --suppressions=supp.supp ./minishell
+valgrind --suppressions=supp.supp --leak-check=full ./minishell
 */

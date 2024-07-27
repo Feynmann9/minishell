@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:21:22 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 18:41:34 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:22:09 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static void	ft_process_expanded_buffer(t_infos *infos, t_tokenizer *tok,
 		ft_add_token(infos, &infos->tokens, TOKEN_ENV, tok->buffer);
 }
 
-/*		1 leaks par passage						*/
 void	ft_add_token_from_buffer(t_infos *infos, t_tokenizer *tok, int *j)
 {
 	char	*expanded;
