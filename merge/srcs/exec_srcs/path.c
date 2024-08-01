@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:29:24 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/27 20:08:42 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/01 23:11:57 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,32 @@ char	*find_command(t_infos *infos, char *cmd, char *path_env)
 	return (NULL);
 }
 
-void	ft_double_minishell(t_infos *infos)
+void ft_double_minishell(t_infos *infos)
+{
+	pid_t (pid) = fork();
+	int		status;
+	char	*path_env;
+
+	if (pid == -1)
+		exit(EXIT_FAILURE);
+	else if (pid == 0)
+	{
+		ft_setup_signal_handlers();
+		path_env = get_env_value(infos->tmp_env, "PATH");
+		if (!path_env)
+			exit(EXIT_FAILURE);
+		execve(infos->tok->cmd[0], infos->tok->cmd, infos->envp);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		g_signal = 2;
+		waitpid(pid, &status, 0);
+		g_signal = 0;
+	}
+}
+
+/*void	ft_double_minishell(t_infos *infos)
 {
 	pid_t	pid = fork();
 	int		rien;
@@ -146,7 +171,7 @@ void	ft_double_minishell(t_infos *infos)
 	}
 	else
 		waitpid(-1, &rien, 0);
-}
+}*/
 
 void	ft_path(t_infos *infos)
 {

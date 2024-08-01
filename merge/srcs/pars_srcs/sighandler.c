@@ -6,43 +6,40 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:26:58 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/27 19:50:40 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/01 23:26:14 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	ft_handle_sigint(int sig)
+void signal_handler(int sig)
 {
-	if (g_signal == 1)
+	if (g_signal == 0)
 	{
-		g_signal = 0;
-		exit(1);
+		if (sig == SIGINT)
+		{
+			printf("\n");
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
 	}
-	else if (sig == SIGINT)
+	else if (g_signal == 1)
 	{
-		write(STDOUT_FILENO, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		if (sig == SIGINT)
+		{
+			printf("\n");
+			rl_replace_line("", 0);
+			rl_redisplay();
+			g_signal = 0;
+		}
 	}
 }
 
-void	ft_sighandler(t_infos *infos)
+void	ft_setup_signal_handlers()
 {
-	struct sigaction	sa;
-
-	sa.sa_handler = ft_handle_sigint;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-	{
-		infos->code_error = 130;
-		exit(EXIT_SUCCESS);
-	}
-	sa.sa_handler = SIG_IGN;
-	if (sigaction(SIGTSTP, &sa, NULL) == -1)
-		exit(EXIT_SUCCESS);
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		exit(EXIT_SUCCESS);
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGTERM, signal_handler);
 }

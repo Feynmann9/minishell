@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/27 20:00:53 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/01 23:23:07 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,18 @@
 
 int	g_signal = 0;
 
-static t_infos	ft_re_init_infos(char **envp, t_env *tmp_env)
+static void	ft_re_init_infos(t_infos *infos)
 {
-	t_infos	infos;
-
-	infos.in_heredoc = 0;
-	infos.envp = envp;
-	infos.history_file = ".minishell_history";
-	infos.count_pipes = 0;
-	infos.input = NULL;
-	infos.error = NULL;
-	infos.tokens = NULL;
-	infos.tmpfile_counter = 0;
-	infos.tokens = NULL;
-	infos.tok = NULL;
-	infos.tmp_env = tmp_env;
-	return (infos);
+	if(!infos)
+		return ;
+	infos->in_heredoc = 0;
+	infos->count_pipes = 0;
+	infos->input = NULL;
+	infos->error = NULL;
+	infos->tokens = NULL;
+	infos->tmpfile_counter = 0;
+	infos->tokens = NULL;
+	infos->tok = NULL;
 }
 
 void	ft_free_envp(t_env *envp)
@@ -53,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1 || argv[1])
 		ft_exit(2, "Erreur: too many arguments.\n");
 	infos = ft_init_infos(envp);
-	ft_sighandler(&infos);
+	ft_setup_signal_handlers();
 	while (1)
 	{
 		infos.input = readline("minishell> ");
@@ -67,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 		//ft_print_tokens(infos.tokens);
 		ft_surcouche(&infos);
 		ft_free_tokens(&infos.tokens);
-		ft_check_and_print_tok(&infos);
+		//ft_check_and_print_tok(&infos);
 		if (infos.error)
 		{
 			ft_printf("%s\n", infos.error);
@@ -79,9 +75,9 @@ int	main(int argc, char **argv, char **envp)
 			builtin(&infos);
 			//ft_printf("--- POST_EXEC ---\n");
 		}
-		printf("le code %d\n", infos.code_error);
+		//printf("le code %d\n", infos.code_error);
 		ft_free_tok(&infos.tok);
-		infos = ft_re_init_infos(envp, infos.tmp_env);
+		ft_re_init_infos(&infos);
 	}
 	rl_clear_history();
 	return (0);

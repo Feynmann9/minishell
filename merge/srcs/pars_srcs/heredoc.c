@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 18:30:41 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/24 22:45:03 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/01 23:23:17 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,34 @@ void	ft_extract_heredoc_delimiter(t_tokenizer *tok)
 	tok->i--;
 }
 
-void	ft_collect_heredoc_lines(t_tokenizer *tok, char *delimiter,
-	t_infos *infos)
+void	ft_collect_heredoc_lines(t_tokenizer *tok, char *delimiter, t_infos *infos)
 {
 	char	*line;
-	size_t	heredoc_size;
+	size_t (heredoc_size) = BUFFER_SIZE;
 	size_t	new_size;
 
-	heredoc_size = BUFFER_SIZE;
-	line = readline("> ");
-	if (!line || ft_strcmp(line, delimiter) == 0)
+	g_signal = 1;
+	while (1)
 	{
+		line = readline("> ");
+		if (!line || ft_strcmp(line, delimiter) == 0)
+		{
+			line = ft_free_str(line);
+			break;
+		}
+		new_size = ft_strlen(tok->heredoc_buffer) + ft_strlen(line) + 2;
+		if (new_size > heredoc_size)
+		{
+			tok->heredoc_buffer = realloc(tok->heredoc_buffer, new_size);
+			if (!tok->heredoc_buffer)
+				ft_quit(infos, "Error: echec malloc heredoc_buffer.\n", 2);
+			heredoc_size = new_size;
+		}
+		ft_strcat(tok->heredoc_buffer, line);
+		ft_strcat(tok->heredoc_buffer, "\n");
 		line = ft_free_str(line);
-		return ;
 	}
-	new_size = ft_strlen(tok->heredoc_buffer) + ft_strlen(line) + 2;
-	if (new_size > heredoc_size)
-	{
-		tok->heredoc_buffer = ft_realloc(tok->heredoc_buffer, heredoc_size,
-				new_size);
-		if (!tok->heredoc_buffer)
-			ft_quit(infos, "Error: realloc heredoc_buffer failed\n", 2);
-		heredoc_size = new_size;
-	}
-	ft_strcat(tok->heredoc_buffer, line);
-	ft_strcat(tok->heredoc_buffer, "\n");
-	line = ft_free_str(line);
-	ft_collect_heredoc_lines(tok, delimiter, infos);
+	g_signal = 0;
 }
 
 void	ft_handle_heredoc(t_tokenizer *tok, t_infos *infos)
@@ -80,7 +81,8 @@ void	ft_handle_heredoc(t_tokenizer *tok, t_infos *infos)
 	g_signal = 1;
 	ft_collect_heredoc_lines(tok, delimiter, infos);
 	g_signal = 0;
-	ft_generate(tok, infos, delimiter);
+	if (tok->heredoc_buffer)
+		ft_generate(tok, infos, delimiter);
 	delimiter = ft_free_str(delimiter);
 	tok->heredoc_buffer = ft_free_str(tok->heredoc_buffer);
 }

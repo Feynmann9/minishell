@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/27 19:23:04 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/01 23:23:02 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,6 @@ void	ft_quit(t_infos *s_infos, char *message, int out);
 void	ft_free_tok(t_tok **tok);
 
 	//		sighandler.c		//
-void	ft_sighandler(t_infos *infos);
 void	ft_setup_signal_handlers(void);
 
 	//		surcouche.c		//
