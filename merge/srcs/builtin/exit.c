@@ -47,10 +47,8 @@ void    ft_jedois_exit(t_infos *infos)
     }
     if (infos->tok->cmd[1] != NULL && ft_jedoistoutfaire(infos->tok->cmd[1]))
     {
-        //printf("cmd 1 = %s\n", infos->tok->cmd[1]);
         exot = ft_atoi(infos->tok->cmd[1]);
         exot = exot % 255;
-        //printf("exot = %d\n", exot);
     }
     else if (infos->tok->cmd[1] != NULL)
     {

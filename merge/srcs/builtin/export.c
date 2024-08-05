@@ -3,39 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:37:45 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/18 19:43:21 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 23:02:51 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-/*void ft_export(t_base **base, char *more) // Attention pd utilise un char ** pour le cas ou il y a plusieurs argument (Charles a dit)
-{
-	char (*folder) = NULL;
-	char (*value) = NULL;
-	int (i) = 0;
-	int (j) = 0;
-
-	if (!(folder = malloc((ft_strlen(more)) * sizeof(char))) || base == NULL)
-		return;
-	if (!(value = malloc((ft_strlen(more)) * sizeof(char))))
-		return (free(folder));
-	while (more[i] != '=')
-		folder[j++] = more[i++];
-	folder[j] = '\0';
-	j = 0;
-	i++;
-	while (more[i] != '\0')
-		value[j++] = more[i++];
-	value[j] = '\0';
-	add_export((*base)->tmp_env, folder, value);
-	free(folder);
-	free(value);
-}*/
-
+/*
 void	ft_export(t_infos *infos, char *more)
 {
 	char	*folder;
@@ -60,7 +37,6 @@ void	ft_export(t_infos *infos, char *more)
 	while (more[i] != '=' && ft_isalpha(more[i]))
 		folder[j++] = more[i++];
 	folder[j] = '\0';
-	//printf("foler = %s\n", folder);
 	j = 0;
 	while (more[i] != '\0')
 	{
@@ -69,25 +45,11 @@ void	ft_export(t_infos *infos, char *more)
 		i++;
 	}
 	value[j] = '\0';
-	//printf("value = %s\n", value);
 	add_export(infos->tmp_env, folder, value);
 	free(folder);
 	free(value);
-}
-
-/*void    add_export(t_env *ev, char *name_folder, char *value_folder)
-{
-	t_env *tmp;
-
-	if (!(tmp = malloc(sizeof(t_env))))
-		return ;
-	tmp->name_folder = ft_strdup(name_folder);
-	tmp->value_folder = ft_strdup(value_folder);
-	if (ev != NULL)
-		ft_lstadd_back_env(&ev, tmp);
-	else
-		ft_lstadd_front_env(&ev, tmp);
 }*/
+
 
 void	add_export(t_env *ev, char *name_folder, char *value_folder)
 {
@@ -118,6 +80,72 @@ void	add_export(t_env *ev, char *name_folder, char *value_folder)
 		ev = tmp;
 }
 
+char	*extract_folder(char *more, int *i)
+{
+	int		size = 0;
+	int		j = 0;
+	char	*folder;
+
+	while (more[size] != '=' && ft_isalpha(more[size]))
+		size++;
+	if (!(folder = malloc(sizeof(char) * (size + 1))))
+		return (NULL);
+	while (j < size)
+	{
+		folder[j] = more[j];
+		j++;
+	}
+	folder[size] = '\0';
+	*i = size + 1;
+	return (folder);
+}
+
+char	*extract_value(char *more, int i)
+{
+	int		val = 0;
+	//int		j = 0;
+	char	*value;
+
+	while (more[i + val] != '\0')
+	{
+		if (more[i + val] != 34 && more[i + val] != 39)
+			val++;
+		else
+			i++;
+	}
+	if (!(value = malloc(sizeof(char) * (val + 1))))
+		return (NULL);
+	val = 0;
+	while (more[i] != '\0')
+	{
+		if (more[i] != 34 && more[i] != 39 && more[i] != '=')
+			value[val++] = more[i];
+		i++;
+	}
+	value[val] = '\0';
+	return (value);
+}
+
+void	free_pointers(char *folder, char *value)
+{
+	free(folder);
+	free(value);
+}
+
+void	ft_export(t_infos *infos, char *more)
+{
+	int		i;
+	char	*folder;
+	char	*value;
+
+	if (infos == NULL || (folder = extract_folder(more, &i)) == NULL)
+		return ;
+	if ((value = extract_value(more, i)) == NULL)
+		return (free(folder));
+	add_export(infos->tmp_env, folder, value);
+	free_pointers(folder, value);
+}
+
 void	ft_order_env(t_infos *infos)
 {
 	t_env	*sorted = NULL;
@@ -137,9 +165,7 @@ void	ft_order_env(t_infos *infos)
 		{
 			temp = sorted;
 			while (temp->next && ft_strcmp(temp->next->name_folder, current->name_folder) < 0)
-			{
 				temp = temp->next;
-			}
 			current->next = temp->next;
 			temp->next = current;
 		}

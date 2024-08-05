@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:29:24 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/01 23:11:57 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 22:36:10 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,112 @@ int	path_or_notpath(char *cmd)
 	return (1);
 }
 
+char *construct_full_path(char *path_env, char *cmd, int len)
+{
+    char *full_path = malloc(len);
+	if (!cmd)
+		return (NULL);
+    if (!full_path)
+        return (NULL);
+    ft_strcpy(full_path, path_env);
+    ft_strcat(full_path, "/");
+    ft_strcat(full_path, cmd);
+    return (full_path);
+}
+
+int	check_access(t_infos *infos, char *full_path, char *end)
+{
+    char *result;
+
+    if (access(full_path, X_OK) == 0)
+    {
+        result = ft_strdup(full_path);
+        full_path = ft_free_str(full_path);
+        if (!result)
+            ft_quit(infos, "Error: Echec malloc result.\n", 2);
+        if (end)
+            *end = ':';
+        result = ft_free_str(result);
+        return (1);
+    }
+    return (0);
+}
+
+int	find_command_unleak(t_infos *infos, char *cmd, char *path_env)
+{
+    char	*end;
+    int		len = ft_strlen(path_env) + ft_strlen(cmd) + 2;
+    char	*full_path;
+
+    while (path_env && infos)
+    {
+        end = ft_strchr(path_env, ':');
+        if (end)
+            *end = '\0';
+        full_path = construct_full_path(path_env, cmd, len);
+        if (!full_path)
+            ft_quit(infos, "Error: echec malloc full_path.\n", 2);
+        if (check_access(infos, full_path, end))
+            return (1);
+        if (end)
+        {
+            *end = ':';
+            path_env = end + 1;
+        }
+        else
+            path_env = NULL;
+        full_path = ft_free_str(full_path);
+    }
+    return (0);
+}
+
+char *check_and_copy_path(t_infos *infos, char *full_path, char *end)
+{
+    char *result;
+
+    if (access(full_path, X_OK) == 0)
+    {
+        result = ft_strdup(full_path);
+        if (!result)
+            ft_quit(infos, "Error: Echec malloc result.\n", 2);
+        if (end)
+            *end = ':';
+        return (result);
+    }
+    return (NULL);
+}
+
+char *find_command(t_infos *infos, char *cmd, char *path_env)
+{
+    char *end;
+    char *full_path;
+    char *result;
+    int len = ft_strlen(path_env) + ft_strlen(cmd) + 2;
+
+    while (path_env && infos)
+    {
+        end = ft_strchr(path_env, ':');
+        if (end)
+            *end = '\0';
+        full_path = construct_full_path(path_env, cmd, len);
+        if (!full_path)
+            ft_quit(infos, "Error: echec malloc full_path.\n", 2);
+        result = check_and_copy_path(infos, full_path, end);
+        free(full_path);
+        if (result)
+            return (result);
+        if (end)
+        {
+            *end = ':';
+            path_env = end + 1;
+        }
+        else
+            path_env = NULL;
+    }
+    return (NULL);
+}
+
+/*
 int	find_command_unleak(t_infos *infos, char *cmd, char *path_env)
 {
 	if (!cmd)
@@ -126,7 +232,7 @@ char	*find_command(t_infos *infos, char *cmd, char *path_env)
 			path_env = NULL;
 	}
 	return (NULL);
-}
+}*/
 
 void ft_double_minishell(t_infos *infos)
 {
@@ -153,26 +259,6 @@ void ft_double_minishell(t_infos *infos)
 	}
 }
 
-/*void	ft_double_minishell(t_infos *infos)
-{
-	pid_t	pid = fork();
-	int		rien;
-	char	*path_env;
-
-	if (pid == -1)
-		exit(EXIT_FAILURE);
-	else if (pid == 0)
-	{
-		path_env = get_env_value(infos->tmp_env, "PATH");
-		if (!path_env)
-			exit(EXIT_FAILURE);
-		execve(infos->tok->cmd[0], infos->tok->cmd, infos->envp);
-		exit(EXIT_FAILURE);
-	}
-	else
-		waitpid(-1, &rien, 0);
-}*/
-
 void	ft_path(t_infos *infos)
 {
 	pid_t	pid = fork();
@@ -197,10 +283,7 @@ void	ft_path(t_infos *infos)
 	{
 		waitpid(-1, &rien, 0);
 		if (WIFEXITED(rien))
-		{
 			infos->code_error = WEXITSTATUS(rien);
-			printf("le code = %d\n", infos->code_error);
-		}
 	}
 }
 
