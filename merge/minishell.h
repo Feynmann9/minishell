@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/05 08:36:11 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:32:42 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,9 @@ t_infos	ft_init_infos(char **envp);
 t_tok	*ft_init_tok(t_infos *infos);
 
 	//		make_tmp.c			//
-void	ft_generate(t_tokenizer *tok, t_infos *infos, char *delimiter);
+void	ft_generate_temp_filename(char *buffer, size_t buffer_size,
+	int counter);
+//void	ft_generate(t_tokenizer *tok, t_infos *infos, char *delimiter);
 
 	//		out.c				//
 void	ft_free_tokens(t_token **tokens);
@@ -231,6 +233,7 @@ void	ft_quit(t_infos *s_infos, char *message, int out);
 void	ft_free_tok(t_tok **tok);
 
 	//		sighandler.c		//
+void	ft_heredoc_signal(int sig);
 void	ft_setup_signal_handlers(void);
 
 	//		surcouche.c		//

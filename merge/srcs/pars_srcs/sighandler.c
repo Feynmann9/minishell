@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:26:58 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/05 07:18:32 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:32:28 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ SIGINT = Ctrl+C
 SIGQUIT = Ctrl+\
 SIGTSTP = Ctrl+Z
 */
+void ft_heredoc_signal(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_redisplay();
+		exit(EXIT_SUCCESS);
+	}
+}
 
 void signal_handler(int sig)
 {
@@ -26,12 +35,8 @@ void signal_handler(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	else if (g_signal == 1)
+	if (sig == SIGINT && g_signal == 1)
 	{
-		rl_done = 1;
-		printf("\n");
-		rl_on_new_line();
-		rl_redisplay();
 		g_signal = 0;
 	}
 }

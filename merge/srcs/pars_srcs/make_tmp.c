@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 21:19:00 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/19 16:06:46 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:31:58 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	ft_give_index(int n, char *str)
 	}
 }
 
-static void	ft_generate_temp_filename(char *buffer, size_t buffer_size,
+void	ft_generate_temp_filename(char *buffer, size_t buffer_size,
 	int counter)
 {
 	char		counter_str[4];
@@ -54,32 +54,4 @@ static void	ft_generate_temp_filename(char *buffer, size_t buffer_size,
 	if (prefix_len + counter_len + 1 >= buffer_size)
 		return ;
 	ft_strlcpy(buffer + prefix_len, counter_str, buffer_size - prefix_len);
-}
-
-static int	ft_create_or_clear_temp_file(t_infos *infos, char *filename)
-{
-	int	fd;
-
-	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-	if (fd == -1)
-		ft_quit(infos, "Error: opening/creating file.\n", 2);
-	return (fd);
-}
-
-void	ft_generate(t_tokenizer *tok, t_infos *infos, char *delimiter)
-{
-	char	tmp_filename[260];
-	int		fd;
-
-	ft_generate_temp_filename(tmp_filename, sizeof(tmp_filename),
-		infos->tmpfile_counter);
-	fd = ft_create_or_clear_temp_file(infos, tmp_filename);
-	write(fd, tok->heredoc_buffer, ft_strlen(tok->heredoc_buffer));
-	close(fd);
-	ft_add_token(infos, &infos->tokens, TOKEN_HEREDOC_WORD, tmp_filename);
-	ft_add_token(infos, &infos->tokens, TOKEN_HEREDOC_DELIMITER, delimiter);
-	if (infos->tmpfile_counter == 256)
-		infos->tmpfile_counter = 0;
-	else
-		infos->tmpfile_counter++;
 }
