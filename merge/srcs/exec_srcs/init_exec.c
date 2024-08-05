@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/26 17:54:53 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 08:06:57 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,24 @@ char	**ft_split_env(t_infos *infos, char *ligne)
 	return (env_var[1][j] = '\0', env_var);
 }
 
+char	**ft_null_env(t_infos *infos)
+{
+	char	**env;
+
+	env = malloc(3 * sizeof(char *));
+	if (!env)
+		ft_quit(infos, "Error: echec malloc env.\n", 2);
+	env[0] = malloc(4);
+	if (!env[0])
+		ft_quit(infos, "Error: echec malloc env[0].\n", 2);
+	ft_strcpy(env[0], "PWD");
+	env[1] = getcwd(NULL, 0);
+	if (!env[1])
+		ft_quit(infos, "Error: echec getcwd env[1].\n", 2);
+	env[2] = NULL;
+	return (env);
+}
+
 t_env	*ft_init_env(t_infos *infos, char **env)
 {
 	t_env	*tmp_env;
@@ -77,12 +95,23 @@ t_env	*ft_init_env(t_infos *infos, char **env)
 
 	tmp_env = NULL;
 	i = 0;
-	while (env[i])
+	if (!env[0])
 	{
-		env_var = ft_split_env(infos, env[i]);
+		env_var = ft_null_env(infos);
 		ft_make_env(infos, &tmp_env, env_var);
 		env_var = ft_free_tab2d(env_var);
-		i++;
+		add_export(tmp_env, "SHLVL", "1");
+		add_export(tmp_env, "_", "");
+	}
+	else
+	{
+		while (env[i])
+		{
+			env_var = ft_split_env(infos, env[i]);
+			ft_make_env(infos, &tmp_env, env_var);
+			env_var = ft_free_tab2d(env_var);
+			i++;
+		}
 	}
 	return (tmp_env);
 }

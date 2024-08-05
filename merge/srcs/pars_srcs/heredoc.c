@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 18:30:41 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/01 23:23:17 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 09:59:35 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,19 @@ void	ft_collect_heredoc_lines(t_tokenizer *tok, char *delimiter, t_infos *infos)
 	size_t (heredoc_size) = BUFFER_SIZE;
 	size_t	new_size;
 
-	g_signal = 1;
 	while (1)
 	{
-		line = readline("> ");
-		if (!line || ft_strcmp(line, delimiter) == 0)
+		if(g_signal == 1)
+			line = readline("> ");
+		if (!line || ft_strcmp(line, delimiter) == 0 || g_signal == 0)
 		{
 			line = ft_free_str(line);
-			break;
+			return ;
 		}
 		new_size = ft_strlen(tok->heredoc_buffer) + ft_strlen(line) + 2;
 		if (new_size > heredoc_size)
 		{
-			tok->heredoc_buffer = realloc(tok->heredoc_buffer, new_size);
+			tok->heredoc_buffer = ft_realloc(tok->heredoc_buffer, ft_strlen(tok->heredoc_buffer), new_size);
 			if (!tok->heredoc_buffer)
 				ft_quit(infos, "Error: echec malloc heredoc_buffer.\n", 2);
 			heredoc_size = new_size;
@@ -66,7 +66,6 @@ void	ft_collect_heredoc_lines(t_tokenizer *tok, char *delimiter, t_infos *infos)
 		ft_strcat(tok->heredoc_buffer, "\n");
 		line = ft_free_str(line);
 	}
-	g_signal = 0;
 }
 
 void	ft_handle_heredoc(t_tokenizer *tok, t_infos *infos)

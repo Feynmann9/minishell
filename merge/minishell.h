@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/01 23:23:02 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 08:36:11 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ typedef struct s_infos
 //			BUILTIN			//
 
 	//			cd.c			//
+void	set_env_value(t_infos *infos, t_env *env, char *name, char *value);
 void	ft_cd(t_infos *infos, const char *folder);
 
 	//			echo.c			//
@@ -205,7 +206,7 @@ void	ft_lstadd_back_env(t_env **lst, t_env **new);
 	//		ex_env.c			//
 int		ft_get_len_pre_expand(char *input);
 char	*ft_new_ex(t_infos *infos, char *buffer, char *expanded);
-char	*ft_expand_env_var(t_infos *infos, char *str, char **envp);
+char	*ft_expand_env_var(t_infos *infos, char *str, t_env *env);
 void	ft_handle_env_var(t_tokenizer *tok, t_infos *infos);
 
 	//		heredoc.c			//

@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:29:58 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/27 19:42:38 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 08:47:50 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,29 +73,23 @@ static char	*ft_extract_env_name(t_infos *infos, const char *input)
 	return (env_name);
 }
 
-char	*ft_expand_env_var(t_infos *infos, char *str, char **envp)
+char	*ft_expand_env_var(t_infos *infos, char *str, t_env *env)
 {
 	char	*var_name;
-	char	*tmp;
-	int		i;
+	t_env	*tmp;
 
 	var_name = ft_extract_env_name(infos, str);
-	i = 0;
-	while (envp[i] && infos)
+	tmp = env;
+	while (tmp)
 	{
-		if (ft_strncmp(envp[i], var_name, ft_strlen(var_name)) == 0
-			&& envp[i][ft_strlen(var_name)] == '=')
-			{
-				tmp = ft_strdup(envp[i] + ft_strlen(var_name) + 1);
-				var_name = ft_free_str(var_name);
-				if (!tmp)
-					ft_quit(infos, "Error: echec malloc tmp.\n", 2);
-				return (tmp);
-			}
-		i++;
+		if (ft_strncmp(tmp->name_folder, var_name, ft_strlen(var_name)) == 0)
+		{
+			if (tmp->value_folder)
+				return (ft_strdup(tmp->value_folder));
+		}
+		tmp = tmp->next;
 	}
-	var_name = ft_free_str(var_name);
-	return (ft_strdup(str));
+	return (NULL);
 }
 
 void	ft_handle_env_var(t_tokenizer *tok, t_infos *infos)

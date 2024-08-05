@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:21:22 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/27 19:22:09 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 08:35:46 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_add_token_from_buffer(t_infos *infos, t_tokenizer *tok, int *j)
 		if (tok->current_type == TOKEN_ENV || (tok->quote_char == '"'
 				&& ft_strchr(tok->buffer, '$')) || tok->input[tok->i] == '$')
 		{
-			expanded = ft_expand_env_var(infos, tok->buffer, infos->envp);
+			expanded = ft_expand_env_var(infos, tok->buffer, infos->tmp_env);
 			if (ft_verif_expand(tok))
 				ft_add_token(infos, &infos->tokens, TOKEN_ENV, expanded);
 			else

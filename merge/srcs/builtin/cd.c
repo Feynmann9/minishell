@@ -6,14 +6,16 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:37:21 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/24 23:22:23 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 09:32:19 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	set_env_value(t_infos *infos, t_env *env, char *name, char *value)
+void	set_env_value(t_infos *infos, t_env *env, char *name, char *value)
 {
+	if (!value)
+		return ;
 	while (env)
 	{
 		if (ft_strcmp(env->name_folder, name) == 0)

@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/01 23:23:07 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 09:51:36 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,38 @@ void	ft_free_envp(t_env *envp)
 	}
 }
 
+char	*ft_get_last(t_tok *tok)
+{
+	int	i;
+	t_tok	*tmp;
+	char	*(tmp_cmd) = NULL;
+
+	tmp = tok;
+	while (tmp)
+	{
+		i = 0;
+		if (tmp->cmd[i])
+		{
+			while (tmp->cmd[i])
+			{
+				tmp_cmd = tmp->cmd[i];
+				i++;
+			}
+		}
+		tmp = tmp->NEXT;
+	}
+	return (tmp_cmd);
+}
+
+void	ft_exec(t_infos *infos)
+{
+	add_history(infos->input);
+	set_env_value(infos, infos->tmp_env, "_", ft_get_last(infos->tok));
+	//ft_printf("\n--- EXEC ---\n");
+	builtin(infos);
+	//ft_printf("--- POST_EXEC ---\n");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_infos	infos;
@@ -53,7 +85,6 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		infos.input = readline("minishell> ");
-		add_history(infos.input);
 		if (!infos.input)
 		{
 			rl_clear_history();
@@ -70,11 +101,7 @@ int	main(int argc, char **argv, char **envp)
 			infos.error = NULL;
 		}
 		else if (infos.error == NULL && infos.tok)
-		{
-			//ft_printf("\n--- EXEC ---\n");
-			builtin(&infos);
-			//ft_printf("--- POST_EXEC ---\n");
-		}
+			ft_exec(&infos);
 		//printf("le code %d\n", infos.code_error);
 		ft_free_tok(&infos.tok);
 		ft_re_init_infos(&infos);
