@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/05 09:51:36 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/05 20:07:39 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*ft_get_last(t_tok *tok)
 	while (tmp)
 	{
 		i = 0;
-		if (tmp->cmd[i])
+		if (tmp->cmd)
 		{
 			while (tmp->cmd[i])
 			{
@@ -69,9 +69,9 @@ void	ft_exec(t_infos *infos)
 {
 	add_history(infos->input);
 	set_env_value(infos, infos->tmp_env, "_", ft_get_last(infos->tok));
-	//ft_printf("\n--- EXEC ---\n");
+	ft_printf("\n--- EXEC ---\n");
 	builtin(infos);
-	//ft_printf("--- POST_EXEC ---\n");
+	ft_printf("--- POST_EXEC ---\n");
 }
 
 int	main(int argc, char **argv, char **envp)
