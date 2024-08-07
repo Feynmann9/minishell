@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:39:09 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/05 08:06:57 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:56:19 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ t_env	*ft_init_env(t_infos *infos, char **env)
 		env_var = ft_free_tab2d(env_var);
 		add_export(tmp_env, "SHLVL", "1");
 		add_export(tmp_env, "_", "");
+		infos->tmp_path = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
 	}
 	else
 	{

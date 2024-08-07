@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:50:04 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/05 20:07:39 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:15:36 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	ft_re_init_infos(t_infos *infos)
 {
 	if(!infos)
 		return ;
-	infos->in_heredoc = 0;
 	infos->count_pipes = 0;
 	infos->input = NULL;
 	infos->error = NULL;
@@ -69,9 +68,9 @@ void	ft_exec(t_infos *infos)
 {
 	add_history(infos->input);
 	set_env_value(infos, infos->tmp_env, "_", ft_get_last(infos->tok));
-	ft_printf("\n--- EXEC ---\n");
+	//ft_printf("\n--- EXEC ---\n");
 	builtin(infos);
-	ft_printf("--- POST_EXEC ---\n");
+	//ft_printf("--- POST_EXEC ---\n");
 }
 
 int	main(int argc, char **argv, char **envp)

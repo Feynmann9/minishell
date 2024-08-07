@@ -121,3 +121,11 @@ format :
         Ajout de ft_strcat (concatenne 2 str sans limite de taille) a la libft
         Ajout de ft_realloc (réallocation de la mémoire) a la libft
         Fix de la gestion des heredoc via l'ajout de TOKEN_HEREDOC_WORD et TOKEN_HEREDOC_DELIMITER
+
+
+        truc a faire
+
+        le path invisible avec env -i ($PATH)
+        le heredoc avec gnl
+        les code erreurs (0 1 127 130 131)
+        

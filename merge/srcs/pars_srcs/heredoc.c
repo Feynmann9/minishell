@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 18:30:41 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/05 16:51:29 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:32:35 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,82 +39,58 @@ void	ft_extract_heredoc_delimiter(t_tokenizer *tok)
 	tok->i--;
 }
 
-void	ft_generate_here(char *heredoc_buffer, char *filename)
+static int	ft_check_line(char *line, char *delimiter)
 {
-	int		fd;
-
-	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-	write(fd, heredoc_buffer, ft_strlen(heredoc_buffer));
-	close(fd);
+	if (!line)
+	{
+		printf("\nminishell: warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
+		return (1);
+	}
+	if (ft_strncmp(line, delimiter, ft_strlen(line) - 1) == 0)
+		return (1);
+	return (0);
 }
 
-void	heredoc_child_process(t_infos *infos, char *delimiter, char *filename)
+void	ft_heredoc(t_tokenizer *tok, t_infos *infos, char *delimiter)
 {
 	size_t (heredoc_size) = BUFFER_SIZE;
 	size_t	new_size;
 	char *line;
-	char *heredoc_buffer = malloc(BUFFER_SIZE);
-	if (!heredoc_buffer)
-		ft_quit(infos, "Error: echec malloc heredoc_buffer.\n", 2);
-	heredoc_buffer[0] = '\0';
-	signal(SIGINT, ft_heredoc_signal);
 
 	while (1)
 	{
-		line = readline("> ");
-		if (!line || strcmp(line, delimiter) == 0)
+		ft_printf("> ");
+		line = get_next_line(0, '\n');
+		if (ft_check_line(line, delimiter) || g_signal == 0)
 		{
 			free(line);
 			break;
 		}
-		new_size = ft_strlen(heredoc_buffer) + ft_strlen(line) + 2;
+		new_size = ft_strlen(tok->heredoc_buffer) + ft_strlen(line) + 2;
 		if (new_size > heredoc_size)
 		{
-			heredoc_buffer = ft_realloc(heredoc_buffer, ft_strlen(heredoc_buffer), new_size);
-			if (!heredoc_buffer)
+			tok->heredoc_buffer = ft_realloc(tok->heredoc_buffer, ft_strlen(tok->heredoc_buffer), new_size);
+			if (!tok->heredoc_buffer)
 				ft_quit(infos, "Error: echec malloc heredoc_buffer.\n", 2);
 			heredoc_size = new_size;
 		}
-		ft_strcat(heredoc_buffer, line);
-		ft_strcat(heredoc_buffer, "\n");
+		ft_strcat(tok->heredoc_buffer, line);
 		line = ft_free_str(line);
 	}
-	ft_generate_here(heredoc_buffer, filename);
-	exit(0);
-}
-
-void heredoc(t_infos *infos, char *delimiter, char *filename)
-{
-	pid_t pid = fork();
-	int status;
-
-	if (pid == 0)
-		heredoc_child_process(infos, delimiter, filename);
-	else if (pid > 0)
-		waitpid(pid, &status, 0);
-	else
-		perror("fork");
+	ft_generate(infos, tok->heredoc_buffer, delimiter);
 }
 
 void	ft_handle_heredoc(t_tokenizer *tok, t_infos *infos)
 {
 	char	*delimiter;
-	char	tmp_filename[260];
 
-	ft_generate_temp_filename(tmp_filename, sizeof(tmp_filename),
-		infos->tmpfile_counter);
+	tok->heredoc_buffer = malloc(BUFFER_SIZE);
+	if (!tok->heredoc_buffer)
+		ft_quit(infos, "Error: echec malloc heredoc_buffer.\n", 2);
+	tok->heredoc_buffer[0] = '\0';
 	delimiter = ft_strdup(tok->buffer);
 	g_signal = 1;
-	heredoc(infos, delimiter, tmp_filename);
+	ft_heredoc(tok, infos, delimiter);
+	g_signal = 0;
 	delimiter = ft_free_str(delimiter);
-	if (g_signal == 1)
-	{
-		ft_add_token(infos, &infos->tokens, TOKEN_HEREDOC_WORD, tmp_filename);
-		ft_add_token(infos, &infos->tokens, TOKEN_HEREDOC_DELIMITER, delimiter);
-		if (infos->tmpfile_counter == 256)
-			infos->tmpfile_counter = 0;
-		else
-			infos->tmpfile_counter++;
-		g_signal = 0;
-	}
 }

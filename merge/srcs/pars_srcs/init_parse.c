@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:35:26 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/07/27 19:03:30 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:56:39 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ t_infos	ft_init_infos(char **envp)
 {
 	t_infos	infos;
 
-	infos.in_heredoc = 0;
 	infos.envp = envp;
 	infos.history_file = ".minishell_history";
 	infos.count_pipes = 0;
@@ -86,6 +85,7 @@ t_infos	ft_init_infos(char **envp)
 	infos.tokens = NULL;
 	infos.tok = NULL;
 	infos.tmp_env = NULL;
+	infos.tmp_path = NULL;
 	infos.tmp_env = ft_init_env(&infos, envp);
 	return (infos);
 }

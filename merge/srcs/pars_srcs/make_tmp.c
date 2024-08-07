@@ -6,7 +6,7 @@
 /*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 21:19:00 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/05 16:31:58 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/06 11:24:36 by gmarquis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,28 @@ void	ft_generate_temp_filename(char *buffer, size_t buffer_size,
 	if (prefix_len + counter_len + 1 >= buffer_size)
 		return ;
 	ft_strlcpy(buffer + prefix_len, counter_str, buffer_size - prefix_len);
+}
+
+void	ft_generate(t_infos *infos, char *heredoc_buffer, char *delimiter)
+{
+	int		fd;
+	char	tmp_filename[260];
+
+	ft_generate_temp_filename(tmp_filename, sizeof(tmp_filename),
+		infos->tmpfile_counter);
+	fd = open(tmp_filename, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+	if(fd == -1)
+		ft_quit(infos, "Error: echec open fd.\n", 2);
+	write(fd, heredoc_buffer, ft_strlen(heredoc_buffer));
+	close(fd);
+	if (g_signal == 1)
+	{
+		ft_add_token(infos, &infos->tokens, TOKEN_HEREDOC_WORD, tmp_filename);
+		ft_add_token(infos, &infos->tokens, TOKEN_HEREDOC_DELIMITER, delimiter);
+		if (infos->tmpfile_counter == 256)
+			infos->tmpfile_counter = 0;
+		else
+			infos->tmpfile_counter++;
+		g_signal = 0;
+	}
 }
