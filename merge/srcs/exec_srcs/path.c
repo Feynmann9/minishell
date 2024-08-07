@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:29:24 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/05 22:36:10 by jpp              ###   ########.fr       */
+/*   Updated: 2024/08/07 19:37:24 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ void ft_double_minishell(t_infos *infos)
 void	ft_path(t_infos *infos)
 {
 	pid_t	pid = fork();
-	int		rien;
+	int		status;
 	char	*path_env;
 	char	*full_path = NULL;
 
@@ -272,18 +272,18 @@ void	ft_path(t_infos *infos)
 	{
 		path_env = get_env_value(infos->tmp_env, "PATH");
 		if (!path_env)
-			exit(EXIT_FAILURE);
+			exit(127);
 		full_path = find_command(infos, infos->tok->cmd[0], path_env);
 		if (!full_path)
-			exit(EXIT_FAILURE);
+			exit(127);
 		execve(full_path, infos->tok->cmd, infos->envp);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 	else
 	{
-		waitpid(-1, &rien, 0);
-		if (WIFEXITED(rien))
-			infos->code_error = WEXITSTATUS(rien);
+		waitpid(pid, &status, 0);
+		int kaka = WEXITSTATUS(status);
+		infos->code_error = kaka;
 	}
 }
 

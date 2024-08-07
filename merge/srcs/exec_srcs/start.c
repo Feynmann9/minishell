@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/05 22:36:50 by jpp              ###   ########.fr       */
+/*   Updated: 2024/08/07 19:36:14 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	builtin(t_infos *infos)
 {
 	while (infos->tok != NULL)
 	{
+		if (infos->tok->cmd[0] && !find_command_unleak(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
+			ft_path(infos);
 		if (infos->tok->cmd)
 		{
 			if (ft_strcmp(infos->tok->cmd[0], "./minishell") == 0)
