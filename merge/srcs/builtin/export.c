@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:37:45 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/05 23:02:51 by jpp              ###   ########.fr       */
+/*   Updated: 2024/08/09 18:35:33 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void	ft_export(t_infos *infos, char *more)
 	if ((value = extract_value(more, i)) == NULL)
 		return (free(folder));
 	add_export(infos->tmp_env, folder, value);
+	infos->code_error = 0;
 	free_pointers(folder, value);
 }
 

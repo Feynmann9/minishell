@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/09 18:21:18 by jpp              ###   ########.fr       */
+/*   Updated: 2024/08/09 18:34:53 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void	ft_solo_cmd(t_infos *infos)
 void	ft_multi_cmd(t_infos *infos)
 {
 	if (ft_strcmp(infos->tok->cmd[0], "echo") == 0)
+	{
 		ft_echo(infos->tok->cmd);
+		infos->code_error = 0;
+	}
 	else if (ft_strcmp(infos->tok->cmd[0], "export") == 0)
 		ft_export(infos, infos->tok->cmd[1]);
 	else if (ft_strcmp(infos->tok->cmd[0], "unset") == 0)

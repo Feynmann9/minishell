@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:37:21 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/05 09:32:19 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/09 18:35:12 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	ft_cd(t_infos *infos, const char *folder)
 		else
 			ft_printf("commande introuvable\n");
 	}
+	infos->code_error = 0;
 	if (folder == NULL)
 		free(cd);
 }
