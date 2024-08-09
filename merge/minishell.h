@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarquis <gmarquis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:39:11 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/07 18:57:10 by gmarquis         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:41:00 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,5 +256,7 @@ int	ft_verif_expand(t_tokenizer *tok);
 void	ft_print_env(t_env *ev);
 void	ft_print_tokens(t_token *tokens);
 void	ft_check_and_print_tok(t_infos *infos);
+
+void    for_all_builtin(t_infos *infos);
 
 #endif

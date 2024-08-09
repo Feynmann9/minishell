@@ -6,7 +6,7 @@
 /*   By: jpp <jpp@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:37:57 by gmarquis          #+#    #+#             */
-/*   Updated: 2024/08/07 19:36:14 by jpp              ###   ########.fr       */
+/*   Updated: 2024/08/09 18:21:18 by jpp              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,30 +60,52 @@ void	ft_multi_cmd(t_infos *infos)
 		ft_jedois_exit(infos);
 }
 
+void	for_in_out(t_infos *infos)
+{
+	int fd_in;
+	int fd_out;
+	
+	if (infos->tok->infile)
+	{
+		fd_in = open(infos->tok->infile->file, O_RDONLY);
+		if (fd_in == -1)
+			ft_printf("bash: %s: Aucun fichier ou dossier de ce type\n", infos->tok->infile->file);
+		else
+			close(fd_in);
+	}
+	if (infos->tok->outfile)
+	{
+		fd_out = open(infos->tok->outfile->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd_out == -1)
+			ft_printf("bash: %s: Impossible d'ouvrir le fichier pour l'écriture\n", infos->tok->outfile->file);
+		else
+			close(fd_out);
+	}
+}
+
 void	builtin(t_infos *infos)
 {
 	while (infos->tok != NULL)
 	{
-		if (infos->tok->cmd[0] && !find_command_unleak(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
-			ft_path(infos);
 		if (infos->tok->cmd)
 		{
+			if (infos->tok->cmd[0] && !find_command_unleak(infos, infos->tok->cmd[0], get_env_value(infos->tmp_env, "PATH")))
+				ft_path(infos);
 			if (ft_strcmp(infos->tok->cmd[0], "./minishell") == 0)
 				ft_double_minishell(infos);
 			if ((infos->tok->infile || infos->tok->outfile))
 				handle_redirections(infos);
+			else if(infos->tok->cmd[0] && infos->tok->NEXT)
+			{
+				handle_redirections(infos);
+				break ;
+			}
 			else if (infos->tok->cmd[0] && infos->tok->cmd[1] == NULL)
 				ft_solo_cmd(infos);
-			else if(infos->tok->cmd[0])
+			else if (infos->tok->cmd[0] && infos->tok->cmd[1])
 				ft_multi_cmd(infos);
 		}
-		if (infos->tok->infile || infos->tok->outfile)
-		{
-			if (infos->tok->infile)
-				ft_printf("bash: %s: Aucun fichier ou dossier de ce type\n", infos->tok->infile->file);
-			if (infos->tok->outfile)
-				ft_printf("bash: %s: Aucun fichier ou dossier de ce type\n", infos->tok->outfile->file);
-		}
+		for_in_out(infos);
 		infos->tok = infos->tok->NEXT;
 	}
 }
